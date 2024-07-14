@@ -1,0 +1,78 @@
+[
+  {
+    "_id": "6686575d7529c232b37258f9",
+    "questions": [
+      {
+        "id": 1,
+        "question": "Quelles sont les trois principales qualités que vous recherchez dans une faculté ",
+        "options": [
+          "Vie étudiante dynamique ",
+          "Opportunités de stage ",
+          "Opportunités de recherche "
+        ]
+      },
+      {
+        "id": 2,
+        "question": "Quelles matières préférez-vous le plus ? (Vous pouvez en choisir plusieurs) ",
+        "options": [
+          "Physique",
+          "Chimie",
+          "Biologie"
+        ]
+      },
+      {
+        "id": 3,
+        "question": "Quel environnement préférez-vous pour étudier ? ",
+        "options": [
+          "Bibliothèque calme",
+          "Café animé ",
+          "Espace collaboratif "
+        ]
+      }
+    ],
+    "answers": [
+      0,
+      1,
+      2,
+      1,
+      0
+    ],
+    "createdAt": "2024-07-04T08:03:41.875Z",
+    "__v": 0
+  },
+  {
+    "_id": "668d0f460d92e8a26e65a0b4",
+    "questions": [
+      {
+        "id": 1,
+        "question": "Quelles sont les trois principales qualités que vous recherchez dans une faculté",
+        "options": [
+          "Vie étudiante dynamique",
+          "Opportunités de stage",
+          "Opportunités de recherche"
+        ]
+      },
+      {
+        "id": 2,
+        "question": "Quelles matières préférez-vous le plus ? (Vous pouvez en choisir plusieurs)",
+        "options": [
+          "Physique",
+          "Chimie",
+          "Biologie"
+        ]
+      },
+      {
+        "id": 3,
+        "question": "Quel environnement préférez-vous pour étudier ?",
+        "options": [
+          "Bibliothèque calme",
+          "Café animé",
+          "Espace collaboratif"
+        ]
+      }
+    ],
+    "answers": [],
+    "createdAt": "2024-07-09T10:21:58.715Z",
+    "__v": 0
+  }
+]
