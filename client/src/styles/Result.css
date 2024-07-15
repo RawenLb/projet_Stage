@@ -29,23 +29,21 @@
 table {
     width: 100%;
 }
-
 .table-header {
-    color: #cecece;
-    font-size: 1.1em;
-    text-align: center;
-    background: #212121;
-    padding: 18px 0;
+    background-color: #f2f2f2;
+    text-align: left;
 }
 
-.table-body {
-    font-size: 1.1em;
-    text-align: center;
-    /* color: #cecece; */
-    background: #d8d8d8;
-    padding: 18px 0;
+.table-row th, .table-body td {
+    padding: 8px;
+    border: 1px solid #ddd;
 }
 
-.table-header > tr > td{
-    border: 1px solid #faff5a;   
+.table-body tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 20px;
 }

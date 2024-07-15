@@ -1,15 +1,9 @@
 import Question from "../models/questionSchema.js";
 import Result from "../models/resultSchema.js";
-import { writeDataToFile } from '../fileUtils.js';
-import { generateUniversities } from '../../gemini.js';
+import { convertAnswersToText, writeDataToFile } from '../fileUtils.js';
+import gemini from '../../gemini.js';
 
-async function fetchUniversitiesByResponses(candidateAnswers) {
-    let prompt = "Based on the following answers, generate a list of 5 Tunisian universities with percentages\n";
-    prompt += JSON.stringify(candidateAnswers);
-
-    const universitiesData = await generateUniversities(prompt);
-    return universitiesData;
-}
+const { generateUniversities } = gemini;
 
 export async function getQuestions(req, res) {
     try {
@@ -32,7 +26,7 @@ export async function insertQuestions(req, res) {
 export async function dropQuestions(req, res) {
     try {
         await Question.deleteMany();
-        res.json({ msg: "Questions Deleted Successfully...!"});
+        res.json({ msg: "Questions Deleted Successfully...!" });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -54,14 +48,31 @@ export async function storeResult(req, res) {
             throw new Error('Incomplete data provided.');
         }
 
-        const results = await fetchUniversitiesByResponses(answers);
+        // Convertir les indices de réponse en texte
+        const convertedAnswers = convertAnswersToText(answers);
 
-        const resultData = { username, answers: results };
+        // Générer une liste de facultés basées sur les réponses
+        const prompt = `Réponses: ${JSON.stringify(convertedAnswers)}\nListe de 9 facultés tunisiennes selon ces intérêts:`;
+        let universities;
+        try {
+            universities = await generateUniversities(prompt);
+        } catch (error) {
+            universities = "Impossible de générer des facultés basées sur vos réponses.";
+        }
+
+        // Inclure la réponse de Gemini dans les réponses
+        const resultData = { 
+            username, 
+            answers: [
+                ...convertedAnswers,
+                { answer: universities }
+            ] 
+        };
+        
         await Result.create(resultData);
-
         await writeDataToFile('results.json', resultData);
 
-        res.json({ msg: "Result Saved Successfully!" });
+        res.json({ msg: "Result Saved Successfully!", resultData, universities });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

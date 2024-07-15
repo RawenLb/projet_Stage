@@ -19,13 +19,13 @@ export const updateResult = (index) => async (dispatch) => {
 
 /** insert user data */
 export const usePublishResult = (resultData) => {
-    const { result, username, answers } = resultData;
+    const { result, username } = resultData;
     (async () => {
         try {
             if (result.length === 0 || !username) throw new Error("Couldn't get Result");
 
             // Make API call to store results
-            await postServerData(`${process.env.REACT_APP_SERVER_HOSTNAME}/api/result`, { ...resultData, answers }, data => data);
+            await postServerData(`${process.env.REACT_APP_SERVER_HOSTNAME}/api/result`, resultData, data => data);
         } catch (error) {
             console.log(error);
         }

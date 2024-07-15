@@ -14,15 +14,19 @@ export default function Quiz() {
     const username = useSelector(state => state.result.userId);
 
     function onNext() {
-        if (trace < queue.length) {
-            dispatch(MoveNextQuestion());
+        if (check !== undefined) {
+            if (trace < queue.length) {
+                dispatch(MoveNextQuestion());
 
-            if (result.length <= trace) {
-                dispatch(PushAnswer(check));
+                if (result.length <= trace) {
+                    dispatch(PushAnswer({ questionId: queue[trace]._id, answer: check }));
+                }
             }
-        }
 
-        setChecked(undefined);
+            setChecked(undefined);
+        } else {
+            alert('Please select an answer before proceeding.');
+        }
     }
 
     function onPrev() {

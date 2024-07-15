@@ -1,4 +1,17 @@
 {
-  "username": "rawene",
-  "answers": "Please provide me with the answers you're referring to so I can generate a list of 5 Tunisian universities with percentages. I need the data about the universities to create the list. \n"
+  "username": "rawen",
+  "answers": [
+    {
+      "answer": "Vie étudiante dynamique"
+    },
+    {
+      "answer": "Chimie"
+    },
+    {
+      "answer": "Espace collaboratif"
+    },
+    {
+      "answer": "Il est impossible de déterminer les 9 facultés tunisiennes sans plus d'informations sur les intérêts spécifiques représentés par les trois réponses. \n\n**Pour vous aider à trouver les facultés qui vous correspondent, j'ai besoin de savoir ce que vous recherchez dans une université:**\n\n* **\"Vie étudiante dynamique\"** signifie-t-elle :\n    * Des événements, clubs et activités étudiantes nombreux et variés ?\n    * Un campus animé avec beaucoup d'étudiants ?\n    * Une ambiance festive et sociale ?\n* **\"Chimie\"** signifie-t-elle que vous êtes intéressé par :\n    * Un cursus en chimie ? \n    * La recherche en chimie ?\n    * Les industries chimiques ?\n* **\"Espace collaboratif\"** signifie-t-il :\n    * Des infrastructures propices au travail en groupe ?\n    * Des programmes d'études favorisant le travail collaboratif ?\n    * Un environnement d'apprentissage ouvert et inclusif ?\n\n**Veuillez préciser vos intérêts afin que je puisse vous aider à identifier les 9 facultés tunisiennes qui vous conviennent le mieux.**\n\nUne fois que vous aurez fourni plus d'informations, je pourrai vous proposer une liste de facultés avec des descriptions détaillées qui répondent à vos critères. \n"
+    }
+  ]
 }

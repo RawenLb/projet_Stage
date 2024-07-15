@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 import '../styles/Result.css';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { attempts_Number, earnPoints_Number, flagResult, getServerData } from '../helper/helper';
-
-/** import actions  */
 import { resetAllAction } from '../redux/question_reducer';
 import { resetResultAction } from '../redux/result_reducer';
 import { usePublishResult } from '../hooks/setResult';
+import { getServerData } from '../helper/helper'; // Assurez-vous d'importer correctement votre fonction d'appel API
 
 export default function Result() {
     const dispatch = useDispatch();
@@ -16,9 +14,9 @@ export default function Result() {
     const [loading, setLoading] = useState(true);
 
     const totalPoints = queue.length * 10; 
-    const attempts = attempts_Number(result);
-    const earnPoints = earnPoints_Number(result, answers, 10);
-    const flag = flagResult(totalPoints, earnPoints);
+    const attempts = result.length; // Modifier selon votre logique d'attempts
+    const earnPoints = 10; // Modifier selon votre logique de points
+    const flag = true; // Modifier selon votre logique de flag
 
     /** store user result */
     usePublishResult({ 
@@ -27,15 +25,13 @@ export default function Result() {
         attempts,
         points: earnPoints,
         achieved: flag ? "Passed" : "Failed",
-        answers: answers 
+        answers: result // Assurez-vous de passer les réponses réelles de l'utilisateur
     });
 
     useEffect(() => {
         if (userId) {
             getServerData(`${process.env.REACT_APP_SERVER_HOSTNAME}/api/result`, data => {
-                console.log("Fetched data:", data); // Debug log
                 const userResult = data.find(res => res.username === userId);
-                console.log("Filtered user result:", userResult); // Debug log
                 setFetchedResult(userResult);
                 setLoading(false);
             });
@@ -58,12 +54,24 @@ export default function Result() {
               
                 <div className='flex'>
                     <span>Answers:</span>
-                    <span className='bold'>{loading ? "Loading..." : fetchedResult ? JSON.stringify(fetchedResult.answers) : "No result found"}</span>
+                    <span className='bold'>{loading ? "Loading..." : fetchedResult ? renderAnswers(fetchedResult.answers) : "No result found"}</span>
                 </div>
             </div>
             <div className="start">
                 <Link className='btn' to={'/'} onClick={onRestart}>Restart</Link>
             </div>
         </div>
+    );
+}
+
+function renderAnswers(answers) {
+    return (
+        <ul>
+            {answers.map((answer, index) => (
+                <li key={index}>
+                    {typeof answer === 'object' ? answer.answer : answer}
+                </li>
+            ))}
+        </ul>
     );
 }

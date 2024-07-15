@@ -1,4 +1,5 @@
 import { promises as fs } from 'fs';
+import { questions } from './database/data.js';
 
 async function writeDataToFile(filename, data) {
     try {
@@ -10,4 +11,16 @@ async function writeDataToFile(filename, data) {
     }
 }
 
+
+export function convertAnswersToText(answers) {
+    return answers.map((answer, index) => {
+        const question = questions[index];
+        if (question) {
+            return {
+                answer: question.options[answer.answer]
+            };
+        }
+        return answer;
+    });
+}
 export { writeDataToFile };

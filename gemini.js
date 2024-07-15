@@ -1,4 +1,3 @@
-
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 // Définissez votre clé API ici ou utilisez une variable d'environnement

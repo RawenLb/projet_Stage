@@ -1,8 +1,8 @@
-export default [
+export const questions = [
     {
         id: 1,
-        question : "Quelles sont les trois principales qualités que vous recherchez dans une faculté",
-        options : [
+        question: "Quelles sont les trois principales qualités que vous recherchez dans une faculté",
+        options: [
             'Vie étudiante dynamique',
             'Opportunités de stage',
             'Opportunités de recherche',
@@ -10,8 +10,8 @@ export default [
     },
     {
         id: 2,
-        question : "Quelles matières préférez-vous le plus ? (Vous pouvez en choisir plusieurs)",
-        options : [
+        question: "Quelles matières préférez-vous le plus ? (Vous pouvez en choisir plusieurs)",
+        options: [
             'Physique',
             'Chimie',
             'Biologie',
@@ -19,8 +19,8 @@ export default [
     },
     {
         id: 3,
-        question : "Quel environnement préférez-vous pour étudier ?",
-        options : [
+        question: "Quel environnement préférez-vous pour étudier ?",
+        options: [
             'Bibliothèque calme',
             'Café animé',
             'Espace collaboratif',
