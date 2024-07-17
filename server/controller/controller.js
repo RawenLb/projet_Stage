@@ -40,7 +40,6 @@ export async function getResult(req, res) {
         res.status(500).json({ error: error.message });
     }
 }
-
 export async function storeResult(req, res) {
     try {
         const { username, answers } = req.body;
@@ -52,9 +51,7 @@ export async function storeResult(req, res) {
         const convertedAnswers = convertAnswersToText(answers);
 
         // Générer une liste de facultés basées sur les réponses
-        const prompt = `Réponses: ${JSON.stringify(convertedAnswers)}\nListe de 9 facultés tunisiennes selon ces intérêts: the formats should be like these :                                                   ->Nom de faculté :                                                                                                                   
-    pourquoi cette facultés est afficher selon mes interets:                                                      
-    Pourcentage d'affichage cette facultés selon mes interets`;
+        const prompt = `Réponses: ${JSON.stringify(convertedAnswers)}`;
         let universities;
         try {
             universities = await generateUniversities(prompt);

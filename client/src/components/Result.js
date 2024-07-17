@@ -9,17 +9,14 @@ import { getServerData } from '../helper/helper';
 
 export default function Result() {
     const dispatch = useDispatch();
-    const {  result: { result, userId } } = useSelector(state => state);
+    const { result: { result, userId } } = useSelector(state => state);
     const [fetchedResult, setFetchedResult] = useState(null);
     const [loading, setLoading] = useState(true);
 
-   
-
-    usePublishResult({ 
-        result, 
+    usePublishResult({
+        result,
         username: userId,
-      
-        answers: result 
+        answers: result
     });
 
     useEffect(() => {
@@ -45,10 +42,9 @@ export default function Result() {
                     <span>Username</span>
                     <span className='bold'>{userId || ""}</span>
                 </div>
-              
                 <div className='flex'>
                     <span>Answers:</span>
-                    <span className='bold'>{loading ? "Loading..." : fetchedResult ? renderAnswers(fetchedResult.answers) : "No result found"}</span>
+                    <span className='bold'>{loading ? "Loading..." : fetchedResult && fetchedResult.answers ? renderAnswers(fetchedResult.answers) : "No result found"}</span>
                 </div>
             </div>
             <div className="start">
@@ -69,3 +65,4 @@ function renderAnswers(answers) {
         </ul>
     );
 }
+
