@@ -11,7 +11,6 @@ async function writeDataToFile(filename, data) {
     }
 }
 
-
 export function convertAnswersToText(answers) {
     return answers.map((answer, index) => {
         const question = questions[index];
@@ -23,4 +22,5 @@ export function convertAnswersToText(answers) {
         return answer;
     });
 }
+
 export { writeDataToFile };

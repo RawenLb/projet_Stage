@@ -47,11 +47,9 @@ export async function storeResult(req, res) {
             throw new Error('Incomplete data provided.');
         }
 
-        // Convertir les indices de réponse en texte
         const convertedAnswers = convertAnswersToText(answers);
+        const prompt = `Student preferences based on answers: ${JSON.stringify(convertedAnswers)}`;
 
-        // Générer une liste de facultés basées sur les réponses
-        const prompt = `Réponses: ${JSON.stringify(convertedAnswers)}`;
         let universities;
         try {
             universities = await generateUniversities(prompt);
@@ -59,7 +57,6 @@ export async function storeResult(req, res) {
             universities = "Impossible de générer des facultés basées sur vos réponses.";
         }
 
-        // Inclure la réponse de Gemini dans les réponses
         const resultData = { 
             username, 
             answers: [
@@ -76,6 +73,7 @@ export async function storeResult(req, res) {
         res.status(500).json({ error: error.message });
     }
 }
+
 
 export async function dropResult(req, res) {
     try {

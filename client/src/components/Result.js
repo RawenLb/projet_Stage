@@ -55,14 +55,16 @@ export default function Result() {
 }
 
 function renderAnswers(answers) {
+    if (!Array.isArray(answers)) {
+        return <div>No valid answers found.</div>;
+    }
     return (
         <ul>
             {answers.map((answer, index) => (
                 <li key={index}>
-                    {typeof answer === 'object' ? answer.answer : answer}
+                    {typeof answer === 'object' && answer !== null ? answer.answer : answer}
                 </li>
             ))}
         </ul>
     );
 }
-
