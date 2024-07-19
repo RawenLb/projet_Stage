@@ -35,22 +35,24 @@ export default function Result() {
     }
 
     return (
-        <div className='container'>
-            <h1 className='title text-light'>Questionnaire</h1>
-            <div className='result flex-center'>
-                <div className='flex'>
-                    <span>Username</span>
-                    <span className='bold'>{userId || ""}</span>
-                </div>
-                <div className='flex'>
-                    <span>Answers:</span>
-                    <span className='bold'>{loading ? "Loading..." : fetchedResult && fetchedResult.answers ? renderAnswers(fetchedResult.answers) : "No result found"}</span>
-                </div>
-            </div>
-            <div className="start">
-                <Link className='btn' to={'/'} onClick={onRestart}>Restart</Link>
-            </div>
+<div className='result-container'>
+    <h1 className='result-title'>Questionnaire Results</h1>
+    <div className='result-details'>
+        <div className='result-item'>
+            <span className='result-label'>Username:</span>
+            <span className='result-value'>{userId || "N/A"}</span>
         </div>
+        <div className='result-item'>
+            <span className='result-label'>Answers:</span>
+            <span className='result-value'>
+                {loading ? "Loading..." : fetchedResult && fetchedResult.answers ? renderAnswers(fetchedResult.answers) : "No result found"}
+            </span>
+        </div>
+    </div>
+    <div className="result-action">
+        <Link className='result-btn' to={'/'} onClick={onRestart}>Restart Quiz</Link>
+    </div>
+</div>
     );
 }
 

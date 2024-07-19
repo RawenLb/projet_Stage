@@ -1,4 +1,4 @@
-import '../styles/App.css';
+// import '../styles/App.css';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Main from './Main';
 import Quiz from './Quiz';
 import Result from './Result';
+import Dashboard from './Dashbord';
 import { CheckUserExist } from '../helper/helper';
 
 
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
     path : '/result',
     element : <CheckUserExist><Result /></CheckUserExist>
   },
+  {
+    path : '/admin',
+    element : <Dashboard />
+  }
 ])
 
 function App() {

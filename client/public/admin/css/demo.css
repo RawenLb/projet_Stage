@@ -1,0 +1,265 @@
+/*
+* demo.css
+* File include item demo only specific css only
+******************************************************************************/
+
+.menu .app-brand.demo {
+  height: 64px;
+  margin-top: 12px;
+}
+
+.app-brand-logo.demo svg {
+  width: 22px;
+  height: 38px;
+}
+
+.app-brand-text.demo {
+  font-size: 1.75rem;
+  letter-spacing: -0.5px;
+  text-transform: lowercase;
+}
+
+/* ! For .layout-navbar-fixed added fix padding top tpo .layout-page */
+/* Detached navbar */
+.layout-navbar-fixed .layout-wrapper:not(.layout-horizontal):not(.layout-without-menu) .layout-page {
+  padding-top: 76px !important;
+}
+/* Default navbar */
+.layout-navbar-fixed .layout-wrapper:not(.layout-without-menu) .layout-page {
+  padding-top: 64px !important;
+}
+
+/* Navbar page z-index issue solution */
+.content-wrapper .navbar {
+  z-index: auto;
+}
+
+/*
+* Content
+******************************************************************************/
+
+.demo-blocks > * {
+  display: block !important;
+}
+
+.demo-inline-spacing > * {
+  margin: 1rem 0.375rem 0 0 !important;
+}
+
+/* ? .demo-vertical-spacing class is used to have vertical margins between elements. To remove margin-top from the first-child, use .demo-only-element class with .demo-vertical-spacing class. For example, we have used this class in forms-input-groups.html file. */
+.demo-vertical-spacing > * {
+  margin-top: 1rem !important;
+  margin-bottom: 0 !important;
+}
+.demo-vertical-spacing.demo-only-element > :first-child {
+  margin-top: 0 !important;
+}
+
+.demo-vertical-spacing-lg > * {
+  margin-top: 1.875rem !important;
+  margin-bottom: 0 !important;
+}
+.demo-vertical-spacing-lg.demo-only-element > :first-child {
+  margin-top: 0 !important;
+}
+
+.demo-vertical-spacing-xl > * {
+  margin-top: 5rem !important;
+  margin-bottom: 0 !important;
+}
+.demo-vertical-spacing-xl.demo-only-element > :first-child {
+  margin-top: 0 !important;
+}
+
+.rtl-only {
+  display: none !important;
+  text-align: left !important;
+  direction: ltr !important;
+}
+
+[dir='rtl'] .rtl-only {
+  display: block !important;
+}
+
+/*
+* Layout demo
+******************************************************************************/
+
+.layout-demo-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+.layout-demo-placeholder img {
+  width: 900px;
+}
+.layout-demo-info {
+  text-align: center;
+  margin-top: 1rem;
+}
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Use the full height of the viewport */
+  transform: translateY(-10%); /* Adjust this value as needed */
+}
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: hsl(239, 66%, 61%);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.list {
+  margin-bottom: 20px;
+
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.grid {
+  display: flex;
+  justify-content: space-between;
+  width: 100%; /* Adjust based on your layout needs */
+  max-width: 600px; /* Ensures the buttons don't stretch too far on larger screens */
+  padding: 20px;
+}
+
+.btn { 
+  display: inline-block;
+  background-color: #8480ef; /* Blue background */
+  color: #ffffff; /* White text */
+  padding: 10px 20px;
+  text-align: center;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.2s;
+  cursor: pointer; /* Changes cursor to pointer on hover */
+}
+.btn:hover {
+  background-color: #0a0a0a;
+}
+
+.start {
+  text-align: center;
+}
+.questions {
+  width: 100%; /* Full width within its container */
+  max-width: 600px; /* Matches the .grid max-width for consistency */
+  margin: 20px auto; /* Centering and spacing */
+  padding: 20px;
+  background-color: #fff; /* Light background for readability */
+  border-radius: 8px; /* Soft rounded corners */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+}
+
+.text-light {
+  color: #333;/* Dark text for contrast against light backgrounds */
+}
+
+.text-primary {
+  color:  #333;; /* Blue color to match the button theme */
+}
+
+ul {
+  list-style-type: none; /* Removes default list styling */
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px; /* Spacing between options */
+}
+.option-input  {
+  cursor: pointer; 
+  margin-right: 10px; 
+}
+.check {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-color: #ddd; /* Default unchecked state */
+  border-radius: 50%; /* Circle shape */
+  margin-left: 10px; /* Space from the label */
+}
+.checked {
+  background-color: #3498db; /* Blue background to indicate checked state */
+}
+.result-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f0f4f8;
+}
+
+.result-title {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.result-details {
+  width: 100%;
+  max-width: 600px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.result-label {
+  font-weight: bold;
+  color: #555;
+}
+
+.result-value {
+  color: #777;
+}
+
+.result-action {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.result-btn {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.result-btn:hover {
+  background-color: #2980b9;
+}

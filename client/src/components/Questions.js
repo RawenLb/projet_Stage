@@ -35,6 +35,7 @@ export default function Questions({ onChecked }) {
                             value={false}
                             name="options"
                             id={`q${i}-option`}
+                            className="option-input"
                             onChange={() => onSelect(i)}
                         />
                         <label className='text-primary' htmlFor={`q${i}-option`}>{q}</label>
