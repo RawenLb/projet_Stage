@@ -2,35 +2,80 @@ import Question from "../models/questionSchema.js";
 import Result from "../models/resultSchema.js";
 import { convertAnswersToText, writeDataToFile } from '../fileUtils.js';
 import gemini from '../../gemini.js';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
 
 const { generateUniversities } = gemini;
 
-export async function getQuestions(req, res) {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+export const insertQuestions = async (req, res) => {
+    try {
+        const { id, question, options } = req.body;
+
+        const newQuestion = new Question({
+            id,
+            question,
+            options
+        });
+        await newQuestion.save();
+
+        // Load existing questions from questions.json
+        const questionsFilePath = path.join(__dirname, '../questions.json');
+        const questionsData = JSON.parse(fs.readFileSync(questionsFilePath, 'utf8'));
+
+        // Add the new question to questions.json
+        questionsData.push({ id, question, options });
+
+        // Write updated questions to questions.json
+        fs.writeFileSync(questionsFilePath, JSON.stringify(questionsData, null, 2));
+
+        // Load existing questions from data.js
+        const dataFilePath = path.join(__dirname, '../database/data.js');
+        const dataFileContent = fs.readFileSync(dataFilePath, 'utf8');
+
+        // Add the new question to data.js
+        const newQuestionString = `
+        {
+            id: ${id},
+            question: "${question}",
+            options: ${JSON.stringify(options)}
+        }`;
+
+        const updatedDataFileContent = dataFileContent.replace(/(export const questions = \[)([\s\S]*?)(\];)/, (match, p1, p2, p3) => {
+            const questionsArrayString = `${p2.trim()},${newQuestionString}\n`;
+            return `${p1}${questionsArrayString}${p3}`;
+        });
+
+        fs.writeFileSync(dataFilePath, updatedDataFileContent);
+
+        res.json({ msg: 'Question added successfully' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const getQuestions = async (req, res) => {
     try {
         const questions = await Question.find();
         res.json(questions);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-}
+};
 
-export async function insertQuestions(req, res) {
-    try {
-        await Question.insertMany(req.body);
-        res.json({ msg: "Data Saved Successfully...!" });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-}
-
-export async function dropQuestions(req, res) {
+export const dropQuestions = async (req, res) => {
     try {
         await Question.deleteMany();
-        res.json({ msg: "Questions Deleted Successfully...!" });
+        res.json({ msg: 'Questions deleted successfully' });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-}
+};
 
 export async function getResult(req, res) {
     try {
@@ -81,5 +126,7 @@ export async function dropResult(req, res) {
         res.json({ msg: "Results Deleted Successfully...!" });
     } catch (error) {
         res.status(500).json({ error: error.message });
-    }
-}
+    }}
+
+   
+    

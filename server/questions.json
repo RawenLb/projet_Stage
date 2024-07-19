@@ -72,5 +72,42 @@
     "answers": [],
     "createdAt": "2024-07-09T10:21:58.715Z",
     "__v": 0
+  },
+  {
+    "id": "4",
+    "question": "Quelle est votre langue préférée pour coder?",
+    "options": [
+      "JavaScript",
+      "Python",
+      "Java",
+      "C++"
+    ]
+  },
+  {
+    "id": "5",
+    "question": "Quelle est votre couleur préférée ?",
+    "options": [
+      "rouge",
+      "bleu",
+      "noir"
+    ]
+  },
+  {
+    "id": "5",
+    "question": "Quelle est votre matiére préférée ?",
+    "options": [
+      "math",
+      "science",
+      "physique"
+    ]
+  },
+  {
+    "id": "5",
+    "question": "Quelle est votre hobby ?",
+    "options": [
+      "lecture",
+      "dance",
+      "guitar"
+    ]
   }
 ]
