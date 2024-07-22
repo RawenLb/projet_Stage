@@ -1,7 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
-    return (
+  return (
     <aside id="layout-menu" className="layout-menu menu-vertical menu bg-menu-theme">
       <div className="app-brand demo">
         <a href="index.html" className="app-brand-link">
@@ -63,46 +64,29 @@ const Sidebar = () => {
           <span className="app-brand-text demo menu-text fw-bolder ms-2">TITRE</span>
         </a>
 
-            <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-              <i class="bx bx-chevron-left bx-sm align-middle"></i>
-            </a>
-          </div>
+        <a href="javascript:void(0);" className="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+          <i className="bx bx-chevron-left bx-sm align-middle"></i>
+        </a>
+      </div>
 
-          <div class="menu-inner-shadow"></div>
+      <div className="menu-inner-shadow"></div>
 
-          <ul class="menu-inner py-1">
-
-            <li class="menu-item active">
-              <a href="index.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Dashboard</div>
-              </a>
-            </li>
-            <li class="menu-header small text-uppercase">
-              <span class="menu-header-text">Welcom</span>
-            </li>   
-            <li class="menu-item">
-              <a href="cards-basic.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">Questions</div>
-              </a>
-            </li>
-            <li class="menu-item">
-              <a href="cards-basic.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">t2</div>
-              </a>
-            </li>
-            <li class="menu-item">
-              <a href="cards-basic.html" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div data-i18n="Basic">t3</div>
-              </a>
-            </li>
-
-          </ul>
-        </aside>
-    );
-}
+      <ul className="menu-inner py-1">
+        <li className="menu-item">
+          <Link to="/questions" className="menu-link">
+            <i className="menu-icon tf-icons bx bx-list-ul"></i>
+            <div data-i18n="Questions">Questions</div>
+          </Link>
+        </li>
+        <li className="menu-item">
+          <Link to="/admin" className="menu-link">
+            <i className="menu-icon tf-icons bx bx-plus"></i>
+            <div data-i18n="Add Question">Add Question</div>
+          </Link>
+        </li>
+      </ul>
+    </aside>
+  );
+};
 
 export default Sidebar;

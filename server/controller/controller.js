@@ -7,7 +7,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
-
 const { generateUniversities } = gemini;
 
 const __filename = fileURLToPath(import.meta.url);
@@ -15,10 +14,10 @@ const __dirname = dirname(__filename);
 
 export const insertQuestions = async (req, res) => {
     try {
-        const { id, question, options } = req.body;
+        const { question, options } = req.body;
 
+        // Generate a new question with auto-generated id
         const newQuestion = new Question({
-            id,
             question,
             options
         });
@@ -29,7 +28,7 @@ export const insertQuestions = async (req, res) => {
         const questionsData = JSON.parse(fs.readFileSync(questionsFilePath, 'utf8'));
 
         // Add the new question to questions.json
-        questionsData.push({ id, question, options });
+        questionsData.push({ id: newQuestion._id, question, options });
 
         // Write updated questions to questions.json
         fs.writeFileSync(questionsFilePath, JSON.stringify(questionsData, null, 2));
@@ -41,7 +40,7 @@ export const insertQuestions = async (req, res) => {
         // Add the new question to data.js
         const newQuestionString = `
         {
-            id: ${id},
+            id: "${newQuestion._id}",
             question: "${question}",
             options: ${JSON.stringify(options)}
         }`;
@@ -85,6 +84,7 @@ export async function getResult(req, res) {
         res.status(500).json({ error: error.message });
     }
 }
+
 export async function storeResult(req, res) {
     try {
         const { username, answers } = req.body;
@@ -119,14 +119,11 @@ export async function storeResult(req, res) {
     }
 }
 
-
 export async function dropResult(req, res) {
     try {
         await Result.deleteMany();
         res.json({ msg: "Results Deleted Successfully...!" });
     } catch (error) {
         res.status(500).json({ error: error.message });
-    }}
-
-   
-    
+    }
+}
