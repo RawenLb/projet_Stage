@@ -59,61 +59,65 @@ const QuestionsList = () => {
 
     return (
         <div className="layout-wrapper layout-content-navbar">
-            <div className="layout-container">
-                <Sidebar />
-                <div className="layout-page">
-                    <Navbar />
-
-                    
-                    <div className="card m-3 p-3">
-                        <h5 className="card-header">Liste des Questions</h5>
-                        <div className="table-responsive text-nowrap">
-                            <table className="table">
-                                <thead className="table-dark">
-                                    <tr>
-                                        <th>Question</th>
-                                        <th>Options</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="table-border-bottom-0">
-                                    {questions.map((question) => (
-                                        <tr key={question._id}>
-                                            <td>{question.question}</td>
-                                            <td>
-                                                <ul className="list-unstyled m-0">
-                                                    {question.options.map((option, index) => (
-                                                        <li key={index}>{option}</li>
-                                                    ))}
-                                                </ul>
-                                            </td>
-                                            <td>
-                                                <div className="dropdown">
-                                                    <button type="button" className="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                                        <i className="bx bx-dots-vertical-rounded"></i>
-                                                    </button>
-                                                    <div className="dropdown-menu">
+        <div className="layout-container">
+            <Sidebar />
+            <div className="layout-page">
+                <Navbar />
+                <div className="container-xxl flex-grow-1 container-p-y">
+                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Liste des Questions /</span></h4>
+                    <div className="card">
+                    <div className="table-responsive text-nowrap">
+                        <table className="table table-striped">
+                            <thead >
+                                <tr>
+                                    <th>Question</th>
+                                    <th>Options</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody className="table-border-bottom-0">
+                                {questions.map((question) => (
+                                    <tr key={question._id}>
+                                        <td>{question.question}</td>
+                                        <td>
+                                            <ul className="list-unstyled m-0">
+                                                {question.options.map((option, index) => (
+                                                    <li key={index}>{option}</li>
+                                                ))}
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <div className="dropdown">
+                                                <button type="button" className="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                                    <i className="bx bx-dots-vertical-rounded"></i>
+                                                </button>
+                                                <ul className="dropdown-menu">
+                                                    <li>
                                                         <a className="dropdown-item" href="javascript:void(0);" onClick={() => handleEdit(question._id)}>
                                                             <i className="bx bx-edit-alt me-1"></i> Edit
                                                         </a>
+                                                    </li>
+                                                    <li>
                                                         <a className="dropdown-item" href="javascript:void(0);" onClick={() => handleDelete(question._id)}>
                                                             <i className="bx bx-trash me-1"></i> Delete
                                                         </a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-            {isEditModalOpen && (
-                <EditModal question={questionToEdit} onSave={editQuestion} onClose={() => setEditModalOpen(false)} />
-            )}
         </div>
+        {isEditModalOpen && (
+            <EditModal question={questionToEdit} onSave={editQuestion} onClose={() => setEditModalOpen(false)} />
+        )}
+    </div>
+    </div>
     );
 };
 const EditModal = ({ question, onSave, onClose }) => {

@@ -35,6 +35,7 @@ export default function Result() {
     }
 
     return (
+<div className='centered-container'>
 <div className='result-container'>
     <h1 className='result-title'>Questionnaire Results</h1>
     <div className='result-details'>
@@ -52,6 +53,8 @@ export default function Result() {
     <div className="result-action">
         <Link className='result-btn' to={'/'} onClick={onRestart}>Restart Quiz</Link>
     </div>
+   
+</div>
 </div>
     );
 }

@@ -106,8 +106,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Use the full height of the viewport */
-  transform: translateY(-10%); /* Adjust this value as needed */
+  min-height: 100vh; /*  Adjust this value as needed */
 }
 .container {
   max-width: 600px;
@@ -239,6 +238,8 @@ li {
 .result-title {
   color: #333;
   margin-bottom: 20px;
+  text-align: center;
+  width: 100%;
 }
 
 .result-details {
@@ -381,12 +382,7 @@ body {
 }
 
 .centered-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh; /* /* Ensure the background image covers the viewport */
-}
-body, html {
+/* Ensure the background image covers the viewport */
   height: 100%;
   margin: 0;
   background-image: url('../img/backgrounds/vecteezy_abstract-wave-background-with-a-combination-of-white-colors_15324716-0-[Converted].jpg'); /* Replace with your image path */

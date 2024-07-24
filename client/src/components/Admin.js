@@ -48,20 +48,12 @@ const Admin = () => {
                     <Navbar />
                     <div className="content-wrapper">
                         <div className="container-xxl flex-grow-1 container-p-y">                           
-                            <h1>Admin Dashboard</h1>
-
-                            <div className="w-100 d-flex justify-content-center">
-                                <img 
-                                    src="/admin/img/illustrations/Q&A.png" 
-                                    className="img-fluid" 
-                                    alt="Login illustration" 
-                                    width="200" 
-                                />
-                            </div>
-
+                        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Add Question/</span> </h4>
+                    <div className="card mb-4">
+                    <div className="card-body">
                             <form onSubmit={handleSubmit} className="mb-6">
-                                <div className="mb-6">
-                                    <label htmlFor="question" className="form-label">
+                                <div className="row mb-3">
+                                    <label htmlFor="question" className="col-sm-2 col-form-label">
                                         Question:
                                     </label>
                                     <input 
@@ -73,8 +65,8 @@ const Admin = () => {
                                     />
                                 </div>
                                 {answerOptions.map((option, index) => (
-                                    <div key={index} className="mb-6">
-                                        <label htmlFor={`option-${index}`} className="form-label">
+                                    <div key={index} className="row mb-3">
+                                        <label htmlFor={`option-${index}`} className="col-sm-2 col-form-label">
                                             Option {index + 1}:
                                         </label>
                                         <input 
@@ -83,6 +75,7 @@ const Admin = () => {
                                             value={option} 
                                             onChange={(e) => handleOptionChange(index, e)} 
                                             className="form-control"
+                                            style={{ width: '200px' }}
                                         />
                                     </div>
                                 ))}
@@ -108,6 +101,8 @@ const Admin = () => {
                 </div>
             </div>
         </div>
+        </div>  
+        </div>  
     );
 };
 
