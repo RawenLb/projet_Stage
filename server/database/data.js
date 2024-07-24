@@ -19,9 +19,13 @@ export const questions = [{
             options: ["Coût de la vie ","Opportunités culturelles ","Sécurité"," Climat "]
         },
             {
-                id: "66a0460156f88c6dbdd04b8b",
                 question: "Quel type d’environnement d’apprentissage préférez-vous ? ",
                 options: ["Grandes universités avec beaucoup de ressources ","Formation à distance / en ligne ","Petites universités avec une attention plus personnalisée "]
+            },
+            {
+                id: "66a04e0e6fbbe6369deda704",
+                question: "Quel est votre style d’apprentissage préféré ? ",
+                options: ["Visuel (images, diagrammes) ","Auditif (écouter des explications)","Lecture/écriture (prendre des notes, lire des manuels) ","Kinesthésique (apprentissage par la pratique)"]
             }
         
 ];

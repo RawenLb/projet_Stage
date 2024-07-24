@@ -7,7 +7,11 @@ router.route('/questions')
         .get(controller.getQuestions)
         .post(controller.insertQuestions)
         .delete(controller.dropQuestions);
-
+        router.route('/questions/:id')
+        .delete(controller.deleteQuestion);
+        router.route('/questions/:id')
+        .put(controller.editQuestion);
+        
 router.route('/result')
         .get(controller.getResult)
         .post(controller.storeResult)

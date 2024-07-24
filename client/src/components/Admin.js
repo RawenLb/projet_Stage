@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 
 const Admin = () => {
     const [questionText, setQuestionText] = useState('');
     const [answerOptions, setAnswerOptions] = useState(['']);
-    const [emailUsername, setEmailUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [rememberMe, setRememberMe] = useState(false);
+    const navigate = useNavigate(); // Initialize useNavigate
 
     const handleOptionChange = (index, event) => {
         const newOptions = [...answerOptions];
@@ -28,9 +27,16 @@ const Admin = () => {
                 question: questionText,
                 options: answerOptions,
             });
-            console.log(response.data);
+
+            // Display success alert
+            alert('Question added successfully!');
+
+            // Redirect to the list of questions
+            navigate('/questions'); // Adjust the path to your questions list route
+
         } catch (error) {
             console.error(error);
+            alert('Failed to add the question. Please try again.');
         }
     };
 
@@ -42,7 +48,7 @@ const Admin = () => {
                     <Navbar />
                     <div className="content-wrapper">
                         <div className="container-xxl flex-grow-1 container-p-y">                           
-                             <h1>Admin Dashboard</h1>
+                            <h1>Admin Dashboard</h1>
 
                             <div className="w-100 d-flex justify-content-center">
                                 <img 
@@ -88,12 +94,14 @@ const Admin = () => {
                                     Add Option
                                 </button>
                                 <hr />
-                              <center>  <button 
-                                    type="submit" 
-                                    className="btn btn-primary"
-                                >
-                                    Submit
-                                </button></center>
+                                <center>
+                                    <button 
+                                        type="submit" 
+                                        className="btn btn-primary"
+                                    >
+                                        Submit
+                                    </button>
+                                </center>
                             </form>
                         </div>
                     </div>

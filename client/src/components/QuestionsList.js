@@ -34,13 +34,14 @@ const QuestionsList = () => {
     const editQuestion = async (updatedQuestion) => {
         try {
             const response = await axios.put(`http://localhost:5000/api/questions/${questionToEdit._id}`, updatedQuestion);
-            setQuestions(questions.map(question => question._id === questionToEdit._id ? response.data : question));
+            setQuestions(questions.map(question => question._id === questionToEdit._id ? response.data.updatedQuestion : question));
             setEditModalOpen(false);
             setQuestionToEdit(null);
         } catch (error) {
             console.error('Error updating question:', error);
         }
     };
+    
 
     const handleEdit = (id) => {
         const question = questions.find(q => q._id === id);
@@ -115,7 +116,6 @@ const QuestionsList = () => {
         </div>
     );
 };
-
 const EditModal = ({ question, onSave, onClose }) => {
     const [updatedQuestion, setUpdatedQuestion] = useState(question);
 

@@ -58,6 +58,70 @@ export const insertQuestions = async (req, res) => {
     }
 };
 
+export const deleteQuestion = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // Remove from MongoDB
+        await Question.findByIdAndDelete(id);
+
+        // Remove from questions.json
+        const questionsFilePath = path.join(__dirname, '../questions.json');
+        const questionsData = JSON.parse(fs.readFileSync(questionsFilePath, 'utf8'));
+        const updatedQuestionsData = questionsData.filter(question => question.id !== id);
+        fs.writeFileSync(questionsFilePath, JSON.stringify(updatedQuestionsData, null, 2));
+
+        // Remove from data.js
+        const dataFilePath = path.join(__dirname, '../database/data.js');
+        const dataFileContent = fs.readFileSync(dataFilePath, 'utf8');
+        const updatedDataFileContent = dataFileContent.replace(/(export const questions = \[)([\s\S]*?)(\];)/, (match, p1, p2, p3) => {
+            const questionsArrayString = p2.trim().split('\n').filter(line => !line.includes(id)).join('\n');
+            return `${p1}${questionsArrayString}\n${p3}`;
+        });
+        fs.writeFileSync(dataFilePath, updatedDataFileContent);
+
+        res.json({ msg: 'Question deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const editQuestion = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { question, options } = req.body;
+
+        // Update the question in MongoDB
+        const updatedQuestion = await Question.findByIdAndUpdate(id, { question, options }, { new: true });
+
+        // Update in questions.json
+        const questionsFilePath = path.join(__dirname, '../questions.json');
+        const questionsData = JSON.parse(fs.readFileSync(questionsFilePath, 'utf8'));
+        const updatedQuestionsData = questionsData.map(q => 
+            q.id === id ? { id, question, options } : q
+        );
+        fs.writeFileSync(questionsFilePath, JSON.stringify(updatedQuestionsData, null, 2));
+
+        // Update in data.js
+        const dataFilePath = path.join(__dirname, '../database/data.js');
+        const dataFileContent = fs.readFileSync(dataFilePath, 'utf8');
+        const updatedDataFileContent = dataFileContent.replace(/(export const questions = \[)([\s\S]*?)(\];)/, (match, p1, p2, p3) => {
+            const questionsArrayString = p2.trim().split('\n').map(line => {
+                if (line.includes(id)) {
+                    return `{ id: "${id}", question: "${question}", options: ${JSON.stringify(options)} }`;
+                }
+                return line;
+            }).join('\n');
+            return `${p1}${questionsArrayString}\n${p3}`;
+        });
+        fs.writeFileSync(dataFilePath, updatedDataFileContent);
+
+        res.json({ msg: 'Question updated successfully', updatedQuestion });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 export const getQuestions = async (req, res) => {
     try {
         const questions = await Question.find();
