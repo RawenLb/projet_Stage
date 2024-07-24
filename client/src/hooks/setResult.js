@@ -1,4 +1,4 @@
-import { postServerData } from '../helper/helper';
+import axios from 'axios';
 import * as Action from '../redux/result_reducer';
 
 export const PushAnswer = (result) => async (dispatch) => {
@@ -18,16 +18,15 @@ export const updateResult = (index) => async (dispatch) => {
 }
 
 /** insert user data */
-export const usePublishResult = (resultData) => {
+export const publishResult = async (resultData) => {
     const { result, username } = resultData;
-    (async () => {
-        try {
-            if (result.length === 0 || !username) throw new Error("Couldn't get Result");
+    try {
+        if (result.length === 0 || !username) throw new Error("Couldn't get Result");
 
-            // Make API call to store results
-            await postServerData(`${process.env.REACT_APP_SERVER_HOSTNAME}/api/result`, resultData, data => data);
-        } catch (error) {
-            console.log(error);
-        }
-    })();
+        // Make API call to store results
+        const response = await axios.post(`http://localhost:5000/api/result`, resultData);
+        console.log('Data saved successfully:', response.data);
+    } catch (error) {
+        console.error('Failed to store results:', error);
+    }
 };

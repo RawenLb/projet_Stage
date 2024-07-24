@@ -149,7 +149,7 @@ export async function getResult(req, res) {
     }
 }
 
-export async function storeResult(req, res) {
+export const storeResult = async (req, res) => {
     try {
         const { username, answers } = req.body;
         if (!username || !answers) {
@@ -181,8 +181,7 @@ export async function storeResult(req, res) {
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-}
-
+};
 export async function dropResult(req, res) {
     try {
         await Result.deleteMany();

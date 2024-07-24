@@ -37,7 +37,7 @@ export default function Quiz() {
         if (result.length && result.length >= queue.length) {
             async function storeResults() {
                 try {
-                    const response = await axios.post('/api/store-result', {
+                    const response = await axios.post(`http://localhost:5000/api/result`, {
                         username,
                         answers: result
                     });
