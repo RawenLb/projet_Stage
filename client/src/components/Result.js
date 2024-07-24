@@ -49,8 +49,7 @@ export default function Result() {
                 <div className='result-item'>
                     <span className='result-label'>Answers:</span>
                     <span className='result-value'>
-                        {loading ? "Loading..." : fetchedResult ? renderAnswers(fetchedResult.answers) : null}
-                    </span>
+                    {loading ? "Loading..." : fetchedResult && fetchedResult.answers ? renderAnswers(fetchedResult.answers) : "No result found"}                    </span>
                 </div>
             </div>
             <div className="result-action">
@@ -65,7 +64,6 @@ function renderAnswers(answers) {
         return <div>No valid answers found.</div>;
     }
     return (
-        
         <ul>
             {answers.map((answer, index) => (
                 <li key={index}>
