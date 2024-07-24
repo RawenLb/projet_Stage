@@ -54,6 +54,7 @@ export default function Result() {
             </span>
         </div>
     </div>
+    
     <div className="result-action">
         <Link className='result-btn' to={'/'} onClick={onRestart}>Restart Quiz</Link>
     </div>
