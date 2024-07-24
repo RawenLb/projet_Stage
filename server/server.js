@@ -9,13 +9,13 @@ import router from './router/route.js';
 import connect from './database/conn.js';
 
 const app = express()
+config();
 
 
 /** app middlewares */
 app.use(morgan('tiny'));
 app.use(cors());
 app.use(express.json());
-config();
 
 
 /** appliation port */

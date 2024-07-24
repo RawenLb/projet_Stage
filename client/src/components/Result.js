@@ -4,28 +4,32 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetAllAction } from '../redux/question_reducer';
 import { resetResultAction } from '../redux/result_reducer';
-import { usePublishResult } from '../hooks/setResult';
-import { getServerData } from '../helper/helper';
+import axios from 'axios';
 
 export default function Result() {
     const dispatch = useDispatch();
-    const { result: { result, userId } } = useSelector(state => state);
+    const resultState = useSelector(state => state.result);
+    const { result, userId } = resultState;
     const [fetchedResult, setFetchedResult] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    usePublishResult({
-        result,
-        username: userId,
-        answers: result
-    });
-
     useEffect(() => {
-        if (userId) {
-            getServerData(`${process.env.REACT_APP_SERVER_HOSTNAME}/api/result`, data => {
-                const userResult = data.find(res => res.username === userId);
+        const fetchResults = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/result');
+                console.log('Fetched Results:', response.data);
+                const userResult = response.data.find(res => res.username === userId);
+                console.log('User Result:', userResult);
                 setFetchedResult(userResult);
+            } catch (error) {
+                console.error('Error fetching results:', error);
+            } finally {
                 setLoading(false);
-            });
+            }
+        };
+
+        if (userId) {
+            fetchResults();
         }
     }, [userId]);
 
@@ -64,7 +68,6 @@ function renderAnswers(answers) {
         return <div>No valid answers found.</div>;
     }
     return (
-        
         <ul>
             {answers.map((answer, index) => (
                 <li key={index}>
