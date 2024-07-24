@@ -2,7 +2,9 @@
 * demo.css
 * File include item demo only specific css only
 ******************************************************************************/
+/* demo.css */
 
+/* Brand styling */
 .menu .app-brand.demo {
   height: 64px;
   margin-top: 12px;
@@ -17,27 +19,23 @@
   font-size: 1.75rem;
   letter-spacing: -0.5px;
   text-transform: lowercase;
+  color: #3498db; /* Blue color for text */
 }
 
-/* ! For .layout-navbar-fixed added fix padding top tpo .layout-page */
-/* Detached navbar */
+/* Layout adjustments */
 .layout-navbar-fixed .layout-wrapper:not(.layout-horizontal):not(.layout-without-menu) .layout-page {
   padding-top: 76px !important;
 }
-/* Default navbar */
+
 .layout-navbar-fixed .layout-wrapper:not(.layout-without-menu) .layout-page {
   padding-top: 64px !important;
 }
 
-/* Navbar page z-index issue solution */
 .content-wrapper .navbar {
   z-index: auto;
 }
 
-/*
-* Content
-******************************************************************************/
-
+/* Content styling */
 .demo-blocks > * {
   display: block !important;
 }
@@ -46,7 +44,6 @@
   margin: 1rem 0.375rem 0 0 !important;
 }
 
-/* ? .demo-vertical-spacing class is used to have vertical margins between elements. To remove margin-top from the first-child, use .demo-only-element class with .demo-vertical-spacing class. For example, we have used this class in forms-input-groups.html file. */
 .demo-vertical-spacing > * {
   margin-top: 1rem !important;
   margin-bottom: 0 !important;
@@ -81,10 +78,7 @@
   display: block !important;
 }
 
-/*
-* Layout demo
-******************************************************************************/
-
+/* Layout demo */
 .layout-demo-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -98,13 +92,16 @@
   flex-direction: column;
   margin-top: 1rem;
 }
+
 .layout-demo-placeholder img {
   width: 900px;
 }
+
 .layout-demo-info {
   text-align: center;
   margin-top: 1rem;
 }
+
 .centered-container {
   display: flex;
   justify-content: center;
@@ -112,6 +109,7 @@
   height: 100vh; /* Use the full height of the viewport */
   transform: translateY(-10%); /* Adjust this value as needed */
 }
+
 .container {
   max-width: 600px;
   margin: 0 auto;
@@ -129,7 +127,6 @@
 
 .list {
   margin-bottom: 20px;
-
 }
 
 .input {
@@ -150,7 +147,7 @@
 
 .btn { 
   display: inline-block;
-  background-color: #8480ef; /* Blue background */
+  background-color: #85c1e9; /* Light blue background */
   color: #ffffff; /* White text */
   padding: 10px 20px;
   text-align: center;
@@ -166,6 +163,7 @@
 .start {
   text-align: center;
 }
+
 .questions {
   width: 100%; /* Full width within its container */
   max-width: 600px; /* Matches the .grid max-width for consistency */
@@ -181,7 +179,7 @@
 }
 
 .text-primary {
-  color:  #333;; /* Blue color to match the button theme */
+  color: #3498db; /* Blue color for primary text */
 }
 
 ul {
@@ -192,10 +190,12 @@ ul {
 li {
   margin-bottom: 10px; /* Spacing between options */
 }
-.option-input  {
+
+.option-input {
   cursor: pointer; 
   margin-right: 10px; 
 }
+
 .check {
   display: inline-block;
   width: 20px;
@@ -204,9 +204,11 @@ li {
   border-radius: 50%; /* Circle shape */
   margin-left: 10px; /* Space from the label */
 }
+
 .checked {
   background-color: #3498db; /* Blue background to indicate checked state */
 }
+
 .result-container {
   display: flex;
   flex-direction: column;
@@ -262,4 +264,98 @@ li {
 
 .result-btn:hover {
   background-color: #2980b9;
+}
+
+/* Variables for theme colors */
+:root {
+  --primary-color: #3498db; /* Light blue */
+  --secondary-color: #85c1e9; /* Lighter blue */
+  --background-color: #f0f4f8; /* Background color */
+  --text-color: #333; /* Text color */
+  --border-radius: 8px; /* Border radius */
+  --box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Box shadow */
+}
+
+/* General styling */
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: Arial, sans-serif;
+}
+
+/* Menu styling */
+.menu {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+.menu .menu-item {
+  padding: 10px 20px;
+}
+
+.menu .menu-item:hover {
+  background-color: var(--secondary-color);
+}
+
+/* Navbar styling */
+.navbar {
+  background-color: var(--primary-color);
+  color: #ffffff;
+  box-shadow: var(--box-shadow);
+}
+
+.navbar .nav-item .nav-link {
+  color: #fff;
+}
+
+/* Content wrapper */
+.content-wrapper {
+  padding: 20px;
+}
+
+/* Button styling */
+.btn {
+  background-color: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn:hover {
+  background-color: var(--secondary-color);
+}
+
+/* Form input styling */
+.input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+}
+
+/* Result container styling */
+.result-container {
+  background-color: var(--background-color);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.result-label {
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.result-value {
+  color: #777;
 }
