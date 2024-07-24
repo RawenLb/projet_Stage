@@ -109,25 +109,41 @@
   height: 100vh; /* Use the full height of the viewport */
   transform: translateY(-10%); /* Adjust this value as needed */
 }
-
 .container {
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
-  background-color: hsl(239, 66%, 61%);
+  background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent background */
+  backdrop-filter: blur(10px); /* Blur effect */
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: black; /* Default text color set to black */
 }
 
-.title {
-  color: #333;
+.container .title {
+  color: black; /* Text color set to black */
   text-align: center;
-  margin-bottom: 20px;
+  margin-top: 1rem;
 }
 
-.list {
+.container .list {
   margin-bottom: 20px;
+  color: black; /* Text color set to black */
 }
+
+.container .list li {
+  color: black; /* Text color set to black for <li> elements */
+}
+
+.container .input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
 
 .input {
   width: 100%;
@@ -200,7 +216,7 @@ li {
   display: inline-block;
   width: 20px;
   height: 20px;
-  background-color: #ddd; /* Default unchecked state */
+  /* Default unchecked state */
   border-radius: 50%; /* Circle shape */
   margin-left: 10px; /* Space from the label */
 }
@@ -210,12 +226,15 @@ li {
 }
 
 .result-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+  border-radius: 10px;
   padding: 20px;
-  background-color: #f0f4f8;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 1100px;
+  width: 100%;
+  margin: 20px auto;
 }
+
 
 .result-title {
   color: #333;
@@ -224,7 +243,7 @@ li {
 
 .result-details {
   width: 100%;
-  max-width: 600px;
+  max-width: 1100px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -315,13 +334,13 @@ body {
 
 /* Button styling */
 .btn {
-  background-color: var(--primary-color);
-  color: #fff;
+  background-color: #007BFF; /* Blue color */
+  color: white;
   border: none;
-  border-radius: var(--border-radius);
   padding: 10px 20px;
+  font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  border-radius: 5px;
 }
 
 .btn:hover {
@@ -356,6 +375,23 @@ body {
   color: var(--text-color);
 }
 
+
 .result-value {
   color: #777;
+}
+
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* /* Ensure the background image covers the viewport */
+}
+body, html {
+  height: 100%;
+  margin: 0;
+  background-image: url('../img/backgrounds/vecteezy_abstract-wave-background-with-a-combination-of-white-colors_15324716-0-[Converted].jpg'); /* Replace with your image path */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Ensure the background image covers the viewport */
 }

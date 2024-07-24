@@ -21,13 +21,14 @@ export default function Main() {
     <div className="centered-container">
     <div className='container'>
     <h1 className='title'>Questionnaire</h1>
-
+    <div className='instructions'>
     <ol className='list'>
         <li>Vous serez invité(e) à répondre à 20 questions l'une après l'autre.</li>
         <li>Chaque question comporte trois options. Vous ne pouvez choisir qu'une seule option.</li>
         <li>Vous pouvez revoir et modifier vos réponses avant de terminer.</li>
         <li>Les résultats seront déclarés à la fin.</li>
     </ol>
+    </div>
 
     <form id="form" className='form'>
         <input ref={inputRef} className='input' type="text" placeholder='Nom et prénom*' />
