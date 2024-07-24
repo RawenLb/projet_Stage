@@ -1,80 +1,29 @@
 export const questions = [{
-        id: 1,
-        question: "Quelles sont les trois principales qualités que vous recherchez dans une faculté",
-        options: [
-            'Vie étudiante dynamique',
-            'Opportunités de stage',
-            'Opportunités de recherche',
-        ]
-    },
-    {
-        id: 2,
-        question: "Quelles matières préférez-vous le plus ? (Vous pouvez en choisir plusieurs)",
-        options: [
-            'Physique',
-            'Chimie',
-            'Biologie',
-        ]
-    },
-    {
-        id: 3,
-        question: "Quel environnement préférez-vous pour étudier ?",
-        options: [
-            'Bibliothèque calme',
-            'Café animé',
-            'Espace collaboratif',
-        ]
-    },
-    {
-        id: 5,
-        question: "Quelle est votre couleur préférée ?",
-        options: ["rouge","bleu","noir"]
-    },
-        {
-            id: 5,
-            question: "Quelle est votre matiére préférée ?",
-            options: ["math","science","physique"]
+            id: "66a035d98c9dfcedd19ae71b",
+            question: "Quel environnement préférez-vous pour étudier ? ",
+            options: ["Bibliothèque calme ","Café animé ","Chambre à la maison ","Espace collaboratif "]
         },
         {
-            id: 5,
-            question: "Quelle est votre hobby ?",
-            options: ["lecture","dance","guitar"]
+            id: "66a03889311f3db6d3db1010",
+            question: "Quels types de clubs ou d'associations aimeriez-vous rejoindre à l'université ? ",
+            options: ["Clubs académiques ","Clubs sportifs ","Clubs artistiques ","Clubs de débat "]
         },
         {
-            id: 8,
-            question: "Quelle est votre hobby ?",
-            options: ["lecture","dance","guitar"]
+            id: "66a039e0a5a8ddd6593716db",
+            question: "Quel type de projet vous inspire le plus ? ",
+            options: [" Recherche scientifique ","Projet artistique ","Développement technologique ","Projet entrepreneurial "]
         },
         {
-            id: "669e1f92b53c9967653ef299",
-            question: "Quelle est votre .. ?",
-            options: ["lecture","dance","guitar"]
+            id: "66a03a324e80ef04d2aa6b69",
+            question: "Quels sont vos critères pour choisir une ville universitaire ? ",
+            options: ["Coût de la vie ","Opportunités culturelles ","Sécurité"," Climat "]
         },
-        {
-            id: "669e23184dc8306c19528071",
-            question: "aed",
-            options: ["z","grg","gre"]
-        },
-        {
-            id: "669e231accc9ec6c60779273",
-            question: "aed",
-            options: ["z","grg","gre"]
-        },
-        {
-            id: "669e2322c3250383a205285d",
-            question: "aed",
-            options: ["z","grg","gre"]
-        },
-        {
-            id: "669e307423ec84e685430c17",
-            question: "bgfbgngdrnbd",
-            options: ["gt","gt"]
-        },
-        {
-            id: "669e3077f71cadbe4bbae80c",
-            question: "bgfbgngdrnbd",
-            options: ["gt","gt"]
-        }
+            {
+                id: "66a0460156f88c6dbdd04b8b",
+                question: "Quel type d’environnement d’apprentissage préférez-vous ? ",
+                options: ["Grandes universités avec beaucoup de ressources ","Formation à distance / en ligne ","Petites universités avec une attention plus personnalisée "]
+            }
+        
 ];
 
 export const answers = [];

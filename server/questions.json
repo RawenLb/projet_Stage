@@ -1,174 +1,51 @@
 [
   {
-    "_id": "6686575d7529c232b37258f9",
-    "questions": [
-      {
-        "id": 1,
-        "question": "Quelles sont les trois principales qualités que vous recherchez dans une faculté ",
-        "options": [
-          "Vie étudiante dynamique ",
-          "Opportunités de stage ",
-          "Opportunités de recherche "
-        ]
-      },
-      {
-        "id": 2,
-        "question": "Quelles matières préférez-vous le plus ? (Vous pouvez en choisir plusieurs) ",
-        "options": [
-          "Physique",
-          "Chimie",
-          "Biologie"
-        ]
-      },
-      {
-        "id": 3,
-        "question": "Quel environnement préférez-vous pour étudier ? ",
-        "options": [
-          "Bibliothèque calme",
-          "Café animé ",
-          "Espace collaboratif "
-        ]
-      }
-    ],
-    "answers": [
-      1,
-      2,
-      1
-    ],
-    "createdAt": "2024-07-04T08:03:41.875Z",
-    "__v": 0
-  },
-  {
-    "_id": "668d0f460d92e8a26e65a0b4",
-    "questions": [
-      {
-        "id": 1,
-        "question": "Quelles sont les trois principales qualités que vous recherchez dans une faculté",
-        "options": [
-          "Vie étudiante dynamique",
-          "Opportunités de stage",
-          "Opportunités de recherche"
-        ]
-      },
-      {
-        "id": 2,
-        "question": "Quelles matières préférez-vous le plus ? (Vous pouvez en choisir plusieurs)",
-        "options": [
-          "Physique",
-          "Chimie",
-          "Biologie"
-        ]
-      },
-      {
-        "id": 3,
-        "question": "Quel environnement préférez-vous pour étudier ?",
-        "options": [
-          "Bibliothèque calme",
-          "Café animé",
-          "Espace collaboratif"
-        ]
-      }
-    ],
-    "answers": [],
-    "createdAt": "2024-07-09T10:21:58.715Z",
-    "__v": 0
-  },
-  {
-    "id": "4",
-    "question": "Quelle est votre langue préférée pour coder?",
+    "id": "66a035d98c9dfcedd19ae71b",
+    "question": "Quel environnement préférez-vous pour étudier ? ",
     "options": [
-      "JavaScript",
-      "Python",
-      "Java",
-      "C++"
+      "Bibliothèque calme ",
+      "Café animé ",
+      "Chambre à la maison ",
+      "Espace collaboratif "
     ]
   },
   {
-    "id": "5",
-    "question": "Quelle est votre couleur préférée ?",
+    "id": "66a03889311f3db6d3db1010",
+    "question": "Quels types de clubs ou d'associations aimeriez-vous rejoindre à l'université ? ",
     "options": [
-      "rouge",
-      "bleu",
-      "noir"
+      "Clubs académiques ",
+      "Clubs sportifs ",
+      "Clubs artistiques ",
+      "Clubs de débat "
     ]
   },
   {
-    "id": "5",
-    "question": "Quelle est votre matiére préférée ?",
+    "id": "66a039e0a5a8ddd6593716db",
+    "question": "Quel type de projet vous inspire le plus ? ",
     "options": [
-      "math",
-      "science",
-      "physique"
+      " Recherche scientifique ",
+      "Projet artistique ",
+      "Développement technologique ",
+      "Projet entrepreneurial "
     ]
   },
   {
-    "id": "5",
-    "question": "Quelle est votre hobby ?",
+    "id": "66a03a324e80ef04d2aa6b69",
+    "question": "Quels sont vos critères pour choisir une ville universitaire ? ",
     "options": [
-      "lecture",
-      "dance",
-      "guitar"
+      "Coût de la vie ",
+      "Opportunités culturelles ",
+      "Sécurité",
+      " Climat "
     ]
   },
   {
-    "id": "8",
-    "question": "Quelle est votre hobby ?",
+    "id": "66a0460156f88c6dbdd04b8b",
+    "question": "Quel type d’environnement d’apprentissage préférez-vous ? ",
     "options": [
-      "lecture",
-      "dance",
-      "guitar"
-    ]
-  },
-  {
-    "id": "669e1f92b53c9967653ef299",
-    "question": "Quelle est votre .. ?",
-    "options": [
-      "lecture",
-      "dance",
-      "guitar"
-    ]
-  },
-  {
-    "id": "669e23184dc8306c19528071",
-    "question": "aed",
-    "options": [
-      "z",
-      "grg",
-      "gre"
-    ]
-  },
-  {
-    "id": "669e231accc9ec6c60779273",
-    "question": "aed",
-    "options": [
-      "z",
-      "grg",
-      "gre"
-    ]
-  },
-  {
-    "id": "669e2322c3250383a205285d",
-    "question": "aed",
-    "options": [
-      "z",
-      "grg",
-      "gre"
-    ]
-  },
-  {
-    "id": "669e307423ec84e685430c17",
-    "question": "bgfbgngdrnbd",
-    "options": [
-      "gt",
-      "gt"
-    ]
-  },
-  {
-    "id": "669e3077f71cadbe4bbae80c",
-    "question": "bgfbgngdrnbd",
-    "options": [
-      "gt",
-      "gt"
+      "Grandes universités avec beaucoup de ressources ",
+      "Formation à distance / en ligne ",
+      "Petites universités avec une attention plus personnalisée "
     ]
   }
 ]

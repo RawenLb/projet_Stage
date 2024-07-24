@@ -39,12 +39,12 @@ export const insertQuestions = async (req, res) => {
 
         // Add the new question to data.js
         const newQuestionString = `
-        {
-            id: "${newQuestion._id}",
-            question: "${question}",
-            options: ${JSON.stringify(options)}
-        }`;
-
+            {
+                id: "${newQuestion._id}",
+                question: "${question}",
+                options: ${JSON.stringify(options)}
+            }
+        `;
         const updatedDataFileContent = dataFileContent.replace(/(export const questions = \[)([\s\S]*?)(\];)/, (match, p1, p2, p3) => {
             const questionsArrayString = `${p2.trim()},${newQuestionString}\n`;
             return `${p1}${questionsArrayString}${p3}`;

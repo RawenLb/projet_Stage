@@ -17,12 +17,10 @@ export default function Quiz() {
         if (check !== undefined) {
             if (trace < queue.length) {
                 dispatch(MoveNextQuestion());
-
                 if (result.length <= trace) {
                     dispatch(PushAnswer({ questionId: queue[trace]._id, answer: check }));
                 }
             }
-
             setChecked(undefined);
         } else {
             alert('Please select an answer before proceeding.');
