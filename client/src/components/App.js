@@ -10,6 +10,7 @@ import Dashboard from './Dashbord';
 import { CheckUserExist } from '../helper/helper';
 import Admin from './Admin';
 import QuestionsList from './QuestionsList';
+import ResultsList from './ResultList';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
   {
     path : '/admin',
     element : <Admin />
+  },
+  {
+    path: '/results',
+    element: <ResultsList />
   }
 ])
 

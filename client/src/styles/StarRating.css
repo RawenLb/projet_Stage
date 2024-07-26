@@ -1,0 +1,31 @@
+.star-rating {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stars-container {
+    display: flex;
+}
+
+.star-rating button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.star-rating button.on {
+    color: gold;
+}
+
+.star-rating button.off {
+    color: lightgray;
+}
+
+.rating-message {
+    margin-top: 10px; /* Space between stars and message */
+    font-size: 16px;
+    color: #4caf50; /* Green color for the message */
+    font-weight: bold;
+}

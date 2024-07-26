@@ -1,0 +1,18 @@
+.statistics {
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.statistics h2 {
+    margin-bottom: 10px;
+}
+
+.chart-container {
+    position: relative;
+    height: 500px; /* Adjust height as needed */
+    width: 99%; /* Adjust width to make it wider */
+    max-width: 900px; /* Set a maximum width if necessary */
+    margin: 45px; /* Center the chart */
+}

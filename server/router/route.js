@@ -12,6 +12,11 @@ router.route('/questions')
         router.route('/questions/:id')
         .put(controller.editQuestion);
         
+        router.route('/feedback')
+        .post(controller.storeFeedback);  
+        router.route('/feedback/stats')
+      .get(controller.getRatingsStats);
+      
 router.route('/result')
         .get(controller.getResult)
         .post(controller.storeResult)

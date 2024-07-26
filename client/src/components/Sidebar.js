@@ -1,3 +1,4 @@
+// Import React and Link from 'react-router-dom'
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -12,7 +13,7 @@ const Sidebar = () => {
       <div className="app-brand demo">
         <a href="/quiz" className="app-brand-link">
           <span className="app-brand-logo demo">
-            {/* Votre logo ici */}
+            {/* Your logo here */}
           </span>
           <span className="app-brand-text demo menu-text fw-bolder ms-2">Dashboard</span>
         </a>
@@ -22,9 +23,15 @@ const Sidebar = () => {
       </div>
       <div className="menu-inner-shadow"></div>
       <ul className="menu-inner py-1">
+      <li className="menu-item">
+          <Link to="/dash" className="menu-link">
+            <i className="menu-icon tf-icons bx bx-list-ul"></i>
+            <div data-i18n="Questions">Dashboard</div>
+          </Link>
+        </li>
         <li className="menu-item">
           <Link to="/questions" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-list-ul"></i>
+            <i className="menu-icon tf-icons bx bx-question-mark"></i>
             <div data-i18n="Questions">Questions</div>
           </Link>
         </li>
@@ -32,6 +39,12 @@ const Sidebar = () => {
           <Link to="/admin" className="menu-link">
             <i className="menu-icon tf-icons bx bx-plus"></i>
             <div data-i18n="Add Question">Add Question</div>
+          </Link>
+        </li>
+        <li className="menu-item">
+          <Link to="/results" className="menu-link">
+            <i className="menu-icon tf-icons bx bx-user"></i>
+            <div data-i18n="Results">Results</div>
           </Link>
         </li>
       </ul>

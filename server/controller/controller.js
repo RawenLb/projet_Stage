@@ -4,6 +4,8 @@ import { convertAnswersToText, writeDataToFile } from '../fileUtils.js';
 import gemini from '../../gemini.js';
 import fs from 'fs';
 import path from 'path';
+import Feedback from '../models/feedbackSchema.js';
+
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
@@ -11,6 +13,32 @@ const { generateUniversities } = gemini;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+export const storeFeedback = async (req, res) => {
+    try {
+        const { userId, rating } = req.body;
+        if (!userId || rating == null) {
+            throw new Error('Incomplete data provided.');
+        }
+
+        await Feedback.create({ userId, rating });
+        res.json({ msg: "Feedback saved successfully!" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const getRatingsStats = async (req, res) => {
+    try {
+        const ratings = await Feedback.aggregate([
+            { $group: { _id: "$rating", count: { $sum: 1 } } }
+        ]);
+
+        res.json(ratings);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
 
 export const insertQuestions = async (req, res) => {
     try {
