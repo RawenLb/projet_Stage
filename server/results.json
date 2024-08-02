@@ -1,23 +1,13 @@
 {
-  "username": "rawene lb",
+  "username": "jlassi imen",
   "answers": [
+    {},
+    {},
+    {},
+    {},
+    {},
     {
-      "answer": "Bibliothèque calme "
-    },
-    {
-      "answer": "Clubs artistiques "
-    },
-    {
-      "answer": "Projet artistique "
-    },
-    {
-      "answer": "Opportunités culturelles "
-    },
-    {
-      "answer": "Grandes universités avec beaucoup de ressources "
-    },
-    {
-      "answer": "Based on the student's preferences, here are three Tunisian faculties that might be a good fit:\n\n**1. Faculty of Arts and Humanities, University of Tunis El Manar** \n\n* **Compatibility:** 80%\n* **Explanation:** This faculty offers a wide range of artistic and cultural programs, including literature, languages, history, philosophy, and the arts. The student's preference for \"bibliothèque calme,\" \"clubs artistiques,\" \"projet artistique,\" and \"opportunités culturelles\" aligns perfectly with the resources and opportunities offered by this faculty. The University of Tunis El Manar is a large university with extensive resources, fulfilling the student's desire for \"grandes universités avec beaucoup de ressources.\"\n\n**2. Faculty of Fine Arts, Tunis**\n\n* **Compatibility:** 75%\n* **Explanation:** This faculty specializes in visual arts, design, and architecture. It provides a strong emphasis on artistic projects and creative expression, perfectly aligning with the student's preferences for \"projet artistique\" and \"clubs artistiques.\" While it may not offer the same range of cultural opportunities as the Faculty of Arts and Humanities, it still provides a vibrant environment for artistic exploration.\n\n**3. Faculty of Letters and Human Sciences, University of Sousse**\n\n* **Compatibility:** 70%\n* **Explanation:** This faculty offers a variety of programs related to languages, literature, history, and social sciences. While it may not have the same emphasis on visual arts as the Faculty of Fine Arts, it does offer opportunities for cultural engagement through its language programs and research projects. The student's preference for \"bibliothèque calme\" and \"opportunités culturelles\" would be fulfilled by this faculty. The University of Sousse is also a reputable university with a good library system.\n\n**Note:** It's important to research each faculty in detail and consider the specific programs offered before making a final decision. The student should also explore other faculties within the universities mentioned above that may offer similar programs and opportunities. \n"
+      "answer": "Please provide the student's preferences. I need the content of the \"answers\" list to determine the best-matching faculties in Tunisia.  \n\nFor example, you could say:\n\n\"Answers: [{'Interest': 'Computer Science', 'Skills': 'Logical thinking, Problem-solving'}, {'Interest': 'Arts', 'Skills': 'Creativity, Communication'}]\"\n\nOnce I have the student's preferences, I can suggest faculties that align with their interests and skills, along with compatibility percentages and explanations. \n"
     }
   ]
 }

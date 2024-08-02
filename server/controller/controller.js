@@ -2,6 +2,7 @@ import Question from "../models/questionSchema.js";
 import Result from "../models/resultSchema.js";
 import { convertAnswersToText, writeDataToFile } from '../fileUtils.js';
 import gemini from '../../gemini.js';
+
 import fs from 'fs';
 import path from 'path';
 import Feedback from '../models/feedbackSchema.js';
@@ -176,6 +177,8 @@ export async function getResult(req, res) {
         res.status(500).json({ error: error.message });
     }
 }
+
+
 
 export const storeResult = async (req, res) => {
     try {
