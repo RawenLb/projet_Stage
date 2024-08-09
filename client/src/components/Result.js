@@ -69,7 +69,7 @@ export default function Result() {
 
     return (
         <div className='centered-container'>
-            <div className='result-container'>
+            <div className='container'>
                 <h1 className='result-title'>Questionnaire Results</h1>
                 <div className='result-details'>
                     <div className='result-item'>

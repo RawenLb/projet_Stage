@@ -9,14 +9,27 @@
     padding-top: 2em;
 }
 
-.start .btn{
-    padding: .2em 1.7em;
+.start .btn {
+    padding: 0.5em 2em; /* Increased padding for better spacing */
     border: none;
-    border-radius: .1em;
+    border-radius: 0.3em; /* Slightly more rounded corners */
     font-size: 1.2em;
-    color: #202020;
+    color: #ffffff; /* White text color for better contrast */
     text-decoration: none;
-    background-color: #faff5a;
+    background-color: #007bff; /* Modern blue color */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.start .btn:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Slightly larger shadow on hover */
+}
+
+.start .btn:active {
+    background-color: #004494; /* Even darker shade on click */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Smaller shadow on click */
 }
 
 #form{

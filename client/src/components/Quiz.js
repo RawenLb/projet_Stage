@@ -55,17 +55,17 @@ export default function Quiz() {
     }
 
     return (
-        <div className='centered-container'>
-            <div className='container'>
-                <h1 className='title'>Questionnaire</h1>
-                <Questions onChecked={setChecked} />
+<div className='centered-container'>
+    <div className='container1'>
+        <h1 className='title'>Questionnaire</h1>
+        <Questions onChecked={setChecked} />
 
-                <div className='grid'>
-                    {trace > 0 && <button className='btn prev' onClick={onPrev}>Previous</button>}
-                    <button className='btn next' onClick={onNext}>Next</button>
-                </div>
-            </div>
+        <div className='button-container'>
+            {trace > 0 && <button className='next' onClick={onPrev}>Previous</button>}
+            <button className='next' onClick={onNext}>Next</button>
         </div>
+    </div>
+</div>
     );
 }
 

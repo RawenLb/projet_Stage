@@ -116,28 +116,63 @@
   backdrop-filter: blur(10px); /* Blur effect */
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  color: black; /* Default text color set to black */
+  color: black;
+  /* Default text color set to black */
 }
-
+.container1 {
+ width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent background */
+  backdrop-filter: blur(10px); /* Blur effect */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: black;
+  display:block;
+  /* Default text color set to black */
+}
 .container .title {
   color: black; /* Text color set to black */
   text-align: center;
   margin-top: 1rem;
 }
 
+.container1 .title {
+  color: black; /* Text color set to black */
+  text-align: center;
+  margin-top: 1rem;
+}
+ .button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  padding-inline: 200px;
+  padding-block: 20px;
+  gap:300px;
+  
+}
+.container1 .question {
+  color: rgb(99, 97, 97); /* Text color set to black */
+
+}
+
 .container .list {
   margin-bottom: 20px;
-  color: black; /* Text color set to black */
+  color: rgb(118, 116, 116);
+  margin-left: 80px;
+  margin-top: 40px;
+  font-weight: bold; /* Text color set to black */
 }
 
 .container .list li {
-  color: black; /* Text color set to black for <li> elements */
+  color: rgb(100, 95, 95); /* Text color set to black for <li> elements */
 }
 
 .container .input {
-  width: 100%;
+  width: 70%;
   padding: 10px;
   margin-bottom: 20px;
+  margin-top: -20px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
@@ -209,6 +244,7 @@ li {
 .option-input {
   cursor: pointer; 
   margin-right: 10px; 
+  color: #0f0f0f;
 }
 
 .check {
@@ -234,12 +270,12 @@ li {
   margin: 20px auto;
 }
 
-
 .result-title {
   color: #333;
   margin-bottom: 20px;
   text-align: center;
   width: 100%;
+  
 }
 
 .result-details {
@@ -284,6 +320,7 @@ li {
 
 .result-btn:hover {
   background-color: #2980b9;
+  color: black;
 }
 
 /* Variables for theme colors */
@@ -389,5 +426,63 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed; /* Ensure the background image covers the viewport */
+  background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure the background image covers the viewport */
+}
+.opt
+{
+  color: #777;
+  font-weight: bold;
+}
+
+.button-container .next {
+  background-color: #007bff; /* Primary color */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.button-container .next:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Slightly larger shadow on hover */
+}
+
+.button-container .next:active {
+  background-color: #004494; /* Even darker shade on click */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Smaller shadow on click */
+}
+.btn {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-secondary {
+  background-color: #007bff; /* Primary color */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.btn-secondary:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Slightly larger shadow on hover */
+}
+
+.btn-secondary:active {
+  background-color: #004494; /* Even darker shade on click */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Smaller shadow on click */
 }

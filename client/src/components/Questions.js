@@ -29,7 +29,7 @@ export default function Questions({ onChecked }) {
 
     return (
         <div className='questions'>
-            <h2 className='text-light'>{questions[trace]?.question}</h2>
+            <h2 className='question'>{questions[trace]?.question}</h2>
             <ul key={questions[trace]?.id}>
                 {questions[trace]?.options.map((q, i) => (
                     <li key={i}>
@@ -41,7 +41,7 @@ export default function Questions({ onChecked }) {
                             className="option-input"
                             onChange={() => onSelect(i)}
                         />
-                        <label className='text-primary' htmlFor={`q${i}-option`}>{q}</label>
+                        <label className='opt' htmlFor={`q${i}-option`}>{q}</label>
                         <div className={`check ${result[trace] === i ? 'checked' : ''}`}></div>
                     </li>
                 ))}
