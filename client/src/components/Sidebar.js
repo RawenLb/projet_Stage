@@ -1,53 +1,52 @@
-// Import React and Link from 'react-router-dom'
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { MdDashboard, MdQuestionAnswer, MdAddCircle, MdAssessment } from 'react-icons/md';
+import '../styles/Dashboard.css'; // Ensure this path matches your actual file
 
 const Sidebar = () => {
-  const handleToggleMenu = (e) => {
-    e.preventDefault();
-    // Logic to toggle the menu
-  };
+  const [pulse, setPulse] = useState(false);
 
   return (
-    <aside id="layout-menu" className="layout-menu menu-vertical menu bg-menu-theme">
-      <div className="app-brand demo">
-        <a href="/quiz" className="app-brand-link">
-          <span className="app-brand-logo demo">
-            {/* Your logo here */}
-          </span>
-          <span className="app-brand-text demo menu-text fw-bolder ms-2">Dashboard</span>
-        </a>
-        <button onClick={handleToggleMenu} className="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
-          <i className="bx bx-chevron-left bx-sm align-middle"></i>
-        </button>
+    <aside className="sidenav">
+      <div className="sidenav-header">
+    
+
       </div>
-      <div className="menu-inner-shadow"></div>
-      <ul className="menu-inner py-1">
-      <li className="menu-item">
-          <Link to="/dash" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-list-ul"></i>
-            <div data-i18n="Questions">Dashboard</div>
+      <hr />
+      <div className="navbar-nav">
+        <li className="nav-item">
+          <Link className="nav-link active" to="/dash">
+            <div className={`icon ${pulse ? 'pulse' : ''}`}>
+              <MdDashboard className="animated-icon" />
+            </div>
+            <span>Dashboard</span>
           </Link>
         </li>
-        <li className="menu-item">
-          <Link to="/questions" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-question-mark"></i>
-            <div data-i18n="Questions">Questions</div>
+        <li className="nav-item">
+          <Link className="nav-link" to="/admin">
+            <div className={`icon ${pulse ? 'pulse' : ''}`}>
+              <MdAddCircle className="animated-icon" />
+            </div>
+            <span>Add Questions</span>
           </Link>
         </li>
-        <li className="menu-item">
-          <Link to="/admin" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-plus"></i>
-            <div data-i18n="Add Question">Add Question</div>
+        <li className="nav-item">
+          <Link className="nav-link" to="/questions">
+            <div className={`icon ${pulse ? 'pulse' : ''}`}>
+              <MdQuestionAnswer className="animated-icon" />
+            </div>
+            <span>Questions</span>
           </Link>
         </li>
-        <li className="menu-item">
-          <Link to="/results" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-user"></i>
-            <div data-i18n="Results">Results</div>
+        <li className="nav-item">
+          <Link className="nav-link" to="/results">
+            <div className={`icon ${pulse ? 'pulse' : ''}`}>
+              <MdAssessment className="animated-icon" />
+            </div>
+            <span>Users</span>
           </Link>
         </li>
-      </ul>
+      </div>
     </aside>
   );
 };

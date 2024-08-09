@@ -13,13 +13,21 @@ router.route('/questions')
         .put(controller.editQuestion);
         
         router.route('/feedback')
-        .post(controller.storeFeedback);  
+        .post(controller.storeFeedback); 
+      
+    // Assurez-vous également que ce n'est pas en conflit avec une autre route
+    
         router.route('/feedback/stats')
       .get(controller.getRatingsStats);
       
 router.route('/result')
         .get(controller.getResult)
-        .post(controller.storeResult)
-        .delete(controller.dropResult);
-
+        .post(controller.storeResult);
+        router.route('/result/:id')    // Utilisez :id pour spécifier un ID
+        .delete(controller.deleteResult);   
+       
+router.route('/total-users')
+.get(controller.getTotalUsers);
+router.route('/total-questions')
+.get(controller.getTotalQuestions);
 export default router;

@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import { setUserId } from '../redux/result_reducer'
 import '../styles/Main.css'
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 export default function Main() {
 

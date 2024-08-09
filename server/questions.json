@@ -18,35 +18,5 @@
       "Clubs artistiques ",
       "Clubs de débat "
     ]
-  },
-  {
-    "id": "66a039e0a5a8ddd6593716db",
-    "question": "Quel type de projet vous inspire le plus ? ",
-    "options": [
-      " Recherche scientifique ",
-      "Projet artistique ",
-      "Développement technologique ",
-      "Projet entrepreneurial "
-    ]
-  },
-  {
-    "id": "66a03a324e80ef04d2aa6b69",
-    "question": "Quels sont vos critères pour choisir une ville universitaire ? ",
-    "options": [
-      "Coût de la vie ",
-      "Opportunités culturelles ",
-      "Sécurité",
-      " Climat "
-    ]
-  },
-  {
-    "id": "66a04e0e6fbbe6369deda704",
-    "question": "Quel est votre style d’apprentissage préféré ? ",
-    "options": [
-      "Visuel (images, diagrammes) ",
-      "Auditif (écouter des explications)",
-      "Lecture/écriture (prendre des notes, lire des manuels) ",
-      "Kinesthésique (apprentissage par la pratique)"
-    ]
   }
 ]

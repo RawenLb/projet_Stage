@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
+import '../styles/Dashboard.css'; // Import the CSS for additional styling
 
 const Admin = () => {
     const [questionText, setQuestionText] = useState('');
@@ -41,67 +42,60 @@ const Admin = () => {
     };
 
     return (
-        <div className="layout-wrapper layout-content-navbar">
-            <div className="layout-container">
-                <Sidebar />
-                <div className='layout-page'>
-                    <Navbar />
-                    <div className="content-wrapper">
-                        <div className="container-xxl flex-grow-1 container-p-y">                           
-                        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Add Question/</span> </h4>
-                    <div className="card mb-4">
-                    <div className="card-body">
-                            <form onSubmit={handleSubmit} className="mb-6">
-                                <div className="row mb-3">
-                                    <label htmlFor="question" className="col-sm-2 col-form-label">
-                                        Question:
-                                    </label>
-                                    <input 
-                                        type="text" 
-                                        id="question" 
-                                        value={questionText} 
-                                        onChange={(e) => setQuestionText(e.target.value)} 
-                                        className="form-control"
-                                    />
-                                </div>
-                                {answerOptions.map((option, index) => (
-                                    <div key={index} className="row mb-3">
-                                        <label htmlFor={`option-${index}`} className="col-sm-2 col-form-label">
-                                            Option {index + 1}:
-                                        </label>
+        <div className="admin-container">
+            <Sidebar />
+            <div className='admin-content'>
+                <Navbar />
+                <div className="content-wrapper">
+                    <div className="container-fluid">
+                        <h4 className="header">Add Question</h4>
+                        <div className="card">
+                            <div className="card-body">
+                                <form onSubmit={handleSubmit}>
+                                    <div className="form-group">
+                                        <label htmlFor="question">Question:</label>
                                         <input 
                                             type="text" 
-                                            id={`option-${index}`} 
-                                            value={option} 
-                                            onChange={(e) => handleOptionChange(index, e)} 
+                                            id="question" 
+                                            value={questionText} 
+                                            onChange={(e) => setQuestionText(e.target.value)} 
                                             className="form-control"
-                                            style={{ width: '200px' }}
                                         />
                                     </div>
-                                ))}
-                                <button 
-                                    type="button" 
-                                    onClick={handleAddOption} 
-                                    className="btn btn-secondary"
-                                >
-                                    Add Option
-                                </button>
-                                <hr />
-                                <center>
+                                    {answerOptions.map((option, index) => (
+                                        <div key={index} className="form-group">
+                                            <label htmlFor={`option-${index}`}>
+                                                Option {index + 1}:
+                                            </label>
+                                            <input 
+                                                type="text" 
+                                                id={`option-${index}`} 
+                                                value={option} 
+                                                onChange={(e) => handleOptionChange(index, e)} 
+                                                className="form-control"
+                                            />
+                                        </div>
+                                    ))}
+                                    <button 
+                                        type="button" 
+                                        onClick={handleAddOption} 
+                                        className="btn btn-secondary"
+                                    >
+                                        Add Option
+                                    </button>
+                                    <hr />
                                     <button 
                                         type="submit" 
                                         className="btn btn-primary"
                                     >
                                         Submit
                                     </button>
-                                </center>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        </div>  
+            </div>  
         </div>  
     );
 };

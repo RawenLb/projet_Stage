@@ -1,18 +1,280 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(315deg, rgba(211,211,211,1) 0%, rgba(255,255,255,1) 100%);
+    animation: gradient 15s ease infinite;
+}
+
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+}
+
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+    flex-grow: 1;
+    transition: margin-left 0.3s;
+}
+
+.content-section {
+    flex-grow: 1;
+    background: linear-gradient(145deg, rgba(245, 245, 245, 0.9), rgba(255, 255, 255, 0.9));
+    padding: 20px;
+    animation: fadeIn 1s ease-in-out;
+}
+/* Section des statistiques */
 .statistics {
     padding: 20px;
-    background-color: #f5f5f5;
-    border-radius: 10px;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(240, 240, 240, 0.9));
+    border-radius: 15px; /* Augmenter les coins arrondis */
     margin-bottom: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Ombre plus prononcée */
+    border: 1px solid rgba(200, 200, 200, 0.3); /* Bordure fine */
+    transition: transform 0.3s, box-shadow 0.3s; /* Animation pour le survol */
 }
 
+.statistics:hover {
+    transform: scale(1.03); /* Agrandir légèrement au survol */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Ombre plus forte au survol */
+}
+
+/* Titre des statistiques */
 .statistics h2 {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 2em; /* Augmenter la taille du texte */
+    color: #333; /* Couleur du texte */
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, rgba(135, 127, 115, 0.8), rgba(255, 193, 7, 0.8)); /* Dégradé de couleur */
+    padding: 10px;
+    border-radius: 10px; /* Coins arrondis pour le titre */
+    color: white;
 }
 
+/* Conteneur du graphique */
 .chart-container {
     position: relative;
-    height: 500px; /* Adjust height as needed */
-    width: 99%; /* Adjust width to make it wider */
-    max-width: 900px; /* Set a maximum width if necessary */
-    margin: 45px; /* Center the chart */
+    height: 500px;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: 15px; /* Coins arrondis */
+    overflow: hidden;
+    background: linear-gradient(145deg, rgba(240, 240, 240, 0.5), rgba(255, 255, 255, 0.5)); /* Dégradé en arrière-plan */
+    border: 1px solid rgba(200, 200, 200, 0.3); /* Bordure fine */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre discrète */
+    padding: 20px; /* Espacement interne */
+}
+
+
+/* Enhanced Chart Styles */
+.chart-container canvas {
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.statistics {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(240, 240, 240, 0.9));
+}
+
+/* Icon Styles */
+.icon {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient(145deg, rgba(61, 60, 59, 0.7), rgba(255, 193, 7, 0.7));
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    transition: background 0.3s;
+}
+
+.icon:hover {
+    background: linear-gradient(145deg, rgba(123, 128, 119, 0.8), rgba(96, 82, 61, 0.8));
+}
+
+/* Numbers Styles */
+.numbers {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: background 0.3s;
+}
+
+.numbers:hover {
+    background: rgba(255, 255, 255, 0.9);
+}
+.card {
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(240, 240, 240, 0.9));
+    border: 1px solid rgba(200, 200, 200, 0.5);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+
+
+/* Card Header */
+.card-header {
+    background: linear-gradient(135deg, rgba(135, 127, 115, 0.8), rgba(255, 193, 7, 0.8)); /* Dégradé de couleur */
+    color: #FFFFFF;
+    padding: 15px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+
+.sidenav {
+    width: 250px;
+    background: linear-gradient(180deg, rgba(50, 50, 50, 0.9) 0%, rgba(0, 0, 0, 0.9) 100%);
+    color: white;
+    padding: 20px;
+    transition: width 0.5s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.sidenav:hover {
+    width: 270px;
+}
+
+.sidenav-header {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.sidenav-header .navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.sidenav-header img {
+    height: 50px;
+}
+
+.sidenav .navbar-nav {
+    margin-top: 20px;
+}
+
+.sidenav .nav-link {
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.sidenav .nav-link .icon {
+    margin-right: 10px;
+}
+
+.sidenav .nav-link:hover {
+    background-color: rgba(169, 169, 169, 0.85);
+    border-radius: 5px;
+}
+
+/* Navbar styles */
+.navbar {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.navbar-brand {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+    }
+
+    .sidenav {
+        width: 100%;
+        position: static;
+    }
+}
+
+/* Animated icons */
+.animated-icon {
+    font-size: 3em; /* Increase icon size */
+    transition: transform 0.3s, color 0.3s, background-color 0.3s;
+    background-color: transparent; /* Set initial background color */
+    border-radius: 50%; /* Make the background circular */
+    padding: 10px; /* Add more padding to the icon */
+    animation: beatFade 1.5s infinite;
+}
+
+/* Hover effect with background color and scaling */
+.animated-icon:hover {
+    color: #FF9800; /* Change color on hover */
+    transform: scale(1.3); /* Scale up on hover */
+    background-color: rgba(255, 152, 0, 0.3); /* Light orange background on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Add shadow effect */
+    cursor: pointer; /* Change cursor on hover */
+}
+
+@keyframes gradient {
+    0% {
+        background: linear-gradient(315deg, rgba(211,211,211,1) 0%, rgba(255,255,255,1) 100%);
+    }
+    50% {
+        background: linear-gradient(315deg, rgba(200,200,200,1) 0%, rgba(240,240,240,1) 100%);
+    }
+    100% {
+        background: linear-gradient(315deg, rgba(211,211,211,1) 0%, rgba(255,255,255,1) 100%);
+    }
+}
+
+
+@keyframes beatFade {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+    .chart-container {
+        height: 300px; /* Adjust height for smaller screens */
+    }
 }

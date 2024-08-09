@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 const resultModel = new Schema({
     username: { type: String },
     answers: { type: Array, default: [] },
+    
     createdAt: { type: Date, default: Date.now }
 });
 

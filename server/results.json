@@ -1,13 +1,14 @@
 {
-  "username": "jlassi imen",
+  "username": "rayen labaoui",
   "answers": [
-    {},
-    {},
-    {},
-    {},
-    {},
     {
-      "answer": "Please provide the student's preferences. I need the content of the \"answers\" list to determine the best-matching faculties in Tunisia.  \n\nFor example, you could say:\n\n\"Answers: [{'Interest': 'Computer Science', 'Skills': 'Logical thinking, Problem-solving'}, {'Interest': 'Arts', 'Skills': 'Creativity, Communication'}]\"\n\nOnce I have the student's preferences, I can suggest faculties that align with their interests and skills, along with compatibility percentages and explanations. \n"
+      "answer": "Chambre à la maison "
+    },
+    {
+      "answer": "Clubs sportifs "
+    },
+    {
+      "answer": "It's impossible to determine specific Tunisian faculties based solely on \"Chambre à la maison\" and \"Clubs sportifs\".  These phrases are too vague to infer academic interests or career goals. \n\nTo provide relevant faculty suggestions, we need more information about the student's:\n\n* **Academic interests:** What subjects does the student enjoy studying?\n* **Career aspirations:** What kind of profession are they interested in?\n* **Skills and talents:** What are their strengths and areas of expertise?\n\n**For example:**\n\n* **If the student enjoys science and technology and wants to work in the medical field:** Faculties of Medicine, Pharmacy, or Dentistry might be a good fit.\n* **If the student is passionate about sports and wants to be a coach or trainer:** Faculties of Sport Sciences or Physical Education might be suitable options.\n\n**To get more specific recommendations, please provide additional information about the student's interests and goals.** \n"
     }
   ]
 }

@@ -20,7 +20,12 @@ app.use(express.json());
 
 /** appliation port */
 const port = process.env.PORT || 8080;
-
+// Route POST pour /api/feedback
+app.post('/api/feedback', (req, res) => {
+    const feedback = req.body; // Récupère les données du corps de la requête
+    console.log('Feedback reçu:', feedback); // Affiche les données dans la console
+    res.status(200).send('Feedback reçu'); // Répond avec un message de confirmation
+  });
 
 /** routes */
 app.use('/api', router) /** apis */

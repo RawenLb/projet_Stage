@@ -1,12 +1,10 @@
 import Question from "../models/questionSchema.js";
 import Result from "../models/resultSchema.js";
+import Feedback from '../models/feedbackSchema.js';
 import { convertAnswersToText, writeDataToFile } from '../fileUtils.js';
 import gemini from '../../gemini.js';
-
 import fs from 'fs';
 import path from 'path';
-import Feedback from '../models/feedbackSchema.js';
-
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
@@ -29,6 +27,23 @@ export const storeFeedback = async (req, res) => {
     }
 };
 
+export const storeFeedbacks = async (req, res) => {
+    try {
+        const { userId, feedback, type } = req.body;
+        console.log('Received data:', { userId, feedback, type });
+
+        if (!userId || !feedback || !type) {
+            throw new Error('Incomplete data provided.');
+        }
+
+        await Feedback.create({ userId, feedback, type });
+        res.json({ msg: "Feedback saved successfully!" });
+    } catch (error) {
+        console.error('Error:', error.message);
+        res.status(500).json({ error: error.message });
+    }
+};
+
 export const getRatingsStats = async (req, res) => {
     try {
         const ratings = await Feedback.aggregate([
@@ -44,29 +59,16 @@ export const getRatingsStats = async (req, res) => {
 export const insertQuestions = async (req, res) => {
     try {
         const { question, options } = req.body;
-
-        // Generate a new question with auto-generated id
-        const newQuestion = new Question({
-            question,
-            options
-        });
+        const newQuestion = new Question({ question, options });
         await newQuestion.save();
 
-        // Load existing questions from questions.json
         const questionsFilePath = path.join(__dirname, '../questions.json');
         const questionsData = JSON.parse(fs.readFileSync(questionsFilePath, 'utf8'));
-
-        // Add the new question to questions.json
         questionsData.push({ id: newQuestion._id, question, options });
-
-        // Write updated questions to questions.json
         fs.writeFileSync(questionsFilePath, JSON.stringify(questionsData, null, 2));
 
-        // Load existing questions from data.js
         const dataFilePath = path.join(__dirname, '../database/data.js');
-        const dataFileContent = fs.readFileSync(dataFilePath, 'utf8');
-
-        // Add the new question to data.js
+        let dataFileContent = fs.readFileSync(dataFilePath, 'utf8');
         const newQuestionString = `
             {
                 id: "${newQuestion._id}",
@@ -74,12 +76,11 @@ export const insertQuestions = async (req, res) => {
                 options: ${JSON.stringify(options)}
             }
         `;
-        const updatedDataFileContent = dataFileContent.replace(/(export const questions = \[)([\s\S]*?)(\];)/, (match, p1, p2, p3) => {
+        dataFileContent = dataFileContent.replace(/(export const questions = \[)([\s\S]*?)(\];)/, (match, p1, p2, p3) => {
             const questionsArrayString = `${p2.trim()},${newQuestionString}\n`;
             return `${p1}${questionsArrayString}${p3}`;
         });
-
-        fs.writeFileSync(dataFilePath, updatedDataFileContent);
+        fs.writeFileSync(dataFilePath, dataFileContent);
 
         res.json({ msg: 'Question added successfully' });
     } catch (error) {
@@ -90,24 +91,20 @@ export const insertQuestions = async (req, res) => {
 export const deleteQuestion = async (req, res) => {
     try {
         const { id } = req.params;
-
-        // Remove from MongoDB
         await Question.findByIdAndDelete(id);
 
-        // Remove from questions.json
         const questionsFilePath = path.join(__dirname, '../questions.json');
         const questionsData = JSON.parse(fs.readFileSync(questionsFilePath, 'utf8'));
         const updatedQuestionsData = questionsData.filter(question => question.id !== id);
         fs.writeFileSync(questionsFilePath, JSON.stringify(updatedQuestionsData, null, 2));
 
-        // Remove from data.js
         const dataFilePath = path.join(__dirname, '../database/data.js');
-        const dataFileContent = fs.readFileSync(dataFilePath, 'utf8');
-        const updatedDataFileContent = dataFileContent.replace(/(export const questions = \[)([\s\S]*?)(\];)/, (match, p1, p2, p3) => {
+        let dataFileContent = fs.readFileSync(dataFilePath, 'utf8');
+        dataFileContent = dataFileContent.replace(/(export const questions = \[)([\s\S]*?)(\];)/, (match, p1, p2, p3) => {
             const questionsArrayString = p2.trim().split('\n').filter(line => !line.includes(id)).join('\n');
             return `${p1}${questionsArrayString}\n${p3}`;
         });
-        fs.writeFileSync(dataFilePath, updatedDataFileContent);
+        fs.writeFileSync(dataFilePath, dataFileContent);
 
         res.json({ msg: 'Question deleted successfully' });
     } catch (error) {
@@ -120,21 +117,16 @@ export const editQuestion = async (req, res) => {
         const { id } = req.params;
         const { question, options } = req.body;
 
-        // Update the question in MongoDB
         const updatedQuestion = await Question.findByIdAndUpdate(id, { question, options }, { new: true });
 
-        // Update in questions.json
         const questionsFilePath = path.join(__dirname, '../questions.json');
         const questionsData = JSON.parse(fs.readFileSync(questionsFilePath, 'utf8'));
-        const updatedQuestionsData = questionsData.map(q => 
-            q.id === id ? { id, question, options } : q
-        );
+        const updatedQuestionsData = questionsData.map(q => q.id === id ? { id, question, options } : q);
         fs.writeFileSync(questionsFilePath, JSON.stringify(updatedQuestionsData, null, 2));
 
-        // Update in data.js
         const dataFilePath = path.join(__dirname, '../database/data.js');
-        const dataFileContent = fs.readFileSync(dataFilePath, 'utf8');
-        const updatedDataFileContent = dataFileContent.replace(/(export const questions = \[)([\s\S]*?)(\];)/, (match, p1, p2, p3) => {
+        let dataFileContent = fs.readFileSync(dataFilePath, 'utf8');
+        dataFileContent = dataFileContent.replace(/(export const questions = \[)([\s\S]*?)(\];)/, (match, p1, p2, p3) => {
             const questionsArrayString = p2.trim().split('\n').map(line => {
                 if (line.includes(id)) {
                     return `{ id: "${id}", question: "${question}", options: ${JSON.stringify(options)} }`;
@@ -143,7 +135,7 @@ export const editQuestion = async (req, res) => {
             }).join('\n');
             return `${p1}${questionsArrayString}\n${p3}`;
         });
-        fs.writeFileSync(dataFilePath, updatedDataFileContent);
+        fs.writeFileSync(dataFilePath, dataFileContent);
 
         res.json({ msg: 'Question updated successfully', updatedQuestion });
     } catch (error) {
@@ -169,16 +161,37 @@ export const dropQuestions = async (req, res) => {
     }
 };
 
-export async function getResult(req, res) {
+export const getResult = async (req, res) => {
     try {
         const results = await Result.find();
-        res.json(results);
+        const modifiedResults = results.map(result => ({
+            _id: result._id,
+            username: result.username,
+            geminiResult: result.answers.find(answer => typeof answer === 'object' && answer !== null && 'answer' in answer && answer.answer.includes('facultés basées'))
+        }));
+        res.json(modifiedResults);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-}
+};
 
+export const getTotalUsers = async (req, res) => {
+    try {
+        const totalUsers = await Result.countDocuments();
+        res.json({ totalUsers });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
 
+export const getTotalQuestions = async (req, res) => {
+    try {
+        const totalQuestions = await Question.countDocuments();
+        res.json({ totalQuestions });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
 
 export const storeResult = async (req, res) => {
     try {
@@ -213,11 +226,13 @@ export const storeResult = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
-export async function dropResult(req, res) {
+
+export const deleteResult = async (req, res) => {
     try {
-        await Result.deleteMany();
-        res.json({ msg: "Results Deleted Successfully...!" });
+        const { id } = req.params;
+        await Result.findByIdAndDelete(id);
+        res.json({ msg: 'Result deleted successfully' });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
-}
+};

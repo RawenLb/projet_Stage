@@ -1,0 +1,111 @@
+/* ResultsList.css */
+
+.layout-wrapper {
+    display: flex;
+    height: 100vh;
+}
+
+.layout-container {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+}
+
+.admin-content {
+    flex-grow: 1;
+    margin-left: 250px;
+    padding: 20px;
+    transition: margin-left 0.3s;
+}
+
+.container-xxl {
+    background-color: rgba(245, 245, 245, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+.card {
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+/* Table styling */
+.table {
+    margin-top: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.table th,
+.table td {
+    padding: 15px;
+    text-align: left;
+}
+
+.table thead {
+    background-color: rgba(245, 245, 245, 0.9);
+}
+
+.table tbody tr:hover {
+    background-color: rgba(245, 245, 245, 0.7);
+}
+
+/* Modal styling (if needed) */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content h4 {
+    margin-bottom: 20px;
+}
+
+.modal-content input {
+    width: calc(100% - 20px);
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.modal-content button {
+    margin-top: 10px;
+}
+
+
+/* Add this to your CSS file for further customization */
+.swal2-popup {
+    font-size: 1.2rem;
+}
+.swal2-confirm {
+    background-color: #3085d6 !important;
+    border: none;
+}
+.swal2-cancel {
+    background-color: #d33 !important;
+    border: none;
+}
