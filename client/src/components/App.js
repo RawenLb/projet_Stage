@@ -7,6 +7,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 /** import components */
 import Main from './Main';
 import Quiz from './Quiz';
+import Login from './Login';
 import Result from './Result';
 import Dashboard from './Dashbord';
 import { CheckUserExist } from '../helper/helper';
@@ -43,10 +44,14 @@ const QuestionsPage = () => {
 const router = createBrowserRouter([
   {
     path : '/',
+    element : <Login></Login>
+  },
+  {
+    path : '/Main',
     element : <Main></Main>
   },
   {
-    path : '/quiz',
+    path : '/Main/quiz',
     element : <CheckUserExist><Quiz /></CheckUserExist>
   },
   {

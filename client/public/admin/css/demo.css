@@ -487,3 +487,124 @@ body {
   background-color: #004494; /* Even darker shade on click */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Smaller shadow on click */
 }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.loginBody {
+  /* image path  */
+  background-image: url('../img/backgrounds/vecteezy_abstract-wave-background-with-a-combination-of-white-colors_15324716-0-[Converted].jpg');
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.logo img {
+  width: 80px;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+p {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.input-group label {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  font-size: 16px;
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.options label {
+  display: flex;
+  align-items: center;
+  color: #666;
+}
+
+.options input[type="checkbox"] {
+  margin-right: 10px;
+  accent-color: #007bff;
+}
+
+.options .forgot-password {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.options .forgot-password:hover {
+  text-decoration: underline;
+}
+
+.btn {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.signup-link {
+  margin-top: 20px;
+  color: #666;
+}
+
+.signup-link a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
+
