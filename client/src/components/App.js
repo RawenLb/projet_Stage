@@ -16,6 +16,7 @@ import QuestionsList from './QuestionsList';
 import ResultsList from './ResultList';
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Signup from './signUp';
 
 const fetchQuestions = async () => {
   try {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
   {
     path : '/',
     element : <Login></Login>
+  },
+  {
+    path : '/signup',
+    element : <Signup></Signup>
   },
   {
     path : '/Main',

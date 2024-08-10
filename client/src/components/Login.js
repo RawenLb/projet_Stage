@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+ // Make sure to import the Argon Dashboard CSS
+import '../assets/css/argon-dashboard.css';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -17,55 +19,68 @@ const Login = () => {
   };
 
   return (
-    <div className="loginBody">
-      <div className="login-container">
-        <div className="login-box">
-          <div className="logo">
-            <img src="logo.png" alt="Logo" />
+    <main className="main-content mt-0">
+      <section>
+        <div className="page-header min-vh-100">
+          <div className="container">
+            <div className="row">
+              <div className="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
+                <div className="card card-plain">
+                  <div className="card-header pb-0 text-start">
+                    <h4 className="font-weight-bolder">Sign In</h4>
+                    <p className="mb-0">Enter your email and password to sign in</p>
+                  </div>
+                  <div className="card-body">
+                    <form onSubmit={handleSubmit}>
+                      <div className="mb-3">
+                        <input
+                          type="text"
+                          className="form-control form-control-lg"
+                          placeholder="Email or Username"
+                          aria-label="Email or Username"
+                          value={username}
+                          onChange={(e) => setUsername(e.target.value)}
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <input
+                          type="password"
+                          className="form-control form-control-lg"
+                          placeholder="Password"
+                          aria-label="Password"
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                        />
+                      </div>
+                      <div className="form-check form-switch">
+                        <input className="form-check-input" type="checkbox" id="rememberMe" />
+                        <label className="form-check-label" htmlFor="rememberMe">Remember me</label>
+                      </div>
+                      <div className="text-center">
+                        <button type="submit" className="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Sign in</button>
+                      </div>
+                    </form>
+                  </div>
+                  <div className="card-footer text-center pt-0 px-lg-2 px-1">
+                    <p className="mb-4 text-sm mx-auto">
+                      Don't have an account? <a href="/signup" className="text-primary text-gradient font-weight-bold">Sign up</a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
+                <div className="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden"
+                  style={{ backgroundImage: 'url(https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signin-ill.jpg)', backgroundSize: 'cover' }}>
+                  <span className="mask bg-gradient-primary opacity-6"></span>
+                  <h4 className="mt-5 text-white font-weight-bolder position-relative">"Attention is the new currency"</h4>
+                  <p className="text-white position-relative">The more effortless the writing looks, the more effort the writer actually put into the process.</p>
+                </div>
+              </div>
+            </div>
           </div>
-          <h2 className="mb-2">Welcome to NAME 👋</h2>
-          <p>Please sign in to your account and start the adventure</p>
-          <form onSubmit={handleSubmit}>
-            <div className="input-group">
-              <label htmlFor="email">Email or Username</label>
-              <input
-                type="text"
-                id="email"
-                name="email"
-                placeholder="Enter your email or username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </div>
-            <div className="input-group">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-            <div className="options">
-              <label>
-                <input type="checkbox" name="remember-me" /> Remember Me
-              </label>
-              <a href="#" className="forgot-password">
-                Forgot Password?
-              </a>
-            </div>
-            <button type="submit" className="btn btn-primary d-grid w-100">
-              Sign in
-            </button>
-            <p className="signup-link">
-              New on our platform? <a href="#">Create an account</a>
-            </p>
-          </form>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 };
 

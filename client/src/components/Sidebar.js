@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MdDashboard, MdQuestionAnswer, MdAddCircle, MdAssessment } from 'react-icons/md';
-import '../styles/Dashboard.css'; // Ensure this path matches your actual file
 
 const Sidebar = () => {
   const [pulse, setPulse] = useState(false);
