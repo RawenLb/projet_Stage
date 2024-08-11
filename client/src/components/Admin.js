@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import '../assets/css/nucleo-icons.css';
 import '../assets/css/nucleo-svg.css';
 import '../assets/css/argon-dashboard.css?v=2.0.4';
+import logo from '../assets/img/logo.jpg'; // Import the logo
 
 const Admin = () => {
     const [questionText, setQuestionText] = useState('');
@@ -46,12 +47,15 @@ const Admin = () => {
 
     return (
         <div className="g-sidenav-show bg-gray-100">
+                    <div className="min-height-300 bg-primary position-absolute w-100"></div>
+
             {/* Sidebar */}
             <aside className="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4">
                 <div className="sidenav-header">
-                    <img src="../assets/img/logo-ct-dark.png" alt="Logo" className="navbar-brand-img h-100" />
-                    <span className="ms-1 font-weight-bold">Dashboard</span>
-                </div>
+                <br></br>
+          <img src={logo} alt="Logo" className="navbar-brand-img h-100" /> {/* Use the imported logo */}
+          <span className="ms-1 font-weight-bold">ORIENTA</span>
+        </div>
                 <hr className="horizontal dark mt-0" />
                 <div className="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
                     <ul className="navbar-nav">
@@ -93,7 +97,14 @@ const Admin = () => {
 
             {/* Navbar */}
             <main className="main-content position-relative border-radius-lg">
-                <nav className="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" data-scroll="false">
+        <div className="min-height-300 bg-primary position-absolute w-100"></div>
+
+        <nav
+          className="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl"
+          id="navbarBlur"
+          data-scroll="false"
+          style={{ backgroundColor: 'transparent' }}
+        >
                     <div className="container-fluid py-1 px-3">
                         <nav aria-label="breadcrumb">
                             <h6 className="font-weight-bolder text-white mb-0">Dashboard</h6>
