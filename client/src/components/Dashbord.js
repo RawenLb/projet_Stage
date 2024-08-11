@@ -1,132 +1,120 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Routes, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
 import '../assets/css/nucleo-icons.css';
 import '../assets/css/nucleo-svg.css';
 import '../assets/css/argon-dashboard.css?v=2.0.4';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faUser, faCog, faBell, faQuestion } from '@fortawesome/free-solid-svg-icons'; // Import new FontAwesome icons
-import { MdDashboard, MdQuestionAnswer, MdAddCircle, MdAssessment,MdPeople } from 'react-icons/md';
+import { faSearch, faUser, faCog, faBell, faQuestion } from '@fortawesome/free-solid-svg-icons';
+import logo from '../assets/img/logo.jpg'; // Import the logo
 
-   // Update this path as needed
-import QuestionsList from './QuestionsList';
-import Admin from './Admin';
 
 const Dashboard = () => {
   const [chartData, setChartData] = useState({
     labels: [],
-    datasets: []
+    datasets: [],
   });
-  
-  const [ratingsData, setRatingsData] = useState({
-    oneStar: 0,
-    twoStars: 0,
-    threeStars: 0,
-    fourStars: 0,
-    fiveStars: 0,
-    totalUsers: 0,
-    totalQuestions: 0
-  });
-  
-  const [showOfferBar, setShowOfferBar] = useState(true);
+
   const [totalUsers, setTotalUsers] = useState(0);
   const [totalQuestions, setTotalQuestions] = useState(0);
 
-  const [pulse, setPulse] = useState(false);
   useEffect(() => {
     fetch('http://localhost:5000/api/feedback/stats')
-      .then(response => response.json())
-      .then(data => {
-        setRatingsData(data);
+      .then((response) => response.json())
+      .then((data) => {
         const labels = ['1 Star', '2 Stars', '3 Stars', '4 Stars', '5 Stars'];
-        const counts = labels.map(label => {
+        const counts = labels.map((label) => {
           const rating = parseInt(label.split(' ')[0], 10);
-          const ratingData = data.find(r => r._id === rating);
+          const ratingData = data.find((r) => r._id === rating);
           return ratingData ? ratingData.count : 0;
         });
         setChartData({
           labels,
-          datasets: [{
-            label: 'Number of Ratings',
-            data: counts,
-            backgroundColor: 'rgba(75, 192, 192, 0.6)',
-            borderColor: 'rgba(75, 192, 192, 1)',
-            borderWidth: 1,
-          }],
+          datasets: [
+            {
+              label: 'Number of Ratings',
+              data: counts,
+              backgroundColor: 'rgba(75, 192, 192, 0.6)',
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1,
+            },
+          ],
         });
       })
-      .catch(error => console.error('Error fetching ratings stats:', error));
+      .catch((error) => console.error('Error fetching ratings stats:', error));
   }, []);
-  
-  
+
   useEffect(() => {
     fetch('http://localhost:5000/api/total-users')
-        .then(response => response.json())
-        .then(data => setTotalUsers(data.totalUsers))
-        .catch(error => console.error('Error fetching total users:', error));
+      .then((response) => response.json())
+      .then((data) => setTotalUsers(data.totalUsers))
+      .catch((error) => console.error('Error fetching total users:', error));
 
     fetch('http://localhost:5000/api/total-questions')
-        .then(response => response.json())
-        .then(data => setTotalQuestions(data.totalQuestions))
-        .catch(error => console.error('Error fetching total questions:', error));
+      .then((response) => response.json())
+      .then((data) => setTotalQuestions(data.totalQuestions))
+      .catch((error) => console.error('Error fetching total questions:', error));
   }, []);
-  
+
   return (
     <div className="g-sidenav-show bg-gray-100">
-      {/* Sidebar */}
+      <div className="min-height-300 bg-primary position-absolute w-100"></div>
+
       <aside className="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4">
-        <div className="sidenav-header">
-          <img src="../assets/img/logo-ct-dark.png" alt="Logo" className="navbar-brand-img h-100" />
-          <span className="ms-1 font-weight-bold">Dashboard</span>
+      <div className="sidenav-header">
+        <br></br>
+          <img src={logo} alt="Logo" className="navbar-brand-img h-100" /> {/* Use the imported logo */}
+          <span className="ms-1 font-weight-bold">ORIENTA</span>
         </div>
         <hr className="horizontal dark mt-0" />
         <div className="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
           <ul className="navbar-nav">
-          <li className="nav-item">
-  <Link className="nav-link" to="/dash">
-    <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-      <i className="ni ni-tv-2 text-primary text-sm opacity-10"></i>
-    </div>
-    <span>Dashboard</span>
-  </Link>
-</li>
-<li className="nav-item">
-  <Link className="nav-link" to="/questions">
-    <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-      <i className="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-    </div>
-    <span>Questions</span>
-  </Link>
-</li>
-
-        
+            <li className="nav-item">
+              <Link className="nav-link" to="/dash">
+                <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                  <i className="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+                </div>
+                <span>Dashboard</span>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/questions">
+                <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                  <i className="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                </div>
+                <span>Questions</span>
+              </Link>
+            </li>
             <li className="nav-item">
               <Link className="nav-link" to="/admin">
-              <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-              <i className="ni ni-calendar-grid-58 text-danger text-sm opacity-10"></i>
-              </div>
+                <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                  <i className="ni ni-calendar-grid-58 text-danger text-sm opacity-10"></i>
+                </div>
                 <span>Add Questions</span>
               </Link>
             </li>
-          
             <li className="nav-item">
-              
               <Link className="nav-link" to="/results">
-              <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-<i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
-</div>
+                <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                  <i className="ni ni-single-02 text-dark text-sm opacity-10"></i>
+                </div>
                 <span>Users</span>
               </Link>
             </li>
-          
           </ul>
         </div>
       </aside>
 
-      {/* Navbar */}
       <main className="main-content position-relative border-radius-lg">
-        <nav className="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" data-scroll="false">
+        <div className="min-height-300 bg-primary position-absolute w-100"></div>
+
+        <nav
+          className="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl"
+          id="navbarBlur"
+          data-scroll="false"
+          style={{ backgroundColor: 'transparent' }}
+        >
           <div className="container-fluid py-1 px-3">
             <nav aria-label="breadcrumb">
               <h6 className="font-weight-bolder text-white mb-0">Dashboard</h6>
@@ -134,7 +122,9 @@ const Dashboard = () => {
             <div className="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
               <div className="ms-md-auto pe-md-3 d-flex align-items-center">
                 <div className="input-group">
-                  <span className="input-group-text text-body"><FontAwesomeIcon icon={faSearch} /></span>
+                  <span className="input-group-text text-body">
+                    <FontAwesomeIcon icon={faSearch} />
+                  </span>
                   <input type="text" className="form-control" placeholder="Type here..." />
                 </div>
               </div>
@@ -160,7 +150,13 @@ const Dashboard = () => {
                   </a>
                 </li>
                 <li className="nav-item dropdown pe-2 d-flex align-items-center">
-                  <a href="#" className="nav-link text-white p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                  <a
+                    href="#"
+                    className="nav-link text-white p-0"
+                    id="dropdownMenuButton"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
                     <FontAwesomeIcon icon={faBell} className="cursor-pointer" />
                   </a>
                 </li>
@@ -169,72 +165,67 @@ const Dashboard = () => {
           </div>
         </nav>
 
-        {/* Main Content */}
- 
-  <div className="container-fluid py-4">
-    <div className="row">
-      {/* Card for Total Questions */}
-      <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-        <div className="card">
-          <div className="card-body p-3">
-            <div className="row">
-              <div className="col-8">
-                <div className="numbers">
-                  <p className="text-sm mb-0 text-uppercase font-weight-bold">Total Questions</p>
-                  <h5 className="font-weight-bolder">{totalQuestions}</h5>
+        <div className="container-fluid py-4">
+          <div className="row">
+            {/* Card for Total Questions */}
+            <div className="col-xl-3 col-sm-6 mb-4">
+              <div className="card" style={{ padding: '20px', fontSize: '18px' }}>
+                <div className="card-body p-3">
+                  <div className="row">
+                    <div className="col-8">
+                      <div className="numbers">
+                        <p className="text-sm mb-0 text-uppercase font-weight-bold">Total Questions</p>
+                        <h5 className="font-weight-bolder">{totalQuestions}</h5>
+                      </div>
+                    </div>
+                    <div className="col-4 text-end">
+                      <div className="icon icon-shape bg-gradient-info shadow-primary text-center rounded-circle">
+                        <FontAwesomeIcon icon={faQuestion} className="text-white text-lg opacity-10" aria-hidden="true" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="col-4 text-end">
-                <div className="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-                  <FontAwesomeIcon icon={faQuestion} className="text-white text-lg opacity-10" aria-hidden="true" />
+            </div>
+
+            {/* Card for Total Users */}
+            <div className="col-xl-3 col-sm-6 mb-4">
+              <div className="card" style={{ padding: '20px', fontSize: '18px' }}>
+                <div className="card-body p-3">
+                  <div className="row">
+                    <div className="col-8">
+                      <div className="numbers">
+                        <p className="text-sm mb-0 text-uppercase font-weight-bold">Total Users</p>
+                        <h5 className="font-weight-bolder">{totalUsers}</h5>
+                      </div>
+                    </div>
+                    <div className="col-4 text-end">
+                      <div className="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
+                        <FontAwesomeIcon icon={faUser} className="text-white text-lg opacity-10" aria-hidden="true" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="row mt-4">
+            <div className="col-lg-7 mb-lg-0 mb-4">
+              <div className="card">
+                <div className="card-header pb-0">
+                  <h6>Feedback Ratings</h6>
+                </div>
+                <div className="card-body p-3">
+                  <div className="chart">
+                    <Bar data={chartData} />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Card for Total Users */}
-      <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-        <div className="card">
-          <div className="card-body p-3">
-            <div className="row">
-              <div className="col-8">
-                <div className="numbers">
-                  <p className="text-sm mb-0 text-uppercase font-weight-bold">Total Users</p>
-                  <h5 className="font-weight-bolder">{totalUsers}</h5>
-                </div>
-              </div>
-              <div className="col-4 text-end">
-                <div className="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
-                  <FontAwesomeIcon icon={faUser} className="text-white text-lg opacity-10" aria-hidden="true" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    {/* Render the chart only if chartData is populated */}
-    {chartData.labels.length > 0 && (
-      <div className="row mt-4">
-        <div className="col-md-6">
-          <div className="card">
-            <div className="card-body p-3">
-              <Bar data={chartData} options={{ responsive: true }} />
-            </div>
-          </div>
-        </div>
-      </div>
-    )}
-    <Routes>
-      <Route path="/admin" element={<Admin />} />
-      <Route path="/questions" element={<QuestionsList />} />
-    </Routes>
-  </div>
-
-
-         
+        
       </main>
     </div>
   );
