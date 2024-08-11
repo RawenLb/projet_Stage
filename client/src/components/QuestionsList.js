@@ -7,7 +7,7 @@ import '../assets/css/nucleo-svg.css';
 import '../assets/css/argon-dashboard.css?v=2.0.4';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faUser, faCog, faBell } from '@fortawesome/free-solid-svg-icons';
-import logo from '../assets/img/logo.jpg'; // Import the logo
+import logo from '../assets/img/logo.png'; // Import the logo
 
 const QuestionsList = () => {
     const [questions, setQuestions] = useState([]);
@@ -83,15 +83,14 @@ const QuestionsList = () => {
 
     return (
         <div className="g-sidenav-show bg-gray-100">
-                    <div className="min-height-300 bg-primary position-absolute w-100"></div>
+            <div className="min-height-300 bg-primary position-absolute w-100"></div>
 
             {/* Sidebar */}
             <aside className="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4">
-            <div className="sidenav-header">
-                <br></br>
-          <img src={logo} alt="Logo" className="navbar-brand-img h-100" /> {/* Use the imported logo */}
-          <span className="ms-1 font-weight-bold">ORIENTA</span>
-        </div>
+                <div className="sidenav-header">
+                    <img src={logo} alt="Logo" className="navbar-brand-img logo-custom" /> 
+                    {/* <span className="ms-1 font-weight-bold">ORIENTA</span> */}
+                </div>
                 <hr className="horizontal dark mt-0" />
                 <div className="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
                     <ul className="navbar-nav">
@@ -131,15 +130,16 @@ const QuestionsList = () => {
                 </div>
             </aside>
 
-            {/* Navbar */}<main className="main-content position-relative border-radius-lg">
-        <div className="min-height-300 bg-primary position-absolute w-100"></div>
+            {/* Navbar */}
+            <main className="main-content position-relative border-radius-lg">
+                <div className="min-height-300 bg-primary position-absolute w-100"></div>
 
-<nav
-  className="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl"
-  id="navbarBlur"
-  data-scroll="false"
-  style={{ backgroundColor: 'transparent' }}
->
+                <nav
+                    className="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl"
+                    id="navbarBlur"
+                    data-scroll="false"
+                    style={{ backgroundColor: 'transparent' }}
+                >
                     <div className="container-fluid py-1 px-3">
                         <nav aria-label="breadcrumb">
                             <h6 className="font-weight-bolder text-white mb-0">Dashboard</h6>
@@ -209,7 +209,18 @@ const QuestionsList = () => {
                                                         </ul>
                                                     </td>
                                                     <td>
-                                                        <button className="btn btn-danger btn-sm ms-2" onClick={() => handleDelete(question._id)}>Delete</button>
+                                                        <button
+                                                            className="btn btn-warning me-2"
+                                                            onClick={() => handleEdit(question._id)}
+                                                        >
+                                                            Edit
+                                                        </button>
+                                                        <button
+                                                            className="btn btn-danger"
+                                                            onClick={() => handleDelete(question._id)}
+                                                        >
+                                                            Delete
+                                                        </button>
                                                     </td>
                                                 </tr>
                                             ))}

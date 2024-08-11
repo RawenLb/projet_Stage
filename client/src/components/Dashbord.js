@@ -7,7 +7,7 @@ import '../assets/css/nucleo-svg.css';
 import '../assets/css/argon-dashboard.css?v=2.0.4';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faUser, faCog, faBell, faQuestion } from '@fortawesome/free-solid-svg-icons';
-import logo from '../assets/img/logo.jpg'; // Import the logo
+import logo from '../assets/img/logo.png'; // Import the logo
 
 
 const Dashboard = () => {
@@ -63,9 +63,7 @@ const Dashboard = () => {
 
       <aside className="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4">
       <div className="sidenav-header">
-        <br></br>
-          <img src={logo} alt="Logo" className="navbar-brand-img h-100" /> {/* Use the imported logo */}
-          <span className="ms-1 font-weight-bold">ORIENTA</span>
+        <img src={logo} alt="Logo" className="navbar-brand-img logo-custom" /> 
         </div>
         <hr className="horizontal dark mt-0" />
         <div className="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
