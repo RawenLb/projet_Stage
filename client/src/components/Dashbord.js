@@ -38,28 +38,25 @@ const Dashboard = () => {
     fetch('http://localhost:5000/api/feedback/stats')
       .then(response => response.json())
       .then(data => {
-        console.log('Fetched data:', data); // Debug log
         setRatingsData(data);
-        setTotalUsers(data.totalUsers);
-        setTotalQuestions(data.totalQuestions);
-  
         const labels = ['1 Star', '2 Stars', '3 Stars', '4 Stars', '5 Stars'];
-        const values = [data.oneStar, data.twoStars, data.threeStars, data.fourStars, data.fiveStars];
-  
+        const counts = labels.map(label => {
+          const rating = parseInt(label.split(' ')[0], 10);
+          const ratingData = data.find(r => r._id === rating);
+          return ratingData ? ratingData.count : 0;
+        });
         setChartData({
-          labels: labels,
-          datasets: [
-            {
-              label: 'Ratings Distribution',
-              data: values,
-              backgroundColor: 'rgba(75, 192, 192, 0.2)',
-              borderColor: 'rgba(75, 192, 192, 1)',
-              borderWidth: 1,
-            },
-          ],
+          labels,
+          datasets: [{
+            label: 'Number of Ratings',
+            data: counts,
+            backgroundColor: 'rgba(75, 192, 192, 0.6)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+          }],
         });
       })
-      .catch(error => console.error('Error fetching data:', error));
+      .catch(error => console.error('Error fetching ratings stats:', error));
   }, []);
   
   
