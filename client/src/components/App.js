@@ -51,6 +51,7 @@ const router = createBrowserRouter([
     path : '/signup',
     element : <Signup></Signup>
   },
+  
   {
     path : '/Main',
     element : <Main></Main>

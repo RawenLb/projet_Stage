@@ -2,6 +2,16 @@ import { Router } from "express";
 const router = Router();
 
 import * as controller from '../controller/controller.js';
+router.route('/register')
+.post(controller.registerUser) ;
+router.route('/login')
+  .post(controller.loginUser);
+
+  router.route('/reset-password-request')
+  .post(controller.requestPasswordReset);
+
+router.route('/reset-password/:token')
+  .post(controller.resetPassword);
 
 router.route('/questions')
         .get(controller.getQuestions)

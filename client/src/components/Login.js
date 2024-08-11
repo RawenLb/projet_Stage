@@ -1,21 +1,29 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
- // Make sure to import the Argon Dashboard CSS
+import axios from 'axios';
 import '../assets/css/argon-dashboard.css';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
-    console.log('Username:', username);
-    console.log('Password:', password);
-    
-    // Navigate to /main after successful login
-    navigate('/main');
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/login', { username, password });
+
+      // Store JWT token in local storage
+      localStorage.setItem('token', response.data.token);
+      
+      // Navigate to /main after successful login
+      navigate('/main');
+    } catch (error) {
+      console.error('Error logging in:', error);
+      setError(error.response?.data?.error || 'An error occurred');
+    }
   };
 
   return (
@@ -40,6 +48,7 @@ const Login = () => {
                           aria-label="Email or Username"
                           value={username}
                           onChange={(e) => setUsername(e.target.value)}
+                          required
                         />
                       </div>
                       <div className="mb-3">
@@ -50,21 +59,26 @@ const Login = () => {
                           aria-label="Password"
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
+                          required
                         />
                       </div>
+                      {error && <div className="alert alert-danger">{error}</div>}
                       <div className="form-check form-switch">
                         <input className="form-check-input" type="checkbox" id="rememberMe" />
                         <label className="form-check-label" htmlFor="rememberMe">Remember me</label>
                       </div>
                       <div className="text-center">
-                        <button type="submit" className="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Sign in</button>
+                        <button type="submit" className="btn btn-lg btn-primary w-100 mt-4 mb-0">Sign In</button>
                       </div>
                     </form>
-                  </div>
-                  <div className="card-footer text-center pt-0 px-lg-2 px-1">
-                    <p className="mb-4 text-sm mx-auto">
-                      Don't have an account? <a href="/signup" className="text-primary text-gradient font-weight-bold">Sign up</a>
-                    </p>
+                    <div className="card-footer text-center pt-0 px-lg-2 px-1">
+                      <p className="mb-4 text-sm mx-auto">
+                        Don't have an account? <a href="/signup" className="text-primary text-gradient font-weight-bold">Sign up</a>
+                      </p>
+                      <p className="mb-0 text-sm mx-auto">
+                        <a href="/" className="text-primary text-gradient font-weight-bold">Forgot Password?</a>
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -72,8 +86,8 @@ const Login = () => {
                 <div className="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden"
                   style={{ backgroundImage: 'url(https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signin-ill.jpg)', backgroundSize: 'cover' }}>
                   <span className="mask bg-gradient-primary opacity-6"></span>
-                  <h4 className="mt-5 text-white font-weight-bolder position-relative">"Attention is the new currency"</h4>
-                  <p className="text-white position-relative">The more effortless the writing looks, the more effort the writer actually put into the process.</p>
+                  <h4 className="mt-5 text-white font-weight-bolder">"Attention is the new currency"</h4>
+                  <p className="text-white">The more effortless the writing looks, the more effort the writer actually put into the process.</p>
                 </div>
               </div>
             </div>

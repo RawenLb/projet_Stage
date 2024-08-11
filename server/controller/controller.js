@@ -7,6 +7,71 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import User from '../models/userModel.js';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt'; // Updated import statement
+import nodemailer from 'nodemailer';
+import crypto from 'crypto';
+
+
+
+const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
+    }
+  });
+  
+  export const requestPasswordReset = async (req, res) => {
+    try {
+      const { email } = req.body;
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.status(404).json({ error: 'No account with that email found' });
+      }
+  
+      // Create a reset token
+      const resetToken = crypto.randomBytes(32).toString('hex');
+      user.resetToken = resetToken;
+      user.resetTokenExpiry = Date.now() + 3600000; // 1 hour
+      await user.save();
+  
+      // Send email
+      const resetUrl = `http://localhost:3000/reset-password/${resetToken}`;
+      await transporter.sendMail({
+        to: user.email,
+        from: 'noreply@example.com',
+        subject: 'Password Reset',
+        text: `You requested a password reset. Click the link below to reset your password:\n\n${resetUrl}`
+      });
+  
+      res.json({ message: 'Password reset link sent to your email' });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
+  
+  export const resetPassword = async (req, res) => {
+    try {
+      const { token } = req.params;
+      const { password } = req.body;
+  
+      const user = await User.findOne({ resetToken: token, resetTokenExpiry: { $gt: Date.now() } });
+      if (!user) {
+        return res.status(400).json({ error: 'Token is invalid or has expired' });
+      }
+  
+      user.password = password;
+      user.resetToken = undefined;
+      user.resetTokenExpiry = undefined;
+      await user.save();
+  
+      res.json({ message: 'Password has been reset successfully' });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
 
 const { generateUniversities } = gemini;
 
@@ -26,6 +91,52 @@ export const storeFeedback = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+
+export const loginUser = async (req, res) => {
+    try {
+        const { username, password } = req.body;
+
+        // Find user by username or email
+        const user = await User.findOne({ $or: [{ username }, { email: username }] });
+        if (!user) {
+            return res.status(401).json({ error: 'Invalid username or password' });
+        }
+
+        // Check password
+        const isMatch = await user.comparePassword(password);
+        if (!isMatch) {
+            return res.status(401).json({ error: 'Invalid username or password' });
+        }
+
+        // Generate JWT token
+        const token = jwt.sign({ id: user._id }, 'your_jwt_secret', { expiresIn: '1h' });
+        res.json({ token });
+
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const registerUser = async (req, res) => {
+    try {
+      const { username, email, password } = req.body;
+  
+      // Check if the user already exists
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        return res.status(400).json({ error: 'User already exists' });
+      }
+  
+      // Create a new user
+      const newUser = new User({ username, email, password });
+      await newUser.save();
+  
+      res.status(201).json({ message: 'User registered successfully' });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
 
 export const storeFeedbacks = async (req, res) => {
     try {
