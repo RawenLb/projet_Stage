@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import '../styles/StarRating.css'; // Add your own styles
+import '../styles/StarRating.css'; // Ajoutez vos propres styles
 
 export default function StarRating({ onRatingSelect }) {
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
-    const [isRated, setIsRated] = useState(false); // Track if the rating has been given
+    const [isRated, setIsRated] = useState(false); // Suivi si la note a été donnée
 
     const handleClick = (index) => {
         if (!isRated) {
@@ -27,7 +27,7 @@ export default function StarRating({ onRatingSelect }) {
                             onClick={() => handleClick(index)}
                             onMouseEnter={() => setHover(index)}
                             onMouseLeave={() => setHover(rating)}
-                            disabled={isRated} // Disable buttons if already rated
+                            disabled={isRated} // Désactiver les boutons si déjà noté
                         >
                             <span className="star">&#9733;</span>
                         </button>

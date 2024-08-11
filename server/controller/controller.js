@@ -7,91 +7,14 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import User from '../models/userModel.js';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt'; // Updated import statement
-import nodemailer from 'nodemailer';
-import crypto from 'crypto';
 
 
-
-const transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    }
-  });
   
-  export const requestPasswordReset = async (req, res) => {
-    try {
-      const { email } = req.body;
-      const user = await User.findOne({ email });
-      if (!user) {
-        return res.status(404).json({ error: 'No account with that email found' });
-      }
-  
-      // Create a reset token
-      const resetToken = crypto.randomBytes(32).toString('hex');
-      user.resetToken = resetToken;
-      user.resetTokenExpiry = Date.now() + 3600000; // 1 hour
-      await user.save();
-  
-      // Send email
-      const resetUrl = `http://localhost:3000/reset-password/${resetToken}`;
-      await transporter.sendMail({
-        to: user.email,
-        from: 'noreply@example.com',
-        subject: 'Password Reset',
-        text: `You requested a password reset. Click the link below to reset your password:\n\n${resetUrl}`
-      });
-  
-      res.json({ message: 'Password reset link sent to your email' });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  };
-  
-  export const resetPassword = async (req, res) => {
-    try {
-      const { token } = req.params;
-      const { password } = req.body;
-  
-      const user = await User.findOne({ resetToken: token, resetTokenExpiry: { $gt: Date.now() } });
-      if (!user) {
-        return res.status(400).json({ error: 'Token is invalid or has expired' });
-      }
-  
-      user.password = password;
-      user.resetToken = undefined;
-      user.resetTokenExpiry = undefined;
-      await user.save();
-  
-      res.json({ message: 'Password has been reset successfully' });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-  };
 
 const { generateUniversities } = gemini;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
-export const storeFeedback = async (req, res) => {
-    try {
-        const { userId, rating } = req.body;
-        if (!userId || rating == null) {
-            throw new Error('Incomplete data provided.');
-        }
-
-        await Feedback.create({ userId, rating });
-        res.json({ msg: "Feedback saved successfully!" });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-};
-
 
 export const loginUser = async (req, res) => {
     try {
@@ -138,19 +61,19 @@ export const registerUser = async (req, res) => {
     }
   };
 
-export const storeFeedbacks = async (req, res) => {
+  
+  export const storeFeedback = async (req, res) => {
     try {
-        const { userId, feedback, type } = req.body;
-        console.log('Received data:', { userId, feedback, type });
-
-        if (!userId || !feedback || !type) {
-            throw new Error('Incomplete data provided.');
+        const { userId, rating } = req.body;
+        if (!userId || rating == null) {
+            return res.status(400).json({ error: 'Incomplete data provided.' });
         }
 
-        await Feedback.create({ userId, feedback, type });
+        const feedback = new Feedback({ userId, rating });
+        await feedback.save(); // Sauvegarde dans la base de données
         res.json({ msg: "Feedback saved successfully!" });
     } catch (error) {
-        console.error('Error:', error.message);
+        console.error('Error saving feedback:', error);
         res.status(500).json({ error: error.message });
     }
 };
@@ -166,6 +89,8 @@ export const getRatingsStats = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
+
 
 export const insertQuestions = async (req, res) => {
     try {

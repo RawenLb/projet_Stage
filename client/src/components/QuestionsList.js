@@ -6,8 +6,8 @@ import '../assets/css/nucleo-icons.css';
 import '../assets/css/nucleo-svg.css';
 import '../assets/css/argon-dashboard.css?v=2.0.4';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faUser, faCog, faBell } from '@fortawesome/free-solid-svg-icons';
-import logo from '../assets/img/logo.png'; // Import the logo
+import { faSearch, faUser, faCog, faBell, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import logo from '../assets/img/logo.png';
 
 const QuestionsList = () => {
     const [questions, setQuestions] = useState([]);
@@ -88,8 +88,7 @@ const QuestionsList = () => {
             {/* Sidebar */}
             <aside className="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4">
                 <div className="sidenav-header">
-                    <img src={logo} alt="Logo" className="navbar-brand-img logo-custom" /> 
-                    {/* <span className="ms-1 font-weight-bold">ORIENTA</span> */}
+                    <img src={logo} alt="Logo" className="navbar-brand-img logo-custom" />
                 </div>
                 <hr className="horizontal dark mt-0" />
                 <div className="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
@@ -202,26 +201,36 @@ const QuestionsList = () => {
                                                 <tr key={question._id}>
                                                     <td>{question.question}</td>
                                                     <td>
-                                                        <ul>
-                                                            {question.options.map((option, index) => (
-                                                                <li key={index}>{option}</li>
-                                                            ))}
-                                                        </ul>
+                                                        {question.options.map((option, index) => (
+                                                            <div key={index}>{option}</div>
+                                                        ))}
                                                     </td>
                                                     <td>
-                                                        <button
-                                                            className="btn btn-warning me-2"
-                                                            onClick={() => handleEdit(question._id)}
-                                                        >
-                                                            Edit
-                                                        </button>
-                                                        <button
-                                                            className="btn btn-danger"
-                                                            onClick={() => handleDelete(question._id)}
-                                                        >
-                                                            Delete
-                                                        </button>
-                                                    </td>
+    <button
+        onClick={() => handleEdit(question._id)}
+        style={{
+            backgroundColor: 'transparent',
+            border: 'none',
+            cursor: 'pointer',
+            padding: 0
+        }}
+    >
+        <FontAwesomeIcon icon={faEdit} style={{ color: '#00aaff' }} />
+    </button>
+    <button
+        onClick={() => handleDelete(question._id)}
+        style={{
+            backgroundColor: 'transparent',
+            border: 'none',
+            cursor: 'pointer',
+            padding: 0,
+            marginLeft: '10px'
+        }}
+    >
+        <FontAwesomeIcon icon={faTrashAlt} style={{ color: '#ff4444' }} />
+    </button>
+</td>
+
                                                 </tr>
                                             ))}
                                         </tbody>
