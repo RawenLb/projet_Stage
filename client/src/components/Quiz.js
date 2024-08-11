@@ -4,6 +4,7 @@ import { Navigate } from 'react-router-dom';
 import Questions from './Questions';
 import { MoveNextQuestion, MovePrevQuestion } from '../hooks/FetchQuestion';
 import { PushAnswer } from '../hooks/setResult';
+import logo from '../assets/img/logo1.png'; // Import the logo
 import axios from 'axios';
 
 export default function Quiz() {
@@ -57,6 +58,7 @@ export default function Quiz() {
     return (
 <div className='centered-container'>
     <div className='container1'>
+    <img src={logo} alt="Logo" className="logo" /> 
         <h1 className='title'>Questionnaire</h1>
         <Questions onChecked={setChecked} />
 

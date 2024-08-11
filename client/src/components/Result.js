@@ -6,6 +6,7 @@ import { resetResultAction } from '../redux/result_reducer';
 import axios from 'axios';
 import StarRating from './StarRating';
 import Modal from './Modal';
+import logo from '../assets/img/logo1.png'; // Import the logo
 
 export default function Result() {
     const dispatch = useDispatch();
@@ -70,6 +71,7 @@ export default function Result() {
     return (
         <div className='centered-container'>
             <div className='container'>
+            <img src={logo} alt="Logo" className="logo" /> 
                 <h1 className='result-title'>Questionnaire Results</h1>
                 <div className='result-details'>
                     <div className='result-item'>

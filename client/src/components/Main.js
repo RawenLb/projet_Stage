@@ -6,6 +6,7 @@ import '../styles/Main.css'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import logo from '../assets/img/logo1.png'; // Import the logo
 
 export default function Main() {
 
@@ -20,26 +21,27 @@ export default function Main() {
     }
 
   return (
-    <div className="centered-container">
+<div className="centered-container">
     <div className='container'>
-    <h1 className='title'>Questionnaire</h1>
-    <div className='instructions'>
-    <ol className='list'>
-        <li>Vous serez invité(e) à répondre à 20 questions l'une après l'autre.</li>
-        <li>Chaque question comporte trois options. Vous ne pouvez choisir qu'une seule option.</li>
-        <li>Vous pouvez revoir et modifier vos réponses avant de terminer.</li>
-        <li>Les résultats seront déclarés à la fin.</li>
-    </ol>
-    </div>
+    <img src={logo} alt="Logo" className="logo" /> 
+        <h1 className='title'>Questionnaire</h1>
+        <div className='instructions'>
+            <ol className='list'>
+                <li>Vous serez invité(e) à répondre à 20 questions l'une après l'autre.</li>
+                <li>Chaque question comporte trois options. Vous ne pouvez choisir qu'une seule option.</li>
+                <li>Vous pouvez revoir et modifier vos réponses avant de terminer.</li>
+                <li>Les résultats seront déclarés à la fin.</li>
+            </ol>
+        </div>
 
-    <form id="form" className='form'>
-        <input ref={inputRef} className='input' type="text" placeholder='Nom et prénom*' />
-    </form>
+        <form id="form" className='form'>
+            <input ref={inputRef} className='input' type="text" placeholder='Nom et prénom*' />
+        </form>
 
-    <div className='start'>
-        <Link className='btn' to={'quiz'} onClick={startQuiz}>Commencer le Quiz</Link>
+        <div className='start'>
+            <Link className='btn' to={'quiz'} onClick={startQuiz}>Commencer le Quiz</Link>
+        </div>
     </div>
-</div>
 </div>
   )
 }
