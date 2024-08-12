@@ -1,23 +1,28 @@
-import React, { useState } from 'react';
-import '../styles/StarRating.css'; // Ajoutez vos propres styles
+import React, { useState, useEffect } from 'react';
+import '../styles/StarRating.css'; // Ensure this path is correct
 
 export default function StarRating({ onRatingSelect }) {
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
-    const [isRated, setIsRated] = useState(false); // Suivi si la note a été donnée
+    const [isRated, setIsRated] = useState(false);
+
+    useEffect(() => {
+        console.log('isRated changed:', isRated);
+    }, [isRated]);
 
     const handleClick = (index) => {
         if (!isRated) {
             setRating(index);
             setIsRated(true);
             onRatingSelect(index);
+            console.log('Rating selected:', index);
         }
     };
 
     return (
         <div className="star-rating">
             <div className="stars-container">
-                {[...Array(5)].map((star, index) => {
+                {[...Array(5)].map((_, index) => {
                     index += 1;
                     return (
                         <button
@@ -27,7 +32,8 @@ export default function StarRating({ onRatingSelect }) {
                             onClick={() => handleClick(index)}
                             onMouseEnter={() => setHover(index)}
                             onMouseLeave={() => setHover(rating)}
-                            disabled={isRated} // Désactiver les boutons si déjà noté
+                            disabled={isRated} // Disable the buttons if already rated
+                            aria-label={`${index} star`} // Accessibility improvement
                         >
                             <span className="star">&#9733;</span>
                         </button>

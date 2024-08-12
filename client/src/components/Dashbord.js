@@ -63,6 +63,7 @@ const Dashboard = () => {
 
       <aside className="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4">
       <div className="sidenav-header">
+     
         <img src={logo} alt="Logo" className="navbar-brand-img logo-custom" /> 
         </div>
         <hr className="horizontal dark mt-0" />
