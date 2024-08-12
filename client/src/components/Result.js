@@ -13,7 +13,7 @@ export default function Result() {
     const { result, userId } = resultState;
     const [fetchedResult, setFetchedResult] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [modalOpen, setModalOpen] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false); // État pour gérer l'ouverture du modal
 
     useEffect(() => {
         const fetchResults = async () => {
