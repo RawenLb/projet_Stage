@@ -1,13 +1,15 @@
 import Question from "../models/questionSchema.js";
 import Result from "../models/resultSchema.js";
-import Feedback from '../models/feedbackSchema.js';
 import { convertAnswersToText, writeDataToFile } from '../fileUtils.js';
 import gemini from '../../gemini.js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import User from '../models/userSchema.js'; // Adjust the path according to your file structure
+import jwt from 'jsonwebtoken'; // Make sure jwt is imported
 
+import Feedback from '../models/feedbackSchema.js';
 
   
 
@@ -19,6 +21,10 @@ const __dirname = dirname(__filename);
 export const loginUser = async (req, res) => {
     try {
         const { username, password } = req.body;
+
+        if (!username || !password) {
+            return res.status(400).json({ error: 'Username and password are required' });
+        }
 
         // Find user by username or email
         const user = await User.findOne({ $or: [{ username }, { email: username }] });
@@ -33,47 +39,48 @@ export const loginUser = async (req, res) => {
         }
 
         // Generate JWT token
-        const token = jwt.sign({ id: user._id }, 'your_jwt_secret', { expiresIn: '1h' });
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || 'your_jwt_secret', { expiresIn: '1h' });
         res.json({ token });
 
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error('Error in loginUser:', error); // Log detailed error
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 };
 
 export const registerUser = async (req, res) => {
     try {
-      const { username, email, password } = req.body;
-  
-      // Check if the user already exists
-      const existingUser = await User.findOne({ email });
-      if (existingUser) {
-        return res.status(400).json({ error: 'User already exists' });
-      }
-  
-      // Create a new user
-      const newUser = new User({ username, email, password });
-      await newUser.save();
-  
-      res.status(201).json({ message: 'User registered successfully' });
+        const { username, email, password } = req.body;
+
+        // Check if the user already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ error: 'User already exists' });
+        }
+
+        // Create a new user
+        const newUser = new User({ username, email, password });
+        await newUser.save();
+
+        res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
-      res.status(500).json({ error: error.message });
+        console.error('Error in registerUser:', error); // Log detailed error
+        res.status(500).json({ error: error.message });
     }
-  };
+};
+
 
   
-  export const storeFeedback = async (req, res) => {
+export const storeFeedback = async (req, res) => {
     try {
         const { userId, rating } = req.body;
         if (!userId || rating == null) {
-            return res.status(400).json({ error: 'Incomplete data provided.' });
+            throw new Error('Incomplete data provided.');
         }
 
-        const feedback = new Feedback({ userId, rating });
-        await feedback.save(); // Sauvegarde dans la base de données
+        await Feedback.create({ userId, rating });
         res.json({ msg: "Feedback saved successfully!" });
     } catch (error) {
-        console.error('Error saving feedback:', error);
         res.status(500).json({ error: error.message });
     }
 };

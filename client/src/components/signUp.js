@@ -12,24 +12,20 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Username:', username);
-    console.log('Email:', email);
-    console.log('Password:', password);
-
     try {
-      const response = await axios.post('http://localhost:5000/api/register', { // Update the URL if needed
-        username,
-        email,
-        password
-      });
-
-      console.log(response.data);
-      navigate('/'); // Redirect on successful registration
+        const response = await axios.post('http://localhost:5000/api/register', {
+            username,
+            email,
+            password
+        });
+        console.log(response.data);
+        navigate('/'); // Redirect on successful registration
     } catch (error) {
-      console.error('Error registering user:', error);
-      setError(error.response?.data?.error || 'An error occurred');
+        console.error('Error registering user:', error.response?.data || error.message);
+        setError(error.response?.data?.error || 'An error occurred');
     }
-  };
+};
+
 
   return (
     <div>
