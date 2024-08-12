@@ -25,7 +25,7 @@ export default function Result() {
                 console.error('Error fetching results:', error);
             } finally {
                 setLoading(false);
-                setTimeout(() => setModalOpen(true), 5000); // Ouvrir le modal après 5 secondes
+                setTimeout(() => setModalOpen(true), 5000); // Open modal after 5 seconds
             }
         };
 
@@ -35,11 +35,12 @@ export default function Result() {
     }, [userId]);
 
     const onRatingSelect = (rating) => {
+        // Enregistrez la note dans le backend
         axios.post('http://localhost:5000/api/feedback', { userId, rating })
             .then(response => console.log('Feedback saved:', response.data))
             .catch(error => console.error('Error saving feedback:', error));
     };
-    
+
     function onRestart() {
         dispatch(resetAllAction());
         dispatch(resetResultAction());
