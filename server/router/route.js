@@ -9,6 +9,8 @@ router.route('/questions').get(controller.getQuestions).post(controller.insertQu
 router.route('/questions/:id').delete(controller.deleteQuestion).put(controller.editQuestion);
 router.route('/feedback').post(controller.storeFeedback);
 router.route('/feedback/stats').get(controller.getRatingsStats);
+
+
 router.route('/result').get(controller.getResult).post(controller.storeResult);
 router.route('/result/:id').delete(controller.deleteResult);
 router.route('/total-users').get(controller.getTotalUsers);

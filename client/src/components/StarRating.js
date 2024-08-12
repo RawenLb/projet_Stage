@@ -1,21 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import '../styles/StarRating.css'; // Ensure this path is correct
+import React, { useState } from 'react';
+import axios from 'axios';
+import '../styles/StarRating.css';
 
-export default function StarRating({ onRatingSelect }) {
+export default function StarRating({ userId, onRatingSelect }) {
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
     const [isRated, setIsRated] = useState(false);
-
-    useEffect(() => {
-        console.log('isRated changed:', isRated);
-    }, [isRated]);
 
     const handleClick = (index) => {
         if (!isRated) {
             setRating(index);
             setIsRated(true);
             onRatingSelect(index);
-            console.log('Rating selected:', index);
+
+            // Send rating to the backend
+            axios.post('http://localhost:5000/api/feedback', { userId, rating: index })
+                .then(response => {
+                    console.log('Feedback saved:', response.data);
+                })
+                .catch(error => {
+                    console.error('Error saving feedback:', error);
+                });
         }
     };
 
@@ -28,12 +33,12 @@ export default function StarRating({ onRatingSelect }) {
                         <button
                             type="button"
                             key={index}
-                            className={index <= (hover || rating) ? "on" : "off"}
+                            className={index <= (hover || rating) ? 'on' : 'off'}
                             onClick={() => handleClick(index)}
                             onMouseEnter={() => setHover(index)}
                             onMouseLeave={() => setHover(rating)}
-                            disabled={isRated} // Disable the buttons if already rated
-                            aria-label={`${index} star`} // Accessibility improvement
+                            disabled={isRated}
+                            aria-label={`${index} star`}
                         >
                             <span className="star">&#9733;</span>
                         </button>
@@ -44,3 +49,4 @@ export default function StarRating({ onRatingSelect }) {
         </div>
     );
 }
+

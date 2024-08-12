@@ -70,21 +70,26 @@ export const registerUser = async (req, res) => {
 };
 
 
-  
+
+
 export const storeFeedback = async (req, res) => {
     try {
         const { userId, rating } = req.body;
-        if (!userId || rating == null) {
-            throw new Error('Incomplete data provided.');
+
+        if (!userId || rating === undefined) {
+            return res.status(400).json({ error: 'User ID and rating are required' });
         }
 
-        await Feedback.create({ userId, rating });
-        res.json({ msg: "Feedback saved successfully!" });
+        // Save feedback
+        const feedback = new Feedback({ userId, rating });
+        await feedback.save();
+
+        res.status(201).json({ message: 'Feedback saved successfully' });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error('Error in storeFeedback:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 };
-
 export const getRatingsStats = async (req, res) => {
     try {
         const ratings = await Feedback.aggregate([
@@ -93,7 +98,8 @@ export const getRatingsStats = async (req, res) => {
 
         res.json(ratings);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error('Error in getRatingsStats:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 };
 

@@ -1,11 +1,10 @@
-// Dans feedbackSchema.js
-import mongoose from "mongoose";
-const { Schema } = mongoose;
+import mongoose from 'mongoose';
 
-const feedbackModel = new Schema({
+const feedbackSchema = new mongoose.Schema({
     userId: { type: String, required: true },
     rating: { type: Number, required: true },
     createdAt: { type: Date, default: Date.now }
 });
 
-export default mongoose.model('Feedback', feedbackModel);
+const Feedback = mongoose.model('Feedback', feedbackSchema);
+export default Feedback;
