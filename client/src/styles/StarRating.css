@@ -1,31 +1,70 @@
+/* Modal.css */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #fff; /* Fond blanc */
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  width: 280px; /* Réduit la largeur du pop-up */
+  max-width: 90%; /* Assure que le pop-up s'adapte bien sur les petits écrans */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centrer le contenu horizontalement */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ajoute une ombre douce pour la profondeur */
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* Ajustement du star rating à l'intérieur du modal */
 .star-rating {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px; /* Espace au-dessus du star rating */
 }
 
 .stars-container {
-    display: flex;
+  display: flex;
 }
 
 .star-rating button {
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  margin: 0 5px; /* Espace entre les étoiles */
 }
 
 .star-rating button.on {
-    color: gold;
+  color: gold;
 }
 
 .star-rating button.off {
-    color: lightgray;
+  color: lightgray;
 }
 
 .rating-message {
-    margin-top: 10px; /* Space between stars and message */
-    font-size: 16px;
-    color: #4caf50; /* Green color for the message */
-    font-weight: bold;
+  margin-top: 10px;
+  font-size: 16px;
+  color: #4caf50;
+  font-weight: bold;
 }

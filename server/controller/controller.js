@@ -8,6 +8,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import User from '../models/userSchema.js'; // Adjust the path according to your file structure
 import jwt from 'jsonwebtoken'; // Make sure jwt is imported
+import Reclamation from "../models/reclamationSchema.js"; // Assurez-vous d'avoir un schéma Reclamation
 
 import Feedback from '../models/feedbackSchema.js';
 
@@ -283,5 +284,50 @@ export const deleteResult = async (req, res) => {
         res.json({ msg: 'Result deleted successfully' });
     } catch (error) {
         res.status(500).json({ error: error.message });
+    }
+};
+
+
+export const submitReclamation = async (req, res) => {
+    try {
+        const { userId, subject, message } = req.body;
+
+        if (!userId || !subject || !message) {
+            return res.status(400).json({ error: 'User ID, subject, and message are required' });
+        }
+
+        const reclamation = new Reclamation({ userId, subject, message });
+        await reclamation.save();
+
+        res.status(201).json({ message: 'Reclamation submitted successfully' });
+    } catch (error) {
+        console.error('Error in submitReclamation:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
+// Ajoutez cette fonction dans votre contrôleur
+
+export const getLastReclamation = async (req, res) => {
+    try {
+        const lastReclamation = await Reclamation.findOne().sort({ createdAt: -1 }).exec();
+        if (!lastReclamation) {
+            return res.status(404).json({ message: 'No reclamation found' });
+        }
+        res.json(lastReclamation);
+    } catch (error) {
+        console.error('Error fetching last reclamation:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+export const getTotalReclamations = async (req, res) => {
+    try {
+        const totalReclamations = await Reclamation.countDocuments();
+        res.json({ totalReclamations });
+    } catch (error) {
+        console.error('Error in getTotalReclamations:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 };
