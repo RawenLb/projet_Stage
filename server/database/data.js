@@ -23,7 +23,13 @@ export const questions = [{
             {
                 question: "Quel est votre style d’apprentissage préféré ? ",
                 options: ["Visuel (images, diagrammes) ","Auditif (écouter des explications)","Lecture/écriture (prendre des notes, lire des manuels) ","Kinesthésique (apprentissage par la pratique)"]
+            },
+            {
+                id: "66bb2a0cd879ca46c3fb1aee",
+                question: "test",
+                options: ["1","2","3"]
             }
+        
 ];
 
 export const answers = [];

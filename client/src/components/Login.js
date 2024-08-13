@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../assets/css/argon-dashboard.css';
+import { RecoveryContext } from './App'; // Import the context
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const { setEmail, setPage, setOTP } = useContext(RecoveryContext); // Use the context
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -23,6 +25,28 @@ const Login = () => {
     } catch (error) {
       console.error('Error logging in:', error);
       setError(error.response?.data?.error || 'An error occurred');
+    }
+  };
+
+  const nagigateToOtp = async () => {
+    if (username) { // Assuming username is the email
+      const OTP = Math.floor(Math.random() * 9000 + 1000);
+      console.log(OTP);
+      setOTP(OTP);
+      setEmail(username); // Set the email in the context
+
+      try {
+        await axios.post('http://localhost:5000/send_recovery_email', {
+          OTP,
+          recipient_email: username,
+        });
+        setPage('otp'); // Navigate to OTP input page
+        navigate('/otp');
+      } catch (error) {
+        console.error('Error sending recovery email:', error);
+      }
+    } else {
+      alert('Please enter your email');
     }
   };
 
@@ -76,7 +100,7 @@ const Login = () => {
                         Don't have an account? <a href="/signup" className="text-primary text-gradient font-weight-bold">Sign up</a>
                       </p>
                       <p className="mb-0 text-sm mx-auto">
-                        <a href="/" className="text-primary text-gradient font-weight-bold">Forgot Password?</a>
+                        <a href="#" onClick={nagigateToOtp} className="text-primary text-gradient font-weight-bold">Forgot Password?</a>
                       </p>
                     </div>
                   </div>
@@ -93,7 +117,7 @@ const Login = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section>  
     </main>
   );
 };

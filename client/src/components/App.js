@@ -1,10 +1,10 @@
-// import '../styles/App.css';
-
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createContext, useState, useEffect } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import axios from 'axios';
 
-/** import components */
+// Import components
 import Main from './Main';
 import Quiz from './Quiz';
 import Login from './Login';
@@ -14,13 +14,16 @@ import { CheckUserExist } from '../helper/helper';
 import Admin from './Admin';
 import QuestionsList from './QuestionsList';
 import ResultsList from './ResultList';
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import Signup from './signUp';
+import OTPInput from "./OTPInput";
+import Recovered from "./Recovered";
+import Reset from "./Reset";
+
+export const RecoveryContext = createContext();
 
 const fetchQuestions = async () => {
   try {
-    const response = await axios.get('/api/questions'); // Adjust the URL as needed
+    const response = await axios.get('/api/questions');
     return response.data;
   } catch (error) {
     console.error('Error fetching questions:', error);
@@ -41,52 +44,70 @@ const QuestionsPage = () => {
 
   return <QuestionsList questions={questions} />;
 };
-/** react routes */
+
+/** React routes */
 const router = createBrowserRouter([
   {
-    path : '/',
-    element : <Login></Login>
+    path: '/',
+    element: <Login />,
   },
   {
-    path : '/signup',
-    element : <Signup></Signup>
-  },
-  
-  {
-    path : '/Main',
-    element : <Main></Main>
+    path: '/signup',
+    element: <Signup />,
   },
   {
-    path : '/Main/quiz',
-    element : <CheckUserExist><Quiz /></CheckUserExist>
+    path: '/main',
+    element: <Main />,
   },
   {
-    path : '/result',
-    element : <CheckUserExist><Result /></CheckUserExist>
+    path: '/main/quiz',
+    element: <CheckUserExist><Quiz /></CheckUserExist>,
   },
   {
-    path : '/dash',
-    element : <Dashboard />
+    path: '/result',
+    element: <CheckUserExist><Result /></CheckUserExist>,
+  },
+  {
+    path: '/dash',
+    element: <Dashboard />,
   },
   {
     path: '/questions',
     element: <QuestionsPage />,
   },
   {
-    path : '/admin',
-    element : <Admin />
+    path: '/admin',
+    element: <Admin />,
   },
   {
     path: '/results',
-    element: <ResultsList />
-  }
-])
+    element: <ResultsList />,
+  },
+  {
+    path: '/otp',
+    element: <OTPInput />,
+  },
+  {
+    path: '/reset',
+    element: <Reset />,
+  },
+  {
+    path: '/recovered',
+    element: <Recovered />,
+  },
+]);
 
 function App() {
+  const [page, setPage] = useState("login");
+  const [email, setEmail] = useState("");
+  const [otp, setOTP] = useState("");
+
   return (
-    <>
+    <RecoveryContext.Provider
+      value={{ page, setPage, otp, setOTP, setEmail, email }}
+    >
       <RouterProvider router={router} />
-    </>
+    </RecoveryContext.Provider>
   );
 }
 
