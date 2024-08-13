@@ -6,6 +6,8 @@ import { resetResultAction } from '../redux/result_reducer';
 import axios from 'axios';
 import StarRating from './StarRating';
 import Modal from './Modal';
+import ReclamationForm from './ReclamationForm'; // Import the ReclamationForm component
+
 
 export default function Result() {
     const dispatch = useDispatch();
@@ -65,14 +67,16 @@ export default function Result() {
                 
                 <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
                     <h2>Rate Your Experience</h2>
-                    <StarRating onRatingSelect={onRatingSelect} />
+                    {/* Passez le userId à StarRating */}
+                    <StarRating userId={userId} onRatingSelect={() => setModalOpen(false)} />
                 </Modal>
+
+
 
                 <div className="result-action">
                     <Link className='result-btn' to={'/'} onClick={onRestart}>Restart Quiz</Link>
                 </div>
             </div>
-            
         </div>
     );
 }
