@@ -28,8 +28,11 @@ export const questions = [{
                 id: "66bb2a0cd879ca46c3fb1aee",
                 question: "test",
                 options: ["1","2","3"]
+            },
+            {
+                question: "test",
+                options: ["1","2"]
             }
-        
 ];
 
 export const answers = [];

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import "../styles/otp.css";
 
 export default function OTPVerification() {
-  const { email, otp, setPage } = useContext(RecoveryContext);
+  const { setemail,email, otp, setPage } = useContext(RecoveryContext);
   const [timerCount, setTimer] = useState(60);
   const [OTPinput, setOTPinput] = useState([0, 0, 0, 0]);
   const [disable, setDisable] = useState(true);
@@ -22,12 +22,15 @@ export default function OTPVerification() {
       .then(() => alert("A new OTP has successfully been sent to your email."))
       .then(() => setTimer(60))
       .catch(console.log);
+      setemail(email);
+    
   }
 
   function verifyOTP() {
     const enteredOTP = parseInt(OTPinput.join(""));
     console.log("Entered OTP:", enteredOTP);
     console.log("Expected OTP:", otp);
+    console.log('email',email);
 
     if (enteredOTP === otp) {
       console.log("OTP Verified. Navigating to reset page...");

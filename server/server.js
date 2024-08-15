@@ -50,6 +50,7 @@ function sendEmail({ recipient_email, OTP }) {
 }
 app.post('/reset-password', async (req, res) => {
   const { recipient_email, newPassword } = req.body;
+  console.log('email',recipient_email);
 
   // Validate input
   if ( !newPassword) {
@@ -57,10 +58,10 @@ app.post('/reset-password', async (req, res) => {
   }
 
   try {
-    const user = await User.findOne({ recipient_email });
-    if (!user) {
-      return res.status(404).send({ error: 'User not found' });
-    }
+    // const user = await User.findOne({ recipient_email });
+    // if (!user) {
+    //   return res.status(404).send({ error: 'User not found' });
+    // }
 
  
 

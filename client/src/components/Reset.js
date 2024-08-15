@@ -4,7 +4,7 @@ import axios from 'axios';
 import "../styles/reset.css"
 
 export default function Reset() {
-  const { setPage } = useContext(RecoveryContext);
+  const { setPage ,email } = useContext(RecoveryContext);
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(null); // For handling errors
@@ -21,9 +21,12 @@ export default function Reset() {
     setLoading(true);
     try {
       const response = await axios.post('http://localhost:5000/reset-password', {
-        recipient_email: localStorage.getItem('email'),
+        recipient_email: email,
         newPassword: password,
       });
+      console.log('newpassword',password);
+      console.log('email',email);
+
       console.log(response.data);
       setPage("recovered");
     } catch (error) {
