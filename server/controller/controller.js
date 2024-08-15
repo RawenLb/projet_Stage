@@ -1,6 +1,6 @@
 import Question from "../models/questionSchema.js";
 import Result from "../models/resultSchema.js";
-import { convertAnswersToText, writeDataToFile } from '../fileUtils.js';
+import { convertAnswersToText, writeDataToFile , readDataFromFile} from '../fileUtils.js';
 import gemini from '../../gemini.js';
 import fs from 'fs';
 import path from 'path';
@@ -213,17 +213,26 @@ export const dropQuestions = async (req, res) => {
 
 export const getResult = async (req, res) => {
     try {
-        const results = await Result.find();
-        const modifiedResults = results.map(result => ({
-            _id: result._id,
-            username: result.username,
-            geminiResult: result.answers.find(answer => typeof answer === 'object' && answer !== null && 'answer' in answer && answer.answer.includes('facultés basées'))
-        }));
-        res.json(modifiedResults);
+        // const results = await Result.find();
+        //         if (!results) {
+        //     throw new Error("No results found in the database");
+        // }
+        // // const modifiedResults = results.map(result => ({
+        // //     username: result.username,
+        // //     geminiResult: result.answers.find(answer => typeof answer === 'object' && answer !== null && 'answer' in answer && answer.answer.includes('facultés basées'))
+        // // }));
+        //read data from result.json 
+        const results = await readDataFromFile('results.json');
+        console.log(results);
+
+
+        res.json(results);
     } catch (error) {
+
         res.status(500).json({ error: error.message });
     }
 };
+
 
 export const getTotalUsers = async (req, res) => {
     try {

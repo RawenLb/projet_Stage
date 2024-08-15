@@ -10,6 +10,17 @@ async function writeDataToFile(filename, data) {
         console.error('Failed to write data to file:', error);
     }
 }
+//read data from file
+async function readDataFromFile(filename) {
+    try {
+        const data = await fs.readFile
+        (filename, 'utf8');
+        return JSON.parse(data);
+    }
+    catch (error) {
+        console.error('Failed to read data from file:', error);
+    }
+}
 
 export function convertAnswersToText(answers) {
     return answers.map((answer, index) => {
@@ -23,4 +34,4 @@ export function convertAnswersToText(answers) {
     });
 }
 
-export { writeDataToFile };
+export { writeDataToFile , readDataFromFile };

@@ -21,8 +21,8 @@ export default function Result() {
         const fetchResults = async () => {
             try {
                 const response = await axios.get('http://localhost:5000/api/result');
-                const userResult = response.data.find(res => res.username === userId);
-                setFetchedResult(userResult);
+                // const userResult = response.data.find(res => res.username === userId);
+                setFetchedResult(response.data);
             } catch (error) {
                 console.error('Error fetching results:', error);
             } finally {

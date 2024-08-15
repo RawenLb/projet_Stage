@@ -58,13 +58,10 @@ app.post('/reset-password', async (req, res) => {
   }
 
   try {
-    // const user = await User.findOne({ recipient_email });
-    // if (!user) {
-    //   return res.status(404).send({ error: 'User not found' });
-    // }
-
- 
-
+    const user = await User.findOne({ recipient_email });
+    if (!user) {
+      return res.status(404).send({ error: 'User not found' });
+    }
     // Update the user's password
     await User.updateOne({ recipient_email }, { $set: { password: newPassword } });
 
