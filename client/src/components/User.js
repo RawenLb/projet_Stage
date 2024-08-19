@@ -1,65 +1,40 @@
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import React, { useEffect, useState } from 'react';
-import { Route, Routes, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch, faUser, faCog, faBell, faTrashAlt,faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import '../assets/css/nucleo-icons.css';
 import '../assets/css/nucleo-svg.css';
 import '../assets/css/argon-dashboard.css?v=2.0.4';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faUser, faCog, faBell,faExclamationTriangle, faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import logo from '../assets/img/logo.png';
 
-const QuestionsList = () => {
-    const [questions, setQuestions] = useState([]);
+const Users = () => {
+    const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchQuestions = async () => {
+        const fetchUsers = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/questions');
-                setQuestions(response.data);
+                const response = await axios.get('http://localhost:5000/api/users');
+                setUsers(response.data);
             } catch (error) {
-                console.error('Error fetching questions:', error);
+                setError(error.message);
+            } finally {
+                setLoading(false);
             }
         };
 
-        fetchQuestions();
+        fetchUsers();
     }, []);
 
-    const deleteQuestion = async (id) => {
+    const deleteUser = async (id) => {
         try {
-            await axios.delete(`http://localhost:5000/api/questions/${id}`);
-            setQuestions(questions.filter(question => question._id !== id));
+            await axios.delete(`http://localhost:5000/api/users/${id}`);
+            setUsers(users.filter(user => user._id !== id));
         } catch (error) {
-            console.error('Error deleting question:', error);
-        }
-    };
-
-    const handleEdit = async (id) => {
-        const question = questions.find(q => q._id === id);
-
-        const { value: updatedQuestion } = await Swal.fire({
-            title: 'Edit Question',
-            html: `
-                <input id="question" class="swal2-input" placeholder="Question" value="${question.question}">
-                <input id="options" class="swal2-input" placeholder="Options (comma-separated)" value="${question.options.join(',')}">
-            `,
-            focusConfirm: false,
-            preConfirm: () => {
-                const questionText = Swal.getPopup().querySelector('#question').value;
-                const optionsText = Swal.getPopup().querySelector('#options').value.split(',');
-                return { question: questionText, options: optionsText };
-            }
-        });
-
-        if (updatedQuestion) {
-            try {
-                const response = await axios.put(`http://localhost:5000/api/questions/${id}`, updatedQuestion);
-                setQuestions(questions.map(question => question._id === id ? response.data.updatedQuestion : question));
-                Swal.fire('Updated!', 'The question has been updated.', 'success');
-            } catch (error) {
-                console.error('Error updating question:', error);
-                Swal.fire('Error!', 'There was an error updating the question.', 'error');
-            }
+            console.error('Error deleting user:', error);
         }
     };
 
@@ -75,11 +50,14 @@ const QuestionsList = () => {
             cancelButtonText: 'Cancel'
         }).then(async (result) => {
             if (result.isConfirmed) {
-                await deleteQuestion(id);
-                Swal.fire('Deleted!', 'The question has been deleted.', 'success');
+                await deleteUser(id);
+                Swal.fire('Deleted!', 'The user has been deleted.', 'success');
             }
         });
     };
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
 
     return (
         <div className="g-sidenav-show bg-gray-100">
@@ -149,13 +127,13 @@ const QuestionsList = () => {
                 >
                     <div className="container-fluid py-1 px-3">
                         <nav aria-label="breadcrumb">
-                            <h6 className="font-weight-bolder text-white mb-0">Dashboard</h6>
+                            <h6 className="font-weight-bolder text-white mb-0">Users</h6>
                         </nav>
                         <div className="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                             <div className="ms-md-auto pe-md-3 d-flex align-items-center">
                                 <div className="input-group">
                                     <span className="input-group-text text-body"><FontAwesomeIcon icon={faSearch} /></span>
-                                    <input type="text" className="form-control" placeholder="Type here..." />
+                                    <input type="text" className="form-control" placeholder="Search..." />
                                 </div>
                             </div>
                             <ul className="navbar-nav justify-content-end">
@@ -193,56 +171,40 @@ const QuestionsList = () => {
                 <div className="container-fluid py-4">
                     <div className="row mt-4">
                         <div className="col-md-12">
-                            <div className="card">
-                                <div className="card-body p-3">
-                                    <h4 className="fw-bold py-3 mb-4">Questions List</h4>
-                                    <table className="table align-items-center mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th>Question</th>
-                                                <th>Options</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {questions.map((question) => (
-                                                <tr key={question._id}>
-                                                    <td>{question.question}</td>
-                                                    <td>
-                                                        {question.options.map((option, index) => (
-                                                            <div key={index}>{option}</div>
-                                                        ))}
-                                                    </td>
-                                                    <td>
-    <button
-        onClick={() => handleEdit(question._id)}
-        style={{
-            backgroundColor: 'transparent',
-            border: 'none',
-            cursor: 'pointer',
-            padding: 0
-        }}
-    >
-        <FontAwesomeIcon icon={faEdit} style={{ color: '#00aaff' }} />
-    </button>
-    <button
-        onClick={() => handleDelete(question._id)}
-        style={{
-            backgroundColor: 'transparent',
-            border: 'none',
-            cursor: 'pointer',
-            padding: 0,
-            marginLeft: '10px'
-        }}
-    >
-        <FontAwesomeIcon icon={faTrashAlt} style={{ color: '#ff4444' }} />
-    </button>
-</td>
-
+                            <div className="card shadow-sm">
+                                <div className="card-body p-4">
+                                    <h4 className="fw-bold py-3 mb-4">Users List</h4>
+                                    <div className="table-responsive">
+                                        <table className="table table-striped table-bordered align-items-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Username</th>
+                                                    <th>Email</th>
+                                                    <th>Actions</th>
                                                 </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                                {users.map(user => (
+                                                    <tr key={user._id}>
+                                                        <td>{user._id}</td>
+                                                        <td>{user.username}</td>
+                                                        <td>{user.email}</td>
+                                                        <td>
+                                                            <div className="btn-group" role="group">
+                                                                <button
+                                                                    onClick={() => handleDelete(user._id)}
+                                                                    className="btn btn-outline-danger btn-sm"
+                                                                >
+                                                                    <FontAwesomeIcon icon={faTrashAlt} />
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -253,4 +215,5 @@ const QuestionsList = () => {
     );
 };
 
-export default QuestionsList;
+export default Users;
+

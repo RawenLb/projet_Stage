@@ -49,7 +49,7 @@ export default function Reset() {
             type="password"
             name="password"
             id="password"
-            placeholder="••••••••"
+            placeholder="new password"
             className="input-field"
             required
             value={password}

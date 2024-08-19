@@ -13,11 +13,12 @@ import Dashboard from './Dashbord';
 import { CheckUserExist } from '../helper/helper';
 import Admin from './Admin';
 import QuestionsList from './QuestionsList';
-import ResultsList from './ResultList';
 import Signup from './signUp';
 import OTPInput from "./OTPInput";
 import Recovered from "./Recovered";
 import Reset from "./Reset";
+import Reclamations from './Reclamations';
+import Users from "./User";
 
 export const RecoveryContext = createContext();
 
@@ -80,8 +81,8 @@ const router = createBrowserRouter([
     element: <Admin />,
   },
   {
-    path: '/results',
-    element: <ResultsList />,
+    path: '/user',
+    element: <Users />,
   },
   {
     path: '/otp',
@@ -90,6 +91,10 @@ const router = createBrowserRouter([
   {
     path: '/reset',
     element: <Reset />,
+  },
+  {
+    path: '/reclamations',
+    element: <Reclamations />,
   },
   {
     path: '/recovered',

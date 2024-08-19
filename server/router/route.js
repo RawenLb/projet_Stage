@@ -13,11 +13,16 @@ router.route('/reclamation').post(controller.submitReclamation);
 router.route('/last-reclamation').get(controller.getLastReclamation);
 router.route('/total-reclamations').get(controller.getTotalReclamations);
 
+router.route('/reclamations').get(controller.getReclamations);
 
 router.route('/result').get(controller.getResult).post(controller.storeResult);
 router.route('/result/:id').delete(controller.deleteResult);
 router.route('/total-users').get(controller.getTotalUsers);
 router.route('/total-questions').get(controller.getTotalQuestions);
+
+// User routes
+router.route('/users').get(controller.getUsers);
+router.route('/users/:id').get(controller.getUserById).put(controller.updateUser).delete(controller.deleteUser);
 
 export default router;
 

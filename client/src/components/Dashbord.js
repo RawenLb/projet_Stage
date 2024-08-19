@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
 import '../assets/css/nucleo-icons.css';
 import '../assets/css/nucleo-svg.css';
 import '../assets/css/argon-dashboard.css?v=2.0.4';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faUser, faCog, faBell, faQuestionCircle,faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faUser, faCog, faBell, faQuestionCircle, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import logo from '../assets/img/logo.png'; // Import the logo
+import Swal from 'sweetalert2'; // Import SweetAlert2
 
 const Dashboard = () => {
     const [chartData, setChartData] = useState({
@@ -19,6 +20,8 @@ const Dashboard = () => {
     const [totalQuestions, setTotalQuestions] = useState(0);
     const [lastReclamation, setLastReclamation] = useState(null);
     const [totalReclamations, setTotalReclamations] = useState(0);
+
+    const navigate = useNavigate(); // Hook to programmatically navigate
 
     useEffect(() => {
         fetch('http://localhost:5000/api/feedback/stats')
@@ -56,6 +59,7 @@ const Dashboard = () => {
             .then((response) => response.json())
             .then((data) => setTotalQuestions(data.totalQuestions))
             .catch((error) => console.error('Error fetching total questions:', error));
+            
         fetch('http://localhost:5000/api/total-reclamations')
             .then((response) => response.json())
             .then((data) => setTotalReclamations(data.totalReclamations))
@@ -67,6 +71,29 @@ const Dashboard = () => {
             .then((data) => setLastReclamation(data))
             .catch((error) => console.error('Error fetching last reclamation:', error));
     }, []);
+
+    const handleLogout = () => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You will be logged out and redirected to the login page.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, log out!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // You might want to clear user session data here
+                // For example, removing authentication tokens:
+                localStorage.removeItem('authToken'); // Adjust as needed
+                
+                // Redirect to the login page
+                navigate('/'); // Ensure this matches your route setup
+            }
+        });
+    };
+    
 
     return (
         <div className="g-sidenav-show bg-gray-100">
@@ -104,11 +131,19 @@ const Dashboard = () => {
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/results">
+                            <Link className="nav-link" to="/user">
                                 <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                     <i className="ni ni-single-02 text-dark text-sm opacity-10"></i>
                                 </div>
                                 <span>Users</span>
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/reclamations">
+                                <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <FontAwesomeIcon icon={faExclamationTriangle} className="text-danger text-sm opacity-10" />
+                                </div>
+                                <span>Reclamations</span>
                             </Link>
                         </li>
                     </ul>
@@ -134,10 +169,10 @@ const Dashboard = () => {
                             </div>
                             <ul className="navbar-nav justify-content-end">
                                 <li className="nav-item d-flex align-items-center">
-                                    <a href="#" className="nav-link text-white font-weight-bold px-0">
+                                    <button className="btn btn-link text-white font-weight-bold px-0" onClick={handleLogout}>
                                         <FontAwesomeIcon icon={faUser} className="me-sm-1" />
-                                        <span className="d-sm-inline d-none">Sign In</span>
-                                    </a>
+                                        <span className="d-sm-inline d-none">Log Out</span>
+                                    </button>
                                 </li>
                                 <li className="nav-item d-xl-none ps-3 d-flex align-items-center">
                                     <a href="#" className="nav-link text-white p-0" id="iconNavbarSidenav">
@@ -148,83 +183,74 @@ const Dashboard = () => {
                                         </div>
                                     </a>
                                 </li>
-                                <li className="nav-item px-3 d-flex align-items-center">
-                                    <a href="#" className="nav-link text-white p-0">
-                                        <FontAwesomeIcon icon={faCog} className="fixed-plugin-button-nav cursor-pointer" />
-                                    </a>
-                                </li>
-                                <li className="nav-item dropdown pe-2 d-flex align-items-center">
-                                    <a href="#" className="nav-link text-white p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <FontAwesomeIcon icon={faBell} className="cursor-pointer" />
-                                    </a>
-                                </li>
+                              
                             </ul>
                         </div>
                     </div>
                 </nav>
 
                 <div className="container-fluid py-4">
-    <div className="row">
-        {/* Card for Total Questions */}
-        <div className="col-xl-4 col-sm-6 mb-xl-0 mb-4">
-            <div className="card">
-                <div className="card-header p-3 pt-2">
-                    <h6 className="text-uppercase text-body text-xs font-weight-bolder">Total Questions</h6>
-                </div>
-                <div className="card-body p-3">
                     <div className="row">
-                        <div className="col-8">
-                            <p className="text-sm font-weight-bolder mb-0">Total Questions</p>
-                            <h5 className="font-weight-bolder">{totalQuestions}</h5>
+                        {/* Card for Total Questions */}
+                        <div className="col-xl-4 col-sm-6 mb-xl-0 mb-4">
+                            <div className="card">
+                                <div className="card-header p-3 pt-2">
+                                    <h6 className="text-uppercase text-body text-xs font-weight-bolder">Total Questions</h6>
+                                </div>
+                                <div className="card-body p-3">
+                                    <div className="row">
+                                        <div className="col-8">
+                                            <p className="text-sm font-weight-bolder mb-0">Total Questions</p>
+                                            <h5 className="font-weight-bolder">{totalQuestions}</h5>
+                                        </div>
+                                        <div className="col-4 text-end">
+                                            <FontAwesomeIcon icon={faQuestionCircle} className="text-primary text-lg opacity-10" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div className="col-4 text-end">
-                            <FontAwesomeIcon icon={faQuestionCircle} className="text-primary text-lg opacity-10" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        {/* Card for Total Users */}
-        <div className="col-xl-4 col-sm-6 mb-xl-0 mb-4">
-            <div className="card">
-                <div className="card-header p-3 pt-2">
-                    <h6 className="text-uppercase text-body text-xs font-weight-bolder">Total Users</h6>
-                </div>
-                <div className="card-body p-3">
-                    <div className="row">
-                        <div className="col-8">
-                            <p className="text-sm font-weight-bolder mb-0">Total Users</p>
-                            <h5 className="font-weight-bolder">{totalUsers}</h5>
+                        {/* Card for Total Users */}
+                        <div className="col-xl-4 col-sm-6 mb-xl-0 mb-4">
+                            <div className="card">
+                                <div className="card-header p-3 pt-2">
+                                    <h6 className="text-uppercase text-body text-xs font-weight-bolder">Total Users</h6>
+                                </div>
+                                <div className="card-body p-3">
+                                    <div className="row">
+                                        <div className="col-8">
+                                            <p className="text-sm font-weight-bolder mb-0">Total Users</p>
+                                            <h5 className="font-weight-bolder">{totalUsers}</h5>
+                                        </div>
+                                        <div className="col-4 text-end">
+                                            <FontAwesomeIcon icon={faUser} className="text-warning text-lg opacity-10" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div className="col-4 text-end">
-                            <FontAwesomeIcon icon={faUser} className="text-warning text-lg opacity-10" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        {/* Card for Total Reclamations */}
-        <div className="col-xl-4 col-sm-6 mb-xl-0 mb-4">
-            <div className="card">
-                <div className="card-header p-3 pt-2">
-                    <h6 className="text-uppercase text-body text-xs font-weight-bolder">Total Reclamations</h6>
-                </div>
-                <div className="card-body p-3">
-                    <div className="row">
-                        <div className="col-8">
-                            <p className="text-sm font-weight-bolder mb-0">Total Reclamations</p>
-                            <h5 className="font-weight-bolder">{totalReclamations}</h5>
-                        </div>
-                        <div className="col-4 text-end">
-                            <FontAwesomeIcon icon={faExclamationTriangle} className="text-danger text-lg opacity-10" />
+                        {/* Card for Total Reclamations */}
+                        <div className="col-xl-4 col-sm-6 mb-xl-0 mb-4">
+                            <div className="card">
+                                <div className="card-header p-3 pt-2">
+                                    <h6 className="text-uppercase text-body text-xs font-weight-bolder">Total Reclamations</h6>
+                                </div>
+                                <div className="card-body p-3">
+                                    <div className="row">
+                                        <div className="col-8">
+                                            <p className="text-sm font-weight-bolder mb-0">Total Reclamations</p>
+                                            <h5 className="font-weight-bolder">{totalReclamations}</h5>
+                                        </div>
+                                        <div className="col-4 text-end">
+                                            <FontAwesomeIcon icon={faExclamationTriangle} className="text-danger text-lg opacity-10" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
     
 
                     <div className="row mt-4">
@@ -250,7 +276,7 @@ const Dashboard = () => {
                                         <table className="table">
                                             <thead>
                                                 <tr>
-                                                    <th scope="col">subject</th>
+                                                    <th scope="col">Subject</th>
                                                     <th scope="col">Date</th>
                                                     <th scope="col">Message</th>
                                                 </tr>

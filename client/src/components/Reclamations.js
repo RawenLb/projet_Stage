@@ -1,37 +1,40 @@
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faUser, faCog, faBell } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faUser, faCog, faBell, faExclamationTriangle, faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 import '../assets/css/nucleo-icons.css';
 import '../assets/css/nucleo-svg.css';
 import '../assets/css/argon-dashboard.css?v=2.0.4';
-import logo from '../assets/img/logo.png'; // Import the logo
+import logo from '../assets/img/logo.png';
 
-const ResultsList = () => {
-    const [results, setResults] = useState([]);
+const Reclamations = () => {
+    const [reclamations, setReclamations] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchResults = async () => {
+        const fetchReclamations = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/result');
-                setResults(response.data || []);
+                const response = await axios.get('http://localhost:5000/api/reclamations');
+                setReclamations(response.data);
             } catch (error) {
-                console.error('Error fetching results:', error);
-                setResults([]);
+                setError(error.message);
+            } finally {
+                setLoading(false);
             }
         };
 
-        fetchResults();
+        fetchReclamations();
     }, []);
 
-    const deleteResult = async (id) => {
+    const deleteReclamation = async (id) => {
         try {
-            await axios.delete(`http://localhost:5000/api/result/${id}`);
-            setResults(results.filter(result => result._id !== id));
+            await axios.delete(`http://localhost:5000/api/reclamations/${id}`);
+            setReclamations(reclamations.filter(reclamation => reclamation._id !== id));
         } catch (error) {
-            console.error('Error deleting result:', error);
+            console.error('Error deleting reclamation:', error);
         }
     };
 
@@ -45,27 +48,26 @@ const ResultsList = () => {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Yes, delete it!',
             cancelButtonText: 'Cancel'
-        }).then((result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
-                deleteResult(id);
-                Swal.fire(
-                    'Deleted!',
-                    'The result has been deleted.',
-                    'success'
-                );
+                await deleteReclamation(id);
+                Swal.fire('Deleted!', 'The reclamation has been deleted.', 'success');
             }
         });
     };
 
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
+
     return (
         <div className="g-sidenav-show bg-gray-100">
-                    <div className="min-height-300 bg-primary position-absolute w-100"></div>
+            <div className="min-height-300 bg-primary position-absolute w-100"></div>
 
             {/* Sidebar */}
             <aside className="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4">
-            <div className="sidenav-header">
-                <img src={logo} alt="Logo" className="navbar-brand-img logo-custom" /> 
-        </div>
+                <div className="sidenav-header">
+                    <img src={logo} alt="Logo" className="navbar-brand-img logo-custom" />
+                </div>
                 <hr className="horizontal dark mt-0" />
                 <div className="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
                     <ul className="navbar-nav">
@@ -94,35 +96,44 @@ const ResultsList = () => {
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/results">
+                            <Link className="nav-link" to="/user">
                                 <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                                     <i className="ni ni-single-02 text-dark text-sm opacity-10"></i>
                                 </div>
                                 <span>Users</span>
                             </Link>
                         </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/reclamations">
+                                <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <FontAwesomeIcon icon={faExclamationTriangle} className="text-danger text-sm opacity-10" />
+                                </div>
+                                <span>Reclamations</span>
+                            </Link>
+                        </li>
                     </ul>
                 </div>
             </aside>
 
-            {/* Navbar */}    <main className="main-content position-relative border-radius-lg">
-        <div className="min-height-300 bg-primary position-absolute w-100"></div>
+            {/* Navbar */}
+            <main className="main-content position-relative border-radius-lg">
+                <div className="min-height-300 bg-primary position-absolute w-100"></div>
 
-<nav
-  className="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl"
-  id="navbarBlur"
-  data-scroll="false"
-  style={{ backgroundColor: 'transparent' }}
->
+                <nav
+                    className="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl"
+                    id="navbarBlur"
+                    data-scroll="false"
+                    style={{ backgroundColor: 'transparent' }}
+                >
                     <div className="container-fluid py-1 px-3">
                         <nav aria-label="breadcrumb">
-                            <h6 className="font-weight-bolder text-white mb-0">Dashboard</h6>
+                            <h6 className="font-weight-bolder text-white mb-0">Reclamations</h6>
                         </nav>
                         <div className="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                             <div className="ms-md-auto pe-md-3 d-flex align-items-center">
                                 <div className="input-group">
                                     <span className="input-group-text text-body"><FontAwesomeIcon icon={faSearch} /></span>
-                                    <input type="text" className="form-control" placeholder="Type here..." />
+                                    <input type="text" className="form-control" placeholder="Search..." />
                                 </div>
                             </div>
                             <ul className="navbar-nav justify-content-end">
@@ -160,61 +171,42 @@ const ResultsList = () => {
                 <div className="container-fluid py-4">
                     <div className="row mt-4">
                         <div className="col-md-12">
-                            <div className="card">
-                                <div className="card-body p-3">
-                                    <h4 className="fw-bold py-3 mb-4">
-                                        <span className="text-muted fw-light">Liste des Résultats /</span>
-                                    </h4>
-                                    <div className="card">
-                                        <div className="card-body">
-                                            <table className="table table-striped">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Username</th>
-                                                        <th>Answers</th>
-                                                        <th>Actions</th>
+                            <div className="card shadow-sm">
+                                <div className="card-body p-4">
+                                    <h4 className="fw-bold py-3 mb-4">Liste des Réclamations</h4>
+                                    <div className="table-responsive">
+                                        <table className="table table-striped table-bordered align-items-center mb-0">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Sujet</th>
+                                                    <th>Date</th>
+                                                    <th>Message</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {reclamations.map((reclamation) => (
+                                                    <tr key={reclamation._id}>
+                                                        <td>{reclamation._id}</td>
+                                                        <td>{reclamation.subject}</td>
+                                                        <td>{new Date(reclamation.createdAt).toLocaleDateString()}</td>
+                                                        <td>{reclamation.message}</td>
+                                                        <td>
+                                                            <div className="btn-group" role="group">
+                                                                <button
+                                                                    onClick={() => handleDelete(reclamation._id)}
+                                                                    className="btn btn-outline-danger btn-sm"
+                                                                >
+                                                                    <FontAwesomeIcon icon={faTrashAlt} />
+                                                                </button>
+                                                                
+                                                            </div>
+                                                        </td>
                                                     </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {results.length > 0 ? results.map((result) => (
-                                                        <tr key={result._id}>
-                                                            <td>{result.username}</td>
-                                                            <td>
-                                                                <ul className="list-unstyled m-0">
-                                                                    {Array.isArray(result.answers) && result.answers.length > 0 ? result.answers.map((answer, index) => (
-                                                                        <li key={index}>
-                                                                            {answer.answer || 'No answer available'}
-                                                                        </li>
-                                                                    )) : 'No answers available'}
-                                                                </ul>
-                                                            </td>
-                                                            <td>
-                                                                <div className="dropdown">
-                                                                    <button type="button" className="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                                                        <i className="bx bx-dots-vertical-rounded"></i>
-                                                                    </button>
-                                                                    <ul className="dropdown-menu">
-                                                                        <li>
-                                                                            <button
-                                                                                type="button"
-                                                                                className="dropdown-item"
-                                                                                onClick={() => handleDelete(result._id)}
-                                                                            >
-                                                                                <i className="bx bx-trash me-1"></i> Delete
-                                                                            </button>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    )) : (
-                                                        <tr>
-                                                            <td colSpan="3" className="text-center">No results found</td>
-                                                        </tr>
-                                                    )}
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                ))}
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -226,4 +218,6 @@ const ResultsList = () => {
     );
 };
 
-export default ResultsList;
+export default Reclamations;
+
+

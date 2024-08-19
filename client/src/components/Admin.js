@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faUser, faCog, faBell } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faUser, faCog, faBell, faQuestionCircle,faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import '../assets/css/nucleo-icons.css';
 import '../assets/css/nucleo-svg.css';
@@ -82,11 +82,19 @@ const Admin = () => {
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/results">
+                            <Link className="nav-link" to="/user">
                                 <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                    <i className="ni ni-calendar-grid-58 text-info text-sm opacity-10"></i>
+                                    <i className="ni ni-single-02 text-dark text-sm opacity-10"></i>
                                 </div>
                                 <span>Users</span>
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/reclamations">
+                                <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                    <FontAwesomeIcon icon={faExclamationTriangle} className="text-danger text-sm opacity-10" />
+                                </div>
+                                <span>Reclamations</span>
                             </Link>
                         </li>
                     </ul>
