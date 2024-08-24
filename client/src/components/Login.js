@@ -65,7 +65,6 @@ const Login = () => {
       <section>
         <div className="page-header min-vh-100">
           <div className="container">
-            <div className="row">
               <div className="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
                 <div className="card card-plain">
                   <div className="card-header pb-0 text-start">
@@ -126,7 +125,6 @@ const Login = () => {
               </div>
             </div>
           </div>
-        </div>
       </section>  
     </main>
   );
