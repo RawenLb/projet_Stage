@@ -1,12 +1,11 @@
 import express from 'express';
 import nodemailer from 'nodemailer';
 import morgan from 'morgan';
-import router from './router/route.js';
 import cors from 'cors';
 import { config } from 'dotenv';
 import connect from './database/conn.js';
 import User from './models/userSchema.js';
-
+import router from './router/route.js';
 
 const app = express();
 const port = 5000;
@@ -18,9 +17,6 @@ app.use(cors());
 app.use(express.json());
 app.use('/api', router);
 
-app.get('/', (req, res) => {
-  res.json("Server is up and running");
-});
 // Function to send email using Nodemailer
 function sendEmail({ recipient_email, OTP }) {
   return new Promise((resolve, reject) => {
@@ -48,22 +44,24 @@ function sendEmail({ recipient_email, OTP }) {
     });
   });
 }
+
 app.post('/reset-password', async (req, res) => {
   const { recipient_email, newPassword } = req.body;
-  console.log('email',recipient_email);
+  console.log('email', recipient_email);
 
   // Validate input
-  if ( !newPassword) {
+  if (!recipient_email || !newPassword) {
     return res.status(400).send({ error: 'Email and new password are required' });
   }
 
   try {
-    const user = await User.findOne({ recipient_email });
+    const user = await User.findOne({ email: recipient_email });
     if (!user) {
       return res.status(404).send({ error: 'User not found' });
     }
     // Update the user's password
-    await User.updateOne({ recipient_email }, { $set: { password: newPassword } });
+    user.password = newPassword;
+    await user.save();
 
     res.status(200).send({ message: 'Password has been reset successfully' });
   } catch (error) {
@@ -71,7 +69,6 @@ app.post('/reset-password', async (req, res) => {
     res.status(500).send({ error: 'An error occurred while resetting the password' });
   }
 });
-
 
 // Endpoint to send recovery email
 app.post('/send_recovery_email', (req, res) => {

@@ -19,6 +19,7 @@ const { generateUniversities } = gemini;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+
 export const loginUser = async (req, res) => {
     try {
         const { username, password } = req.body;
@@ -27,24 +28,21 @@ export const loginUser = async (req, res) => {
             return res.status(400).json({ error: 'Username and password are required' });
         }
 
-        // Find user by username or email
         const user = await User.findOne({ $or: [{ username }, { email: username }] });
         if (!user) {
             return res.status(401).json({ error: 'Invalid username or password' });
         }
 
-        // Check password
         const isMatch = await user.comparePassword(password);
         if (!isMatch) {
             return res.status(401).json({ error: 'Invalid username or password' });
         }
 
-        // Generate JWT token
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || 'your_jwt_secret', { expiresIn: '1h' });
         res.json({ token });
 
     } catch (error) {
-        console.error('Error in loginUser:', error); // Log detailed error
+        console.error('Error in loginUser:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };

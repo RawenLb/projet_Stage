@@ -24,6 +24,7 @@ export default function Reset() {
         recipient_email: email,
         newPassword: password,
       });
+      
       console.log('newpassword',password);
       console.log('email',email);
 

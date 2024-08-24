@@ -29,26 +29,36 @@ const Login = () => {
   };
 
   const nagigateToOtp = async () => {
-    if (username) { // Assuming username is the email
-      const OTP = Math.floor(Math.random() * 9000 + 1000);
-      console.log(OTP);
-      setOTP(OTP);
-      setEmail(username); // Set the email in the context
+  if (username) {
+    const OTP = Math.floor(Math.random() * 9000 + 1000);
+    console.log(OTP);
+    setOTP(OTP);
+    setEmail(username);
 
-      try {
-        await axios.post('http://localhost:5000/send_recovery_email', {
-          OTP,
-          recipient_email: username,
-        });
-        setPage('otp'); // Navigate to OTP input page
-        navigate('/otp');
-      } catch (error) {
-        console.error('Error sending recovery email:', error);
+    try {
+      await axios.post('http://localhost:5000/send_recovery_email', {
+        OTP,
+        recipient_email: username,
+      });
+      setPage('otp');
+      navigate('/otp');
+    } catch (error) {
+      console.error('Error sending recovery email:', error);
+      if (error.response) {
+        // Le serveur a répondu avec un code d'erreur
+        alert(`Error: ${error.response.data.error}`);
+      } else if (error.request) {
+        // La requête a été envoyée mais aucune réponse n'a été reçue
+        alert('No response received from the server. Please try again later.');
+      } else {
+        // Quelque chose s'est mal passé dans la configuration de la requête
+        alert('An error occurred while sending the recovery email. Please check your network and try again.');
       }
-    } else {
-      alert('Please enter your email');
     }
-  };
+  } else {
+    alert('Please enter your email');
+  }
+};
 
   return (
     <main className="main-content mt-0">
