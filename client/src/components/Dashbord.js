@@ -6,8 +6,10 @@ import '../assets/css/nucleo-icons.css';
 import '../assets/css/nucleo-svg.css';
 import '../assets/css/argon-dashboard.css?v=2.0.4';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faUser, faCog, faBell, faQuestionCircle, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faUser, faCog, faBell, faQuestionCircle, faExclamationTriangle,faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import logo from '../assets/img/logo.png'; // Import the logo
+import logoutIcon from '../assets/img/logout.png'; // Import the logout icon
+
 import Swal from 'sweetalert2'; // Import SweetAlert2
 
 const Dashboard = () => {
@@ -39,8 +41,8 @@ const Dashboard = () => {
                         {
                             label: 'Number of Ratings',
                             data: counts,
-                            backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: ['rgba(75, 192, 192, 0.6)', 'rgba(255, 99, 132, 0.6)', 'rgba(255, 159, 64, 0.6)', 'rgba(153, 102, 255, 0.6)', 'rgba(255, 205, 86, 0.6)'],
+                            borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)', 'rgba(255, 159, 64, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 205, 86, 1)'],
                             borderWidth: 1,
                         },
                     ],
@@ -72,27 +74,26 @@ const Dashboard = () => {
             .catch((error) => console.error('Error fetching last reclamation:', error));
     }, []);
 
-    const handleLogout = () => {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You will be logged out and redirected to the login page.",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, log out!',
-            cancelButtonText: 'Cancel'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // You might want to clear user session data here
-                // For example, removing authentication tokens:
-                localStorage.removeItem('authToken'); // Adjust as needed
-                
-                // Redirect to the login page
-                navigate('/'); // Ensure this matches your route setup
-            }
-        });
-    };
+  
+const handleLogout = () => {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You will be logged out and redirected to the login page.",
+        imageUrl: logoutIcon, // Use the custom logout icon
+        imageWidth: 50, // Adjust the size as needed
+        imageHeight: 50,
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, log out!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            localStorage.removeItem('authToken'); // Adjust as needed
+            navigate('/'); // Ensure this matches your route setup
+        }
+    });
+};
     
 
     return (
@@ -169,10 +170,11 @@ const Dashboard = () => {
                             </div>
                             <ul className="navbar-nav justify-content-end">
                                 <li className="nav-item d-flex align-items-center">
-                                    <button className="btn btn-link text-white font-weight-bold px-0" onClick={handleLogout}>
-                                        <FontAwesomeIcon icon={faUser} className="me-sm-1" />
-                                        <span className="d-sm-inline d-none">Log Out</span>
-                                    </button>
+                                <button className="btn btn-link text-white font-weight-bold px-0" onClick={handleLogout}>
+    <FontAwesomeIcon icon={faSignOutAlt} className="me-sm-1" />
+    <span className="d-sm-inline d-none">Log Out</span>
+</button>
+
                                 </li>
                                 <li className="nav-item d-xl-none ps-3 d-flex align-items-center">
                                     <a href="#" className="nav-link text-white p-0" id="iconNavbarSidenav">
