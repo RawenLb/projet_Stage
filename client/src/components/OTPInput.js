@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import "../styles/otp.css";
 
 export default function OTPVerification() {
-  const { setemail,email, otp, setPage } = useContext(RecoveryContext);
+  const { setemail, email, otp, setPage } = useContext(RecoveryContext);
   const [timerCount, setTimer] = useState(60);
-  const [OTPinput, setOTPinput] = useState([0, 0, 0, 0]);
+  const [OTPinput, setOTPinput] = useState(["", "", "", ""]);
   const [disable, setDisable] = useState(true);
   const navigate = useNavigate();
   
@@ -22,25 +22,18 @@ export default function OTPVerification() {
       .then(() => alert("A new OTP has successfully been sent to your email."))
       .then(() => setTimer(60))
       .catch(console.log);
-      setemail(email);
-    
+    setemail(email);
   }
 
   function verifyOTP() {
     const enteredOTP = parseInt(OTPinput.join(""));
-    console.log("Entered OTP:", enteredOTP);
-    console.log("Expected OTP:", otp);
-    console.log('email',email);
-
     if (enteredOTP === otp) {
-      console.log("OTP Verified. Navigating to reset page...");
       setPage("reset");
       navigate('/reset');
     } else {
       alert("The code you have entered is not correct, try again or re-send the link");
     }
   }
-  
 
   useEffect(() => {
     let interval = setInterval(() => {
@@ -55,58 +48,75 @@ export default function OTPVerification() {
   }, [disable]);
 
   return (
-    <div className="otp-container">
-      <div className="otp-box">
-        <div className="otp-content">
-          <div className="otp-header">
-            <h1>Email Verification</h1>
-            <p>We have sent a code to your email {email}</p>
+    <main className="main-content main-content-bg mt-0 ps">
+      <div className="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg" style={{ backgroundImage: "url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/verification-cover.jpg')" }}>
+        <span className="mask bg-gradient-dark opacity-6"></span>
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-lg-5 text-center mx-auto">
+              <h1 className="text-white mb-2 mt-7">Good evening!</h1>
+              <p className="text-lead text-white">Use these awesome forms to login or create a new account in your project for free.</p>
+            </div>
           </div>
-
-          <form>
-            <div className="otp-inputs">
-              {OTPinput.map((_, index) => (
-                <input
-                  key={index}
-                  maxLength="1"
-                  className="otp-input"
-                  type="text"
-                  onChange={(e) => {
-                    const newOTP = [...OTPinput];
-                    newOTP[index] = e.target.value;
-                    setOTPinput(newOTP);
-                  }}
-                />
-              ))}
-            </div>
-
-            <div className="otp-actions">
-              <button
-                type="button"
-                className="otp-verify-btn"
-                onClick={verifyOTP}
-              >
-                Verify Account
-              </button>
-
-              <p className="otp-resend">
-                Didn't receive code?{" "}
-                <span
-                  className="otp-resend-link"
-                  style={{
-                    color: disable ? "gray" : "blue",
-                    cursor: disable ? "none" : "pointer",
-                    textDecorationLine: disable ? "none" : "underline",
-                  }}
-                  onClick={resendOTP}
-                >
-                  {disable ? `Resend OTP in ${timerCount}s` : "Resend OTP"}
-                </span>
-              </p>
-            </div>
-          </form>
         </div>
       </div>
-    </div>
+      <div className="container">
+        <div className="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
+          <div className="col-xl-4 col-lg-5 col-md-7 mx-auto">
+            <div className="card mb-5">
+              <div className="card-body px-lg-5 py-lg-5 text-center">
+                <div className="text-center text-muted mb-4">
+                  <h2>2-Step Verification</h2>
+                </div>
+                <div className="row gx-2 gx-sm-3">
+                  {OTPinput.map((value, index) => (
+                    <div className="col" key={index}>
+                      <div className="form-group">
+                        <input
+                          type="text"
+                          className="form-control form-control-lg"
+                          maxlength="1"
+                          autocomplete="off"
+                          autocapitalize="off"
+                          value={value}
+                          onChange={(e) => {
+                            const newOTP = [...OTPinput];
+                            newOTP[index] = e.target.value;
+                            setOTPinput(newOTP);
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="text-center">
+                  <button
+                    type="button"
+                    className="btn bg-gradient-warning w-100"
+                    onClick={verifyOTP}
+                  >
+                    Send code
+                  </button>
+                  <span className="text-muted text-sm">
+                    Haven't received it?
+                    <a
+                      href="javascript:;"
+                      onClick={resendOTP}
+                      style={{
+                        color: disable ? "gray" : "blue",
+                        cursor: disable ? "none" : "pointer",
+                        textDecorationLine: disable ? "none" : "underline",
+                      }}
+                    >
+                      {disable ? ` Resend OTP in ${timerCount}s` : " Resend a new code"}
+                    </a>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
   );
 }

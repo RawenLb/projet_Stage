@@ -178,7 +178,6 @@ const Users = () => {
                                         <table className="table table-striped table-bordered align-items-center mb-0">
                                             <thead>
                                                 <tr>
-                                                    <th>ID</th>
                                                     <th>Username</th>
                                                     <th>Email</th>
                                                     <th>Actions</th>
@@ -187,7 +186,6 @@ const Users = () => {
                                             <tbody>
                                                 {users.map(user => (
                                                     <tr key={user._id}>
-                                                        <td>{user._id}</td>
                                                         <td>{user.username}</td>
                                                         <td>{user.email}</td>
                                                         <td>

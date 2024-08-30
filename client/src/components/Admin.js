@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faUser, faCog, faBell, faQuestionCircle,faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faUser, faCog, faBell, faQuestionCircle,faExclamationTriangle,faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import '../assets/css/nucleo-icons.css';
 import '../assets/css/nucleo-svg.css';
 import '../assets/css/argon-dashboard.css?v=2.0.4';
 import logo from '../assets/img/logo.png'; // Import the logo
+import logoutIcon from '../assets/img/logout.png'; // Import the logout icon
 
+import Swal from 'sweetalert2'; // Import SweetAlert2
 const Admin = () => {
     const [questionText, setQuestionText] = useState('');
     const [answerOptions, setAnswerOptions] = useState(['']);
@@ -24,6 +26,25 @@ const Admin = () => {
         setAnswerOptions([...answerOptions, '']);
     };
 
+    const handleLogout = () => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You will be logged out and redirected to the login page.",
+            imageUrl: logoutIcon, // Use the custom logout icon
+            imageWidth: 50, // Adjust the size as needed
+            imageHeight: 50,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, log out!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                localStorage.removeItem('authToken'); // Adjust as needed
+                navigate('/'); // Ensure this matches your route setup
+            }
+        });
+    };
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -113,7 +134,7 @@ const Admin = () => {
         >
                     <div className="container-fluid py-1 px-3">
                         <nav aria-label="breadcrumb">
-                            <h6 className="font-weight-bolder text-white mb-0">Dashboard</h6>
+                            <h6 className="font-weight-bolder text-white mb-0">Add Question</h6>
                         </nav>
                         <div className="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                             <div className="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -124,30 +145,13 @@ const Admin = () => {
                             </div>
                             <ul className="navbar-nav justify-content-end">
                                 <li className="nav-item d-flex align-items-center">
-                                    <a href="#" className="nav-link text-white font-weight-bold px-0">
-                                        <FontAwesomeIcon icon={faUser} className="me-sm-1" />
-                                        <span className="d-sm-inline d-none">Sign In</span>
-                                    </a>
+                                <button className="btn btn-link text-white font-weight-bold px-0" onClick={handleLogout}>
+    <FontAwesomeIcon icon={faSignOutAlt} className="me-sm-1" />
+    <span className="d-sm-inline d-none">Logout</span>
+</button>
                                 </li>
-                                <li className="nav-item d-xl-none ps-3 d-flex align-items-center">
-                                    <a href="#" className="nav-link text-white p-0" id="iconNavbarSidenav">
-                                        <div className="sidenav-toggler-inner">
-                                            <div className="sidenav-toggler-line bg-white"></div>
-                                            <div className="sidenav-toggler-line bg-white"></div>
-                                            <div className="sidenav-toggler-line bg-white"></div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li className="nav-item px-3 d-flex align-items-center">
-                                    <a href="#" className="nav-link text-white p-0">
-                                        <FontAwesomeIcon icon={faCog} className="fixed-plugin-button-nav cursor-pointer" />
-                                    </a>
-                                </li>
-                                <li className="nav-item dropdown pe-2 d-flex align-items-center">
-                                    <a href="#" className="nav-link text-white p-0" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <FontAwesomeIcon icon={faBell} className="cursor-pointer" />
-                                    </a>
-                                </li>
+                               
+                                
                             </ul>
                         </div>
                     </div>

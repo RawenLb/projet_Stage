@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Bar } from 'react-chartjs-2';
+import { Pie } from 'react-chartjs-2'; // Import Pie instead of Bar
 import 'chart.js/auto';
 import '../assets/css/nucleo-icons.css';
 import '../assets/css/nucleo-svg.css';
 import '../assets/css/argon-dashboard.css?v=2.0.4';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faUser, faCog, faBell, faQuestionCircle, faExclamationTriangle,faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faUser, faCog, faBell, faQuestionCircle, faExclamationTriangle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import logo from '../assets/img/logo.png'; // Import the logo
 import logoutIcon from '../assets/img/logout.png'; // Import the logout icon
 
@@ -25,16 +25,25 @@ const Dashboard = () => {
 
     const navigate = useNavigate(); // Hook to programmatically navigate
 
+    const [ratingPercentages, setRatingPercentages] = useState([]); // New state for percentages
+    
     useEffect(() => {
         fetch('http://localhost:5000/api/feedback/stats')
             .then((response) => response.json())
             .then((data) => {
                 const labels = ['1 Star', '2 Stars', '3 Stars', '4 Stars', '5 Stars'];
+                const totalRatings = data.reduce((total, rating) => total + rating.count, 0);
+    
                 const counts = labels.map((label) => {
                     const rating = parseInt(label.split(' ')[0], 10);
                     const ratingData = data.find((r) => r._id === rating);
                     return ratingData ? ratingData.count : 0;
                 });
+    
+                const percentages = counts.map(count => ((count / totalRatings) * 100).toFixed(2)); // Calculate percentages
+    
+                setRatingPercentages(percentages); // Store percentages
+    
                 setChartData({
                     labels,
                     datasets: [
@@ -43,14 +52,14 @@ const Dashboard = () => {
                             data: counts,
                             backgroundColor: ['rgba(75, 192, 192, 0.6)', 'rgba(255, 99, 132, 0.6)', 'rgba(255, 159, 64, 0.6)', 'rgba(153, 102, 255, 0.6)', 'rgba(255, 205, 86, 0.6)'],
                             borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)', 'rgba(255, 159, 64, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 205, 86, 1)'],
-                            borderWidth: 1,
+                            borderWidth: 2,
                         },
                     ],
                 });
             })
             .catch((error) => console.error('Error fetching ratings stats:', error));
     }, []);
-
+    
     useEffect(() => {
         fetch('http://localhost:5000/api/total-users')
             .then((response) => response.json())
@@ -74,28 +83,26 @@ const Dashboard = () => {
             .catch((error) => console.error('Error fetching last reclamation:', error));
     }, []);
 
-  
-const handleLogout = () => {
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You will be logged out and redirected to the login page.",
-        imageUrl: logoutIcon, // Use the custom logout icon
-        imageWidth: 50, // Adjust the size as needed
-        imageHeight: 50,
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, log out!',
-        cancelButtonText: 'Cancel'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            localStorage.removeItem('authToken'); // Adjust as needed
-            navigate('/'); // Ensure this matches your route setup
-        }
-    });
-};
+    const handleLogout = () => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You will be logged out and redirected to the login page.",
+            imageUrl: logoutIcon, // Use the custom logout icon
+            imageWidth: 50, // Adjust the size as needed
+            imageHeight: 50,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, log out!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                localStorage.removeItem('authToken'); // Adjust as needed
+                navigate('/'); // Ensure this matches your route setup
+            }
+        });
+    };
     
-
     return (
         <div className="g-sidenav-show bg-gray-100">
             <div className="min-height-300 bg-primary position-absolute w-100"></div>
@@ -172,20 +179,11 @@ const handleLogout = () => {
                                 <li className="nav-item d-flex align-items-center">
                                 <button className="btn btn-link text-white font-weight-bold px-0" onClick={handleLogout}>
     <FontAwesomeIcon icon={faSignOutAlt} className="me-sm-1" />
-    <span className="d-sm-inline d-none">Log Out</span>
+    <span className="d-sm-inline d-none">Logout</span>
 </button>
-
                                 </li>
-                                <li className="nav-item d-xl-none ps-3 d-flex align-items-center">
-                                    <a href="#" className="nav-link text-white p-0" id="iconNavbarSidenav">
-                                        <div className="sidenav-toggler-inner">
-                                            <div className="sidenav-toggler-line bg-white"></div>
-                                            <div className="sidenav-toggler-line bg-white"></div>
-                                            <div className="sidenav-toggler-line bg-white"></div>
-                                        </div>
-                                    </a>
-                                </li>
-                              
+                               
+                                
                             </ul>
                         </div>
                     </div>
@@ -193,87 +191,125 @@ const handleLogout = () => {
 
                 <div className="container-fluid py-4">
                     <div className="row">
-                        {/* Card for Total Questions */}
                         <div className="col-xl-4 col-sm-6 mb-xl-0 mb-4">
                             <div className="card">
-                                <div className="card-header p-3 pt-2">
-                                    <h6 className="text-uppercase text-body text-xs font-weight-bolder">Total Questions</h6>
-                                </div>
                                 <div className="card-body p-3">
                                     <div className="row">
                                         <div className="col-8">
-                                            <p className="text-sm font-weight-bolder mb-0">Total Questions</p>
-                                            <h5 className="font-weight-bolder">{totalQuestions}</h5>
+                                            <div className="numbers">
+                                                <p className="text-sm mb-0 text-uppercase font-weight-bold">Total Users</p>
+                                                <h5 className="font-weight-bolder">
+                                                    {totalUsers}
+                                                </h5>
+                                            </div>
                                         </div>
                                         <div className="col-4 text-end">
-                                            <FontAwesomeIcon icon={faQuestionCircle} className="text-primary text-lg opacity-10" />
+                                            <FontAwesomeIcon icon={faUser} className="text-primary" size="3x" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        {/* Card for Total Users */}
                         <div className="col-xl-4 col-sm-6 mb-xl-0 mb-4">
                             <div className="card">
-                                <div className="card-header p-3 pt-2">
-                                    <h6 className="text-uppercase text-body text-xs font-weight-bolder">Total Users</h6>
-                                </div>
                                 <div className="card-body p-3">
                                     <div className="row">
                                         <div className="col-8">
-                                            <p className="text-sm font-weight-bolder mb-0">Total Users</p>
-                                            <h5 className="font-weight-bolder">{totalUsers}</h5>
+                                            <div className="numbers">
+                                                <p className="text-sm mb-0 text-uppercase font-weight-bold">Total Questions</p>
+                                                <h5 className="font-weight-bolder">
+                                                    {totalQuestions}
+                                                </h5>
+                                            </div>
                                         </div>
                                         <div className="col-4 text-end">
-                                            <FontAwesomeIcon icon={faUser} className="text-warning text-lg opacity-10" />
+                                            <FontAwesomeIcon icon={faQuestionCircle} className="text-warning" size="3x" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        {/* Card for Total Reclamations */}
                         <div className="col-xl-4 col-sm-6 mb-xl-0 mb-4">
                             <div className="card">
-                                <div className="card-header p-3 pt-2">
-                                    <h6 className="text-uppercase text-body text-xs font-weight-bolder">Total Reclamations</h6>
-                                </div>
                                 <div className="card-body p-3">
                                     <div className="row">
                                         <div className="col-8">
-                                            <p className="text-sm font-weight-bolder mb-0">Total Reclamations</p>
-                                            <h5 className="font-weight-bolder">{totalReclamations}</h5>
+                                            <div className="numbers">
+                                                <p className="text-sm mb-0 text-uppercase font-weight-bold">Total Reclamations</p>
+                                                <h5 className="font-weight-bolder">
+                                                    {totalReclamations}
+                                                </h5>
+                                            </div>
                                         </div>
                                         <div className="col-4 text-end">
-                                            <FontAwesomeIcon icon={faExclamationTriangle} className="text-danger text-lg opacity-10" />
+                                            <FontAwesomeIcon icon={faExclamationTriangle} className="text-danger" size="3x" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                       
                     </div>
-    
+
+                    <div className="min-height-300 bg-primary position-absolute w-100"></div>
 
                     <div className="row mt-4">
-                        <div className="col-xl-6 col-lg-6 mb-4">
-                            <div className="card">
-                                <div className="card-header p-3 pt-2">
-                                    <h6 className="text-uppercase text-body text-xs font-weight-bolder">Feedback Ratings</h6>
+                        <div className="col-lg-4 col-12 mb-4">
+                            <div className="card h-100">
+                                <div className="card-header pb-0 p-3">
+                                    <div className="d-flex align-items-center">
+                                        <h6 className="mb-0">Ratings Distribution</h6>
+                                    </div>
                                 </div>
                                 <div className="card-body p-3">
-                                    <Bar data={chartData} options={{ responsive: true }} />
+                                    <div className="chart">
+                                        <Pie data={chartData} />
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
-                        {/* Table for Last Reclamation */}
-                        <div className="col-xl-6 col-lg-6 mb-4">
-                            <div className="card">
-                                <div className="card-header p-3 pt-2">
-                                    <h6 className="text-uppercase text-body text-xs font-weight-bolder">Dernière Réclamation</h6>
+                        <div className="col-md-6">
+    <div className="row mt-4">
+        <div className="col-lg-15 col-20 mb-4">
+            <div className="card">
+                <div className="card-header">
+                    <h5 className="mb-0">Ratings Percentage</h5>
+                </div>
+                <div className="card-body">
+                    {ratingPercentages.map((percentage, index) => (
+                        <div key={index} className="mb-3">
+                            <label className="form-label">{index + 1} Star</label>
+                            <div className="progress">
+                                <div
+                                    className="progress-bar"
+                                    role="progressbar"
+                                    style={{ width: `${percentage}%` }}
+                                >
+                                    {percentage}%
                                 </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                        <div className="col-xl-5 col-sm-9">
+                            <div className="card">
+                            <div className="col-8 text-end">
+    <div className="card-header pb-0">
+        <div className="d-flex align-items-center">
+            <FontAwesomeIcon icon={faBell} className="text-success me-2" size="2x" />
+            <h6 className="mb-0">Last reclamation</h6>
+        </div>
+    </div>
+</div>
+
                                 <div className="card-body p-3">
+                                    <div className="row">
+                                    <div className="card-body p-3">
                                     {lastReclamation ? (
                                         <table className="table">
                                             <thead>
@@ -295,9 +331,12 @@ const handleLogout = () => {
                                         <p>Aucune réclamation disponible.</p>
                                     )}
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+                                      
+                                    </div>
+                                </div>
+                           </div></div></div>
+                    
+                   
                 </div>
             </main>
         </div>

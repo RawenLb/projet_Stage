@@ -149,7 +149,7 @@ const QuestionsList = () => {
                 >
                     <div className="container-fluid py-1 px-3">
                         <nav aria-label="breadcrumb">
-                            <h6 className="font-weight-bolder text-white mb-0">Dashboard</h6>
+                            <h6 className="font-weight-bolder text-white mb-0">Question List</h6>
                         </nav>
                         <div className="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                             <div className="ms-md-auto pe-md-3 d-flex align-items-center">

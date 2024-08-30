@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faUser, faCog, faBell, faExclamationTriangle, faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faUser, faCog, faBell, faExclamationTriangle, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import '../assets/css/nucleo-icons.css';
 import '../assets/css/nucleo-svg.css';
@@ -178,7 +178,6 @@ const Reclamations = () => {
                                         <table className="table table-striped table-bordered align-items-center mb-0">
                                             <thead>
                                                 <tr>
-                                                    <th>ID</th>
                                                     <th>Sujet</th>
                                                     <th>Date</th>
                                                     <th>Message</th>
@@ -188,7 +187,6 @@ const Reclamations = () => {
                                             <tbody>
                                                 {reclamations.map((reclamation) => (
                                                     <tr key={reclamation._id}>
-                                                        <td>{reclamation._id}</td>
                                                         <td>{reclamation.subject}</td>
                                                         <td>{new Date(reclamation.createdAt).toLocaleDateString()}</td>
                                                         <td>{reclamation.message}</td>
@@ -198,7 +196,7 @@ const Reclamations = () => {
                                                                     onClick={() => handleDelete(reclamation._id)}
                                                                     className="btn btn-outline-danger btn-sm"
                                                                 >
-                                                                    <FontAwesomeIcon icon={faTrashAlt} />
+                                                                <FontAwesomeIcon icon={faTrash} className="me-2" />
                                                                 </button>
                                                                 
                                                             </div>
