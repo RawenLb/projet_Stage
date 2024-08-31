@@ -9,7 +9,6 @@ import '../assets/css/nucleo-svg.css';
 import '../assets/css/argon-dashboard.css?v=2.0.4';
 import logo from '../assets/img/logo.png'; // Import the logo
 import logoutIcon from '../assets/img/logout.png'; // Import the logout icon
-
 import Swal from 'sweetalert2'; // Import SweetAlert2
 const Admin = () => {
     const [questionText, setQuestionText] = useState('');
