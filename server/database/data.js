@@ -32,6 +32,10 @@ export const questions = [{
             {
                 question: "test",
                 options: ["1","2"]
+            },
+            {
+                question: ".Êtes-vous intéressé par des programmes de double diplôme ?",
+                options: ["oui","non"]
             }
 ];
 
